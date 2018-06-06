@@ -42,6 +42,6 @@ public class courseDetails extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        
     }
 }
