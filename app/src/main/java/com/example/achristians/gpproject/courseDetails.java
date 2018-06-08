@@ -45,24 +45,5 @@ public class courseDetails extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-/*
-        //firebase connectivity
-        auth = FirebaseAuth.getInstance();
-        String email="almabekov@gmail.com";
-        String password="testtpassword";
-        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(courseDetails.this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (!task.isSuccessful()) {
-                   // Toast.makeText(courseDetails.this, "Cannot login to firebase", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    Toast.makeText(courseDetails.this, "Connected to firebase", Toast.LENGTH_LONG).show();
-                }
-                String t=task.getException().toString();
-                Toast.makeText(courseDetails.this,t, Toast.LENGTH_LONG).show();
-            }
-        });
-        */
     }
 }
