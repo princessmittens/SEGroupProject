@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 /**
  * Created by AChristians on 2018-05-14.
  */
@@ -19,6 +21,7 @@ public class courseDetails extends AppCompatActivity {
 
     private Button btnRegistration;
 
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,5 +46,7 @@ public class courseDetails extends AppCompatActivity {
             }
         });
 
+        //firebase connectivity
+        auth = FirebaseAuth.getInstance();
     }
 }
