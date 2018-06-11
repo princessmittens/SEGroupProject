@@ -11,13 +11,18 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 /**
  * Created by AChristians on 2018-05-14.
  */
 
 public class registration extends AppCompatActivity {
-
+    //MARLEE: Commented merged firebase stuff out for now 
+//     public FirebaseAuth firebaseAuth;
+//     public FirebaseAuth.AuthStateListener mAuth;
     ArrayList<String> filteredCourses = new ArrayList<String>();
+//     firebase fb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
