@@ -21,5 +21,7 @@ public class MainActivity extends AppCompatActivity {
         dbInterface.addTestListener();
         dbInterface.setTestObject();
         dbInterface.getUserSpec();
+
+        User test = User.SpecUser;
     }
 }
