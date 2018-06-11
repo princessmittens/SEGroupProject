@@ -12,35 +12,57 @@ import com.google.firebase.database.ValueEventListener;
 
 public class firebaseDB {
 
-    static FirebaseDatabase dataSource;
-    static DatabaseReference dataReference;
+    private static FirebaseDatabase rootDataSource;
+    private static DatabaseReference rootDataReference;
 
-    private static String outputString;
+    private static DatabaseReference testDataReference;
+
+    private static String result;
 
     public firebaseDB(Context appContext){
         FirebaseApp.initializeApp(appContext);
+        rootDataSource = FirebaseDatabase.getInstance();
+        rootDataReference = rootDataSource.getReference();
     }
 
-    public String getObject(String DB_path){
-        dataSource = FirebaseDatabase.getInstance();
-        dataReference = dataSource.getReference(DB_path);
+    public void addObjectListener(String DB_path){
+        testDataReference = rootDataReference.child(DB_path);
 
-        dataReference.addListenerForSingleValueEvent(
+        testDataReference.addListenerForSingleValueEvent(
             new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    outputString = dataSnapshot.getValue(String.class);
+                    result = dataSnapshot.getValue(String.class);
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-                    outputString = databaseError.toString();
+                    result = databaseError.toString();
                 }
             }
         );
+    }
 
-        String output = outputString;
-        outputString = null;
-        return output;
+    public void addTestListener(){
+        testDataReference = rootDataReference.child("Test");
+
+        testDataReference.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        result = dataSnapshot.getValue(String.class);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        result = databaseError.toString();
+                    }
+                }
+        );
+    }
+
+    public void setTestObject(){
+        testDataReference = rootDataReference.child("Test");
+        testDataReference.setValue("New Value");
     }
 }

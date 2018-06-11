@@ -17,5 +17,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.menu);
 
         firebaseDB dbInterface = new firebaseDB(this);
+
+        dbInterface.addTestListener();
+        dbInterface.setTestObject();
     }
 }
