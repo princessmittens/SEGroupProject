@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
         Vlogemail = findViewById(R.id.Vlogemail);
         Vlogpass = findViewById(R.id.Vlogpass);
-
         Elogpass = findViewById(R.id.Elogpass);
         Elogemail = findViewById(R.id.Elogemail);
 
@@ -46,15 +45,14 @@ public class MainActivity extends AppCompatActivity {
         createaccount.setOnClickListener(new View.OnClickListener() {
                                           @Override
                                           public void onClick(View view) {
-
         Intent i = new Intent(MainActivity.this, signUpPage.class);
         startActivity(i);}});
 
         loginbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = Elogemail.toString();
-                String pass = Elogpass.toString();
+                String email = Elogemail.getText().toString();
+                String pass = Elogpass.getText().toString();
                fb.signIn(MainActivity.this, email, pass);
             }
         });
@@ -65,12 +63,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-//        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-      //  updateUI(currentUser);
-//
 
-//
 
 
     }

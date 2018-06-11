@@ -23,9 +23,6 @@ public class firebase extends MainActivity {
     public FirebaseAuth firebaseAuth;
     public FirebaseAuth.AuthStateListener mAuth;
 
-//    public firebase(FirebaseAuth firebaseAuth) {
-//        this.firebaseAuth = firebaseAuth;
-//    }
     public FirebaseAuth firebaseInstance() {
       return  this.firebaseAuth = FirebaseAuth.getInstance();
     }
@@ -39,13 +36,13 @@ public class firebase extends MainActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-//                           updateUI(user);
+                            Toast.makeText(context, "Authentication success.",
+                                    Toast.LENGTH_SHORT).show();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(context, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-//                            updateUI(null);
                         }
                     }
                 });
@@ -78,13 +75,13 @@ public class firebase extends MainActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-                          // updateUI(user);
+                            Toast.makeText(context, "Authentication success.",
+                                    Toast.LENGTH_SHORT).show();
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Log.w(TAG, "createUserWith Email:failure", task.getException());
                             Toast.makeText(context, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-//                            updateUI(null);
                         }
 
                     }
