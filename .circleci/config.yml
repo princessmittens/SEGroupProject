@@ -184,7 +184,8 @@ workflows:
       # - test_instrumented:
       #     requires:
       #       - test_unit
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
+           filters:
+             branches:
+               only:
+                 - master
+                 - develop
