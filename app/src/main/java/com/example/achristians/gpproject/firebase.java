@@ -1,6 +1,5 @@
 package com.example.achristians.gpproject;
 
-import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -15,19 +14,15 @@ import com.google.firebase.auth.FirebaseUser;
 
 import static android.content.ContentValues.TAG;
 
-/**
- * Created by AChristians on 2018-06-05.
- */
-
 public class firebase extends MainActivity {
     public FirebaseAuth firebaseAuth;
     public FirebaseAuth.AuthStateListener mAuth;
 
     public FirebaseAuth firebaseInstance() {
-      return  this.firebaseAuth = FirebaseAuth.getInstance();
+        return this.firebaseAuth = FirebaseAuth.getInstance();
     }
 
-    public void signIn(final Context context, String email, String password ) {
+    public void signIn(final Context context, String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
