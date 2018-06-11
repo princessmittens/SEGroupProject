@@ -72,6 +72,7 @@ public class registration extends AppCompatActivity {
             }
 
             @Override
+            public void onNothingSelected(AdapterView<?> parent) {
                 Log.i("BEEP BOOP ", "BEEEEEP");
             }
         });
