@@ -16,6 +16,7 @@ public class firebaseDB {
     private static DatabaseReference rootDataReference;
 
     private static DatabaseReference testDataReference;
+    private static DatabaseReference usersDataReference;
 
     private static String result;
 
@@ -33,6 +34,25 @@ public class firebaseDB {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     result = dataSnapshot.getValue(String.class);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    result = databaseError.toString();
+                }
+            }
+        );
+    }
+
+    public void getUserSpec(){
+        usersDataReference = rootDataReference.child("Users");
+        DatabaseReference specUserDR = usersDataReference.child("Spec");
+
+        specUserDR.addListenerForSingleValueEvent(
+            new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User.setSpecUser(dataSnapshot.getValue(User.class));
                 }
 
                 @Override
