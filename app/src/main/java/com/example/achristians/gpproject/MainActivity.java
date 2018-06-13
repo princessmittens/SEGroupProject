@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
     TextView Vlogpass, Vlogemail;
     EditText Elogpass, Elogemail;
     Button createaccount, loginbutton;
-    public FirebaseAuth firebaseAuth;
-    firebase fb;
+    public static FirebaseAuth firebaseAuth;
+    public static firebase fb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +59,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = Elogemail.getText().toString();
                 String pass = Elogpass.getText().toString();
+                if (email.length()!=0 && pass.length()!=0) {
                 fb.signIn(MainActivity.this, email, pass);
                 Intent i = new Intent(getApplicationContext() ,MainActivity.class);
                 startActivity(i);
+            }
             }
         });
 
