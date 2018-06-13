@@ -23,6 +23,8 @@ import static org.hamcrest.CoreMatchers.anything;
 @LargeTest
 public class ListTest {
 
+    @Rule
+    public ActivityTestRule<registration> testRule = new ActivityTestRule<>(registration.class);
     //Test 1: check if the listview exists
     @Test
     public void listViewExists() {

@@ -1,5 +1,6 @@
 package com.example.achristians.gpproject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,12 +44,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        final Context context = this;
+
         loginbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = Elogemail.getText().toString();
                 String pass = Elogpass.getText().toString();
                 fb.signIn(MainActivity.this, email, pass);
+                //Navigate to course list page
+                Intent myintent = new Intent(context, registration.class);
+                startActivity(myintent);
             }
         });
 
