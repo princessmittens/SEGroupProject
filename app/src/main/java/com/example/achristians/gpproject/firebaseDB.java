@@ -20,6 +20,16 @@ public class firebaseDB {
 
     private static String result;
 
+    public static firebaseDB dbInterface;
+
+    public static void testQueries(){
+        dbInterface.addTestListener();
+        dbInterface.setTestObject();
+        dbInterface.getUserSpec();
+
+        User test = User.SpecUser;
+    }
+
     public firebaseDB(Context appContext){
         FirebaseApp.initializeApp(appContext);
         rootDataSource = FirebaseDatabase.getInstance();

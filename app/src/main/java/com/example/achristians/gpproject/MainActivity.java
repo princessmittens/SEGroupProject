@@ -16,12 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
 
-        firebaseDB dbInterface = new firebaseDB(this);
-
-        dbInterface.addTestListener();
-        dbInterface.setTestObject();
-        dbInterface.getUserSpec();
-
-        User test = User.SpecUser;
+        firebaseDB.dbInterface = new firebaseDB(this);
+        firebaseDB.testQueries();
     }
 }
