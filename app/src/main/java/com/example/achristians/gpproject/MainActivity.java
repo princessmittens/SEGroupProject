@@ -53,9 +53,6 @@ public class MainActivity extends AppCompatActivity {
                 String email = Elogemail.getText().toString();
                 String pass = Elogpass.getText().toString();
                 fb.signIn(MainActivity.this, email, pass);
-                //Navigate to course list page
-                Intent myintent = new Intent(context, registration.class);
-                startActivity(myintent);
             }
         });
 
