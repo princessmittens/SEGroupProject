@@ -14,10 +14,8 @@ public class firebaseDB {
 
     private static FirebaseDatabase rootDataSource;
     private static DatabaseReference rootDataReference;
-
     private static DatabaseReference testDataReference;
     private static DatabaseReference usersDataReference;
-
     private static String result;
 
     public firebaseDB(Context appContext){
@@ -26,14 +24,16 @@ public class firebaseDB {
         rootDataReference = rootDataSource.getReference();
     }
 
-    public void addObjectListener(String DB_path){
+   public void addObjectListener(String DB_path){
         testDataReference = rootDataReference.child(DB_path);
 
         testDataReference.addListenerForSingleValueEvent(
             new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    result = dataSnapshot.getValue(String.class);
+                    //result = dataSnapshot.getValue(Course.class).Name;
+                    Course c = dataSnapshot.getValue(Course.class);
+                    Log.i("TEST", c.toString());
                 }
 
                 @Override
@@ -83,6 +83,6 @@ public class firebaseDB {
 
     public void setTestObject(){
         testDataReference = rootDataReference.child("Test");
-        testDataReference.setValue("New Value");
+        testDataReference.setValue("Testing...");
     }
 }

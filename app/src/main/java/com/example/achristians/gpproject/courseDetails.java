@@ -75,5 +75,9 @@ public class courseDetails extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //Here...
+        firebaseDB db = new firebaseDB(getApplicationContext());
+        db.addObjectListener("Courses/0");
     }
 }
