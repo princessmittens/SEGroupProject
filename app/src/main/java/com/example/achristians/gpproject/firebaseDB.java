@@ -22,7 +22,7 @@ public class firebaseDB {
     private static DatabaseReference testDataReference;
     private static DatabaseReference usersDataReference;
 
-    private static String result;
+    public static String result;
 
     public static firebaseDB dbInterface;
 
