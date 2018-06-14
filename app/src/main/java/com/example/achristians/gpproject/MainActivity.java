@@ -1,5 +1,6 @@
 package com.example.achristians.gpproject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+
+        final Context context = this;
 
         loginbutton.setOnClickListener(new View.OnClickListener() {
             @Override
