@@ -2,6 +2,9 @@ package com.example.achristians.gpproject;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+
+//Changing this file so Git will decide that my version is up to date
+
 @IgnoreExtraProperties
 public class Listing {
     public Listing(){}

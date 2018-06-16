@@ -5,6 +5,9 @@ import com.google.firebase.database.IgnoreExtraProperties;
 import java.util.HashMap;
 import java.util.List;
 
+
+//Changing this file so Git will decide that my version is up to date
+
 @IgnoreExtraProperties
 public class User {
 
