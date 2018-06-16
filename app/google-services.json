@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "626965145142-a731a0i877lkm135cjauhos8qcdk9p0d.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.achristians.gpproject",
-            "certificate_hash": "720d6f89314c1ba5e054e22439b52d4b737e3ef2"
-          }
-        },
-        {
           "client_id": "626965145142-o1db023lvs6frp3vtnaglfsru9ivnoj4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
