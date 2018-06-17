@@ -28,8 +28,4 @@ public class Course {
         Name = name;
         Semester = semester;
     }
-
-    public String toString() {
-        return Course_Code + " " + Name;
-    }
 }
