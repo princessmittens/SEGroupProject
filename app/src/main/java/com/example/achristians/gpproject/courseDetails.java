@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class courseDetails extends AppCompatActivity {
 
-    private String courseID="";
+    private String courseID= "";
     private TextView courseCodeView;
     private TextView courseNameView;
     private TextView userNameView;

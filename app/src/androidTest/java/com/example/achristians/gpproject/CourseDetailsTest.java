@@ -28,6 +28,7 @@ public class CourseDetailsTest {
             new ActivityTestRule<courseDetails>(courseDetails.class,
                     true, false);
 
+    /* Launch the activity. Thread sleeps to allow activity to be created. */
     @Before
     public void init() throws InterruptedException {
         Intent intent = new Intent();

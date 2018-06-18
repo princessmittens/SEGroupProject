@@ -3,6 +3,7 @@ package com.example.achristians.gpproject;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.PropertyName;
 
+/** Represents a Course object from Firebase. */
 @IgnoreExtraProperties
 public class Course {
 
