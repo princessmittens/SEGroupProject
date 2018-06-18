@@ -1,5 +1,6 @@
 package com.example.achristians.gpproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,7 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 /**
  * Created by AChristians on 2018-06-05.
@@ -50,8 +50,13 @@ public class signUpPage extends AppCompatActivity {
                 String email = Eemail.getText().toString();
                 String pass = Epass.getText().toString();
                 Log.d("TAGCATS", "meow " + email + pass + "this is a test");
+                Boolean result;
                 fb.createUser(signUpPage.this, email, pass);
+
+                Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(i);
             }
+
         });
 
     }
