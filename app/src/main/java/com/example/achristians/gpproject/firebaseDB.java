@@ -20,7 +20,6 @@ public class firebaseDB {
 
     private static FirebaseDatabase rootDataSource;
     private static DatabaseReference rootDataReference;
-
     private static DatabaseReference testDataReference;
     private static DatabaseReference usersDataReference;
 
@@ -52,7 +51,9 @@ public class firebaseDB {
             new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    result = dataSnapshot.getValue(String.class);
+                    //result = dataSnapshot.getValue(Course.class).Name;
+                    Course c = dataSnapshot.getValue(Course.class);
+                    Log.i("TEST", c.toString());
                 }
 
                 @Override
@@ -119,6 +120,6 @@ public class firebaseDB {
     //Sets a single test data point in the database, no template object
     public void setTestObject(){
         testDataReference = rootDataReference.child("Test");
-        testDataReference.setValue("New Value");
+        testDataReference.setValue("Testing...");
     }
 }

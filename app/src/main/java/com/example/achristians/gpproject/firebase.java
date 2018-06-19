@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import static android.content.ContentValues.TAG;
 
+
 public class firebase extends MainActivity {
     public FirebaseAuth firebaseAuth;
     public FirebaseAuth.AuthStateListener mAuth;
@@ -62,6 +63,8 @@ public class firebase extends MainActivity {
     }
 
     public void createUser(final Context context, String email, String password) {
+        boolean result=false;
+
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -72,6 +75,9 @@ public class firebase extends MainActivity {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             Toast.makeText(context, "Authentication success.",
                                     Toast.LENGTH_SHORT).show();
+
+
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWith Email:failure", task.getException());

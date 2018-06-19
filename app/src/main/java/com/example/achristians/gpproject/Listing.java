@@ -7,9 +7,19 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class Listing {
-    public Listing(){}
 
-    public Listing(String CRN, String key, long credit_Hours, String format, String instructor, long max_Enrollment, String location, String days, String time) {
+    public int CRN;
+    public String Key;
+    public int Credit_Hours;
+    public String Format;
+    public String Instructor;
+    public int Max_Enrollment;
+    public String Location;
+    public String Days;
+    public String Time;
+
+    public Listing(int CRN, String key, int credit_Hours, String format, String instructor,
+                   int max_Enrollment, String location, String days, String time) {
         this.CRN = CRN;
         Key = key;
         Credit_Hours = credit_Hours;
@@ -21,15 +31,7 @@ public class Listing {
         Time = time;
     }
 
-    public String CRN;
-    public String Key;
+     public Listing(){
 
-    public long Credit_Hours;
-    public String Format;
-    public String Instructor;
-    public long Max_Enrollment;
-
-    public String Location;
-    public String Days;
-    public String Time;
+     }
 }
