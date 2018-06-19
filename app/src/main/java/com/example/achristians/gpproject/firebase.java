@@ -77,7 +77,6 @@ public class firebase extends MainActivity {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             Toast.makeText(context, "Authentication success.",
                                     Toast.LENGTH_SHORT).show();
-
                             signIn(context, email, password);
 
                         } else {
