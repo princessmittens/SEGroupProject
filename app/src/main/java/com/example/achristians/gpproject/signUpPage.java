@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 /**
  * Created by AChristians on 2018-06-05.
@@ -50,13 +49,16 @@ public class signUpPage extends AppCompatActivity {
                 String name = Ename.getText().toString();
                 String email = Eemail.getText().toString();
                 String pass = Epass.getText().toString();
+
                 String secondPass = Echeckpass.getText().toString();
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 boolean checkPass = verifyPassword(secondPass, pass);
                 if (checkPass == true) {
                     fb.createUser(signUpPage.this, email, pass);
                 }
+
             }
+
         });
 
     }
