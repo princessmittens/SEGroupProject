@@ -70,12 +70,12 @@ public class loginUITest {
     //check user registration is success
     @Test
     public void registerUserTest(){
-        Intent registerIntent = new Intent();
-        String response = "ok----";
-        registerIntent.putExtra("response",response);
-        Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK,registerIntent);
-
-        intending(toPackage("package com.example.achristians.gpproject;")).respondWith(result);
+//        Intent registerIntent = new Intent();
+//        String response = "ok----";
+//        registerIntent.putExtra("response",response);
+//        Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK,registerIntent);
+//
+//        intending(toPackage("package com.example.achristians.gpproject;")).respondWith(result);
 
         //click register
         onView(withId(R.id.createaccount)).perform(click());
