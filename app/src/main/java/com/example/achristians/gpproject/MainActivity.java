@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.firebase.FirebaseApp;
@@ -38,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
         courseIDstring="CourseID";
 
-
-
         setContentView(R.layout.login);
 
         Vlogemail = findViewById(R.id.Vlogemail);
@@ -48,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         Echeckpass = findViewById(R.id.Echeckpass);
         Elogemail = findViewById(R.id.Elogemail);
 
+        btnNavigateCourseDescription=findViewById(R.id.navigateCourseDescription);
         createaccount = findViewById(R.id.createaccount);
         loginbutton = findViewById(R.id.loginbutton);
         fb = new firebase();
@@ -69,17 +69,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = Elogemail.getText().toString();
                 String pass = Elogpass.getText().toString();
-
-                String secondPass = Echeckpass.getText().toString();
-              
-                fb.signIn(MainActivity.this, email, pass);
-                Intent i = new Intent(getApplicationContext() ,MainActivity.class);
-                startActivity(i);
+                boolean isValidEmailPass = checkEmailPass(email, pass);
+                if (isValidEmailPass) {
+                    fb.signIn(MainActivity.this, email, pass);
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(i);
+                }
             }
         });
-
-
-        btnNavigateCourseDescription=findViewById(R.id.navigateCourseDescription);
 
         btnNavigateCourseDescription.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,8 +86,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
 
-
+    private boolean checkEmailPass(String email, String pass) {
+        if ((email.equals("") || pass.equals("") || !email.contains("@"))) {
+            Toast.makeText(this, "Please enter a valid email or password.",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (pass.length() < 6) {
+            Toast.makeText(this, "Password length is not long enough.",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public FirebaseAuth.AuthStateListener mAuth = new FirebaseAuth.AuthStateListener() {
@@ -117,6 +126,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-//        auth.removeAuthStateListener(authStateListener);
     }
 }
