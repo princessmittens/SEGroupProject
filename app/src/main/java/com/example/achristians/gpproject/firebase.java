@@ -1,6 +1,7 @@
 package com.example.achristians.gpproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -16,19 +17,21 @@ import static android.content.ContentValues.TAG;
 
 
 public class firebase extends MainActivity {
+    Context context;
     public FirebaseAuth firebaseAuth;
-    public FirebaseAuth.AuthStateListener mAuth;
-
     public FirebaseAuth firebaseInstance() {
         return this.firebaseAuth = FirebaseAuth.getInstance();
     }
 
+
     public void signIn(final Context context, String email, String password) {
+        boolean isSignedIn = false;
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -62,8 +65,7 @@ public class firebase extends MainActivity {
         }
     }
 
-    public void createUser(final Context context, String email, String password) {
-        boolean result=false;
+    public void createUser(final Context context, final String email, final String password) {
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -76,7 +78,7 @@ public class firebase extends MainActivity {
                             Toast.makeText(context, "Authentication success.",
                                     Toast.LENGTH_SHORT).show();
 
-
+                            signIn(context, email, password);
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -88,5 +90,5 @@ public class firebase extends MainActivity {
                     }
                 });
     }
-}
 
+}
