@@ -12,6 +12,35 @@ public class User {
 
     public static User SpecUser;
 
+
+    private static String current_UID;
+
+    public static String getCurrent_UID() {
+        return current_UID;
+    }
+
+    public static void setCurrent_UID(String current_UID) {
+        if(current_UID == null){
+            return;
+        }
+        User.current_UID = current_UID;
+    }
+
+    private static String current_Identifier;
+
+    public static String getCurrent_Identifier() {
+        return current_Identifier;
+    }
+
+    public static void setCurrent_Identifier(String current_Identifier) {
+        if(current_Identifier == null){
+            return;
+        }
+        User.current_Identifier = current_Identifier;
+    }
+
+
+
     public static void setSpecUser(User input){
         SpecUser = input;
     }

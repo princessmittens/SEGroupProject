@@ -35,6 +35,8 @@ public class firebase extends MainActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
+                            User.setCurrent_UID(user.getUid());
+                            User.setCurrent_Identifier(user.getEmail());//Can be temporary, if we include UNames
                             Toast.makeText(context, "Authentication success.",
                                     Toast.LENGTH_SHORT).show();
                         } else {
