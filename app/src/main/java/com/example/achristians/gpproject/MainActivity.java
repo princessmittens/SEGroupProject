@@ -23,9 +23,6 @@ import com.google.firebase.auth.FirebaseUser;
 // assumes user open to availibility of course with list view
 public class MainActivity extends AppCompatActivity {
 
-
-    private Button btnNavigateCourseDescription;
-    public static String courseIDstring;
     TextView Vlogpass, Vlogemail;
     EditText Elogpass, Elogemail, Echeckpass;
     Button createaccount, loginbutton;
@@ -37,17 +34,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        courseIDstring="CourseID";
-
-        setContentView(R.layout.login);
-
         Vlogemail = findViewById(R.id.Vlogemail);
         Vlogpass = findViewById(R.id.Vlogpass);
         Elogpass = findViewById(R.id.Elogpass);
         Echeckpass = findViewById(R.id.Echeckpass);
         Elogemail = findViewById(R.id.Elogemail);
 
-        btnNavigateCourseDescription=findViewById(R.id.navigateCourseDescription);
         createaccount = findViewById(R.id.createaccount);
         loginbutton = findViewById(R.id.loginbutton);
         fb = new firebase();
@@ -72,20 +64,10 @@ public class MainActivity extends AppCompatActivity {
                 boolean isValidEmailPass = checkEmailPass(email, pass);
                 if (isValidEmailPass) {
                     fb.signIn(MainActivity.this, email, pass);
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(i);
                 }
             }
         });
 
-        btnNavigateCourseDescription.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),courseDetails.class);
-                intent.putExtra(courseIDstring,"CSCI3130");
-                startActivity(intent);
-            }
-        });
     }
 
     private boolean checkEmailPass(String email, String pass) {
@@ -107,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
             if (currentUser != null) {
-                Intent i = new Intent(MainActivity.this, registration.class);
+                Intent i = new Intent(MainActivity.this, Menu.class);
                 startActivity(i);
             }
         }
