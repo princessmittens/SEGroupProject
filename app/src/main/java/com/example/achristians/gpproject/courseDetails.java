@@ -42,7 +42,7 @@ public class courseDetails extends AppCompatActivity {
         userNameView = findViewById(R.id.userNameView);
 
         Intent intent = getIntent();
-        courseID = intent.getStringExtra(MainActivity.courseIDstring);
+        courseID = intent.getStringExtra(Menu.courseIDstring);
         courseCodeView.setText(courseID);
         id = intent.getIntExtra("id", 0);
 
