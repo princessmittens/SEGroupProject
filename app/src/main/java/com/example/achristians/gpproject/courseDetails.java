@@ -53,8 +53,14 @@ public class courseDetails extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        auth = FirebaseAuth.getInstance();
         populateCourseInformation(id);
+        String uid="Not signed id";
+        if(auth.getCurrentUser()!=null) {
+            uid = auth.getCurrentUser().getUid().toString();
+        }
+
+        userNameView.setText(uid);
     }
 
     /**
@@ -87,4 +93,5 @@ public class courseDetails extends AppCompatActivity {
             }
         });
     }
+
 }
