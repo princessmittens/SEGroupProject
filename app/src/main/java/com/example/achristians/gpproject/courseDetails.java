@@ -13,7 +13,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 /**
@@ -73,15 +72,12 @@ public class courseDetails extends AppCompatActivity {
     private void populateCourseInformation(final int id, final String uid) {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference ref = db.getReference().child("Courses/" + id);
-        Query user_query = db.getReference().child("Users/").orderByChild("UID").equalTo("User1");
-
-        DatabaseReference user_ref = user_query.getRef();
-
-        user_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference userRef = db.getReference().child("Users/"+uid);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User u = dataSnapshot.getValue(User.class);
-                Log.d("USER_QUERY",u.toString());
+                Log.d("USER_QUERY", u.Identifier.toString());
                // Log.d("USER_QUERY",u.UID.toString());
             }
 
