@@ -82,7 +82,7 @@ public class courseDetails extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User u = dataSnapshot.getValue(User.class);
                 Log.d("USER_QUERY",u.toString());
-                Log.d("USER_QUERY",u.UID.toString());
+               // Log.d("USER_QUERY",u.UID.toString());
             }
 
             @Override

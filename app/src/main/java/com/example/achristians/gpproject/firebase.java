@@ -1,7 +1,6 @@
 package com.example.achristians.gpproject;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -12,6 +11,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
@@ -67,7 +71,7 @@ public class firebase extends MainActivity {
         }
     }
 
-    public void createUser(final Context context, final String email, final String password) {
+    public void createUser(final Context context, final String email, final String password, final String name) {
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -77,6 +81,20 @@ public class firebase extends MainActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                            //add newly created user to the users table
+                            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference ref = database.getReference();
+                            DatabaseReference usersRef = ref.child("Users/");
+                            HashMap<String,Long> coursesCompleted = new HashMap<String,Long>();
+                            HashMap<String,Long> coursesRegistered = new HashMap<String,Long>();
+
+                            coursesCompleted.put("CRN",00000L);
+                            coursesRegistered.put("CRN",99999L);
+
+                            Map<String, User> users = new HashMap<>();
+                            User u = new User(name, coursesCompleted, coursesRegistered);
+                            usersRef.child(user.getUid()).setValue(u);
                             Toast.makeText(context, "Authentication success.",
                                     Toast.LENGTH_SHORT).show();
                             signIn(context, email, password);

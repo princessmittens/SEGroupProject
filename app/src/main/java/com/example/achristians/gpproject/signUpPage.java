@@ -1,9 +1,7 @@
 package com.example.achristians.gpproject;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,7 +52,7 @@ public class signUpPage extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 boolean checkPass = verifyPassword(secondPass, pass);
                 if (checkPass == true) {
-                    fb.createUser(signUpPage.this, email, pass);
+                    fb.createUser(signUpPage.this, email, pass, name);
                 }
 
             }

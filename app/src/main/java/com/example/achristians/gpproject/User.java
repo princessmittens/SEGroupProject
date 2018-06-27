@@ -49,15 +49,15 @@ public class User {
         //Default no-args constructor is required for firebase RT DB usage.
     }
 
-    public User(String Identifier, String UID, HashMap<String,Long> Courses_Completed, HashMap<String,Long> Courses_Registered){
+    public User(String Identifier, HashMap<String,Long> Courses_Completed, HashMap<String,Long> Courses_Registered){
         this.Identifier = Identifier;
-        this.UID = UID;
+        //this.UID = UID;
         this.Courses_Completed = Courses_Completed;
         this.Courses_Registered = Courses_Registered;
     }
 
     public String Identifier;
-    public String UID;
+    //public String UID;
 
     public HashMap<String,Long> Courses_Completed;
     public HashMap<String,Long> Courses_Registered;
