@@ -48,19 +48,18 @@ public class firebaseDB {
         testDataReference = rootDataReference.child(DB_path);
 
         testDataReference.addValueEventListener(
-            new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    //result = dataSnapshot.getValue(Course.class).Name;
-                    Course c = dataSnapshot.getValue(Course.class);
-                    Log.i("TEST", c.toString());
-                }
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Course c = dataSnapshot.getValue(Course.class);
+                        Log.i("TEST", c.toString());
+                    }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    result = databaseError.toString();
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        result = databaseError.toString();
+                    }
                 }
-            }
         );
     }
 
@@ -70,17 +69,17 @@ public class firebaseDB {
         DatabaseReference specUserDR = usersDataReference.child("Spec");
 
         specUserDR.addListenerForSingleValueEvent(
-            new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    User.setSpecUser(dataSnapshot.getValue(User.class));
-                }
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        User.setSpecUser(dataSnapshot.getValue(User.class));
+                    }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    result = databaseError.toString();
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        result = databaseError.toString();
+                    }
                 }
-            }
         );
     }
 

@@ -11,18 +11,18 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * Created by AChristians on 2018-05-14.
  */
 
 public class registration extends AppCompatActivity {
-    //MARLEE: Commented merged firebase stuff out for now 
-//     public FirebaseAuth firebaseAuth;
-//     public FirebaseAuth.AuthStateListener mAuth;
-    ArrayList<String> filteredCourses = new ArrayList<String>();
-//     firebase fb;
+
+    //ArrayList<String> filteredCourses = new ArrayList<String>();
+    //Full list of courses from DB
+    static ArrayList<Course> courseList = new ArrayList<>();
+    ArrayAdapter<Course> arrayAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +31,16 @@ public class registration extends AppCompatActivity {
 
         final ListView courseListView = findViewById(R.id.courseListView);
 
+        firebaseDB.dbInterface = new firebaseDB(getApplicationContext());
+        fetchCourses();
+
         //Populate dropdown menu
         final Spinner dropdown = (Spinner) findViewById(R.id.category_spinner);
         ArrayAdapter<CharSequence> dropdownAdapter = ArrayAdapter.createFromResource(this, R.array.category_array, android.R.layout.simple_spinner_item);
         dropdownAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropdown.setAdapter(dropdownAdapter);
 
+        //Add data to courseListView
         //Generate sample data
         final ArrayList<String> demoCourses = new ArrayList<String>();
         demoCourses.add("CSCI 1100");
@@ -51,36 +55,53 @@ public class registration extends AppCompatActivity {
         demoCourses.add("MATH 2030");
 
         //Add sample data to courseListView
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, demoCourses);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,demoCourses);
         courseListView.setAdapter(arrayAdapter);
 
         courseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO: Navigate to course information activity when user story #1 complete
-                Log.i("Course selected: ", demoCourses.get(position));
+                Log.i("Course selected: ", courseList.get(position).toString());
             }
         });
 
-        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //Get selected text and scream it into the void
-                String selected = parent.getItemAtPosition(position).toString();
-                Log.i("Filter selected: ", selected);
-                filteredCourses = sortList(dropdown, demoCourses);
-                //MARLEE: testing
-                for(int i= 0; i<filteredCourses.size();i++){
-                    Log.i("Item ", filteredCourses.get(i));
-                }
+//        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                //Get selected text and scream it into the void
+//                String selected = parent.getItemAtPosition(position).toString();
+//                Log.i("Filter selected: ", selected);
+//                filteredCourses = sortList(dropdown, demoCourses);
+//                //MARLEE: testing
+//                for(int i= 0; i<filteredCourses.size();i++){
+//                    Log.i("Item ", filteredCourses.get(i));
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//                Log.i("BEEP BOOP ", "BEEEEEP");
+//            }
+//        });
+    }
 
-            }
+    /**
+     * Fetches course information from backing db on startup, no filtering/searching
+     */
+    public void fetchCourses(){
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Log.i("BEEP BOOP ", "BEEEEEP");
-            }
-        });
+    }
+
+    /**
+     * Handles the event of course data being pushed to the application from an external source
+     * (The DB). Extracted from the value event listener so functionality/inputs can be mocked for
+     * testing.
+     * @param courseListNew A new arraylist of courses to display
+     */
+    public void courseChangeHandler(ArrayList<Course> courseListNew){
+
     }
 
     //Sort list when dropdown category clicked

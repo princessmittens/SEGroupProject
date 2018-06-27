@@ -32,4 +32,9 @@ public class Course {
         Semester = semester;
         Requirements = requirements;
     }
+
+    @Override
+    public String toString(){
+        return Name;
+    }
 }
