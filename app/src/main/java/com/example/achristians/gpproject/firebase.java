@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -86,11 +87,11 @@ public class firebase extends MainActivity {
                             final FirebaseDatabase database = FirebaseDatabase.getInstance();
                             DatabaseReference ref = database.getReference();
                             DatabaseReference usersRef = ref.child("Users/");
-                            HashMap<String,Long> coursesCompleted = new HashMap<String,Long>();
-                            HashMap<String,Long> coursesRegistered = new HashMap<String,Long>();
+                            HashMap<String, String> coursesCompleted = new HashMap<String,String>();
+                            HashMap<String, String> coursesRegistered = new HashMap<String,String>();
 
-                            coursesCompleted.put("CRN",00000L);
-                            coursesRegistered.put("CRN",99999L);
+                            coursesCompleted.put("00000", new Date().toString());
+                            coursesRegistered.put("99999", new Date().toString());
 
                             Map<String, User> users = new HashMap<>();
                             User u = new User(name, coursesCompleted, coursesRegistered);

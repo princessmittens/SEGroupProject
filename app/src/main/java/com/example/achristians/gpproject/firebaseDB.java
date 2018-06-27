@@ -92,8 +92,8 @@ public class firebaseDB {
         HashMap<String, Long> registered = new HashMap<>();
         registered.put("CRN", (long)2);
 
-        User testUser = new User("Test", completed, registered);
-        testUserDR.setValue(testUser);
+        //User testUser = new User("Test", completed, registered);
+       // testUserDR.setValue(testUser);
     }
 
     //Adds a listener to the Test object, fetching it once
