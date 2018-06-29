@@ -11,6 +11,11 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by AChristians on 2018-05-14.
@@ -20,7 +25,7 @@ public class registration extends AppCompatActivity {
 
     //ArrayList<String> filteredCourses = new ArrayList<String>();
     //Full list of courses from DB
-    static ArrayList<Course> courseList = new ArrayList<>();
+    ArrayList<Course> courseList = new ArrayList<>();
     ArrayAdapter<Course> arrayAdapter;
 
 
@@ -41,28 +46,14 @@ public class registration extends AppCompatActivity {
         dropdown.setAdapter(dropdownAdapter);
 
         //Add data to courseListView
-        //Generate sample data
-        final ArrayList<String> demoCourses = new ArrayList<String>();
-        demoCourses.add("CSCI 1100");
-        demoCourses.add("CSCI 2110");
-        demoCourses.add("CSCI 3130");
-        demoCourses.add("CSCI 3132");
-        demoCourses.add("CSCI 2121");
-        demoCourses.add("CSCI 3120");
-        demoCourses.add("CSCI 1107");
-        demoCourses.add("MATH 1000");
-        demoCourses.add("MATH 1010");
-        demoCourses.add("MATH 2030");
-
-        //Add sample data to courseListView
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,demoCourses);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, courseList);
         courseListView.setAdapter(arrayAdapter);
 
         courseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO: Navigate to course information activity when user story #1 complete
-                Log.i("Course selected: ", courseList.get(position).toString());
+                //Log.i("Course selected: ", demoCourses.get(position));
             }
         });
 
@@ -91,7 +82,26 @@ public class registration extends AppCompatActivity {
      * Fetches course information from backing db on startup, no filtering/searching
      */
     public void fetchCourses(){
+        DatabaseReference coursesDataReference = firebaseDB.rootDataReference.child("Courses/");
 
+        coursesDataReference.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        ArrayList<Course> inputCourses = new ArrayList<>();
+                        Iterable<DataSnapshot> dataSnapshots = dataSnapshot.getChildren();
+                        for (DataSnapshot dsCourse: dataSnapshots) {
+                            inputCourses.add(dsCourse.getValue(Course.class));
+                        }
+                        courseChangeHandler(inputCourses);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.i("Error",databaseError.toString());
+                    }
+                }
+        );
     }
 
     /**
@@ -101,7 +111,12 @@ public class registration extends AppCompatActivity {
      * @param courseListNew A new arraylist of courses to display
      */
     public void courseChangeHandler(ArrayList<Course> courseListNew){
-
+        //Emptying the course list, as anytime data is changed db side this method will
+        //be called, and add all elements to the end of the list
+        courseList.clear();
+        courseList.addAll(courseListNew);
+        arrayAdapter.notifyDataSetChanged();
+        Log.i("Test", courseList.size()+"");
     }
 
     //Sort list when dropdown category clicked

@@ -18,10 +18,10 @@ import java.util.HashMap;
 
 public class firebaseDB {
 
-    private static FirebaseDatabase rootDataSource;
-    private static DatabaseReference rootDataReference;
-    private static DatabaseReference testDataReference;
-    private static DatabaseReference usersDataReference;
+    public static FirebaseDatabase rootDataSource;
+    public static DatabaseReference rootDataReference;
+    public static DatabaseReference testDataReference;
+    public static DatabaseReference usersDataReference;
 
     public static String result;
 
@@ -41,6 +41,7 @@ public class firebaseDB {
         FirebaseApp.initializeApp(appContext);
         rootDataSource = FirebaseDatabase.getInstance();
         rootDataReference = rootDataSource.getReference();
+        Log.i("Check", "DBReference instantiated");
     }
 
     //Adds a listener to a database path, whose result will be stored in result
@@ -48,12 +49,12 @@ public class firebaseDB {
         testDataReference = rootDataReference.child(DB_path);
 
         testDataReference.addValueEventListener(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Course c = dataSnapshot.getValue(Course.class);
-                        Log.i("TEST", c.toString());
-                    }
+            new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Course c = dataSnapshot.getValue(Course.class);
+                    Log.i("TEST", c.toString());
+                }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
