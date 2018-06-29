@@ -10,8 +10,13 @@ import java.util.HashMap;
 @IgnoreExtraProperties
 public class User {
 
-    public static User SpecUser;
+    private User loggedIn;
 
+    public User getUser(){
+        return loggedIn;
+    }
+
+    //public static User SpecUser;
 
     private static String current_UID;
 
@@ -41,9 +46,9 @@ public class User {
 
 
 
-    public static void setSpecUser(User input){
+    /*public static void setSpecUser(User input){
         SpecUser = input;
-    }
+    }*/
 
     public User(){
         //Default no-args constructor is required for firebase RT DB usage.

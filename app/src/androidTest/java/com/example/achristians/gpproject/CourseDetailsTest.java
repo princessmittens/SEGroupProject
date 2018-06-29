@@ -32,26 +32,22 @@ public class CourseDetailsTest {
     @Before
     public void init() throws InterruptedException {
         Intent intent = new Intent();
-        intent.putExtra("id", 0);
+        Course c = new Course("MATH 1000", "", "", "It's a course. It's alive.", "MATH 1000 FALL 2018-2019W", "Calculus 1", "Winter", "");
+        intent.putExtra("Course", c);
         activityRule.launchActivity(intent);
         Thread.sleep(2000);
     }
 
     @Test
-    public void testCourseCodeDisplayed() {
-        onView(withId(R.id.courseCodeView)).check(matches(withText("CSCI 1105")));
-    }
-
-    @Test
     public void testCourseNameDisplayed() {
         onView(withId(R.id.courseNameView)).check(matches(
-                withText("CSCI 1105 Intro to Computer Programming")));
+                withText("Calculus 1")));
     }
 
     @Test
     public void testSemesterDisplayed() {
         onView(withId(R.id.courseSemesterView)).check(matches(
-                withText("FALL (1) : 04-SEP-2018 - 04-DEC-2018")));
+                withText("Winter")));
     }
 
     @Test

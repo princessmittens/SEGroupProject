@@ -20,11 +20,11 @@ import com.google.firebase.database.ValueEventListener;
 public class courseDetails extends AppCompatActivity {
 
     private String courseID= "";
-    private TextView courseCodeView;
     private TextView courseNameView;
     private TextView userNameView;
     private TextView courseSemesterView;
     private TextView courseCrossListView;
+    private TextView courseDescription;
     private Button btnRegistration;
     private FirebaseAuth auth;
     private int id;
@@ -34,16 +34,20 @@ public class courseDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_details);
 
-        courseCodeView = findViewById(R.id.courseCodeView);
+        Intent intent = getIntent();
+        Course inputCourse = (Course) intent.getSerializableExtra("Course");
+
         courseNameView = findViewById(R.id.courseNameView);
         courseSemesterView = findViewById(R.id.courseSemesterView);
         courseCrossListView = findViewById(R.id.courseCrossListView);
+        courseDescription = findViewById(R.id.courseDescriptionView);
+
         btnRegistration = findViewById(R.id.registerButton);
         userNameView = findViewById(R.id.userNameView);
 
-        Intent intent = getIntent();
+        userNameView.setText(User.getCurrent_Identifier());
+
         courseID = intent.getStringExtra(Menu.courseIDstring);
-        courseCodeView.setText(courseID);
         id = intent.getIntExtra("id", 0);
 
         btnRegistration.setOnClickListener(new View.OnClickListener() {
@@ -54,8 +58,27 @@ public class courseDetails extends AppCompatActivity {
             }
         });
 
-        populateCourseInformation(id);
+        populateFromCourse(inputCourse);
     }
+
+    /**
+     * Populates text fields with course information based on an inputted course
+     * @param c The course to populate based on
+     */
+    private void populateFromCourse(Course c){
+        courseNameView.setText(c.Name);
+        courseDescription.setText(c.Description);
+        courseSemesterView.setText(c.Semester);
+
+        if (c.Cross_Listing.equals("")) {
+            courseCrossListView.setText("N/A");
+        } else {
+            courseCrossListView.setText(c.Cross_Listing);
+        }
+
+        setTitle(c.Course_Code);
+    }
+
 
     /**
      * Populates the course information fields.
@@ -68,17 +91,7 @@ public class courseDetails extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Course c = dataSnapshot.getValue(Course.class);
-                courseCodeView.setText(c.Course_Code);
-                courseNameView.setText(c.Name);
-                courseSemesterView.setText(c.Semester);
-
-                if (c.Cross_Listing.equals("")) {
-                    courseCrossListView.setText("N/A");
-                } else {
-                    courseCrossListView.setText(c.Cross_Listing);
-                }
-
-                setTitle(c.Course_Code);
+                populateFromCourse(c);
             }
 
             @Override

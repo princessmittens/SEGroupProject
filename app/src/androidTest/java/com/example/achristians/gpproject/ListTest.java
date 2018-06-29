@@ -24,6 +24,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static android.support.test.internal.runner.junit4.statement.UiThreadStatement.runOnUiThread;
 import static org.hamcrest.CoreMatchers.anything;
 import static org.junit.Assert.assertTrue;
@@ -68,6 +69,14 @@ public class ListTest {
     @Test
     public void cellClicks() {
         onData(anything()).inAdapterView(withId(R.id.courseListView)).atPosition(0).perform(click());
+        Espresso.pressBack();
+    }
+
+    @Test
+    public void cellClickOpensDescription(){
+        onData(anything()).inAdapterView(withId(R.id.courseListView)).atPosition(0).perform(click());
+        onView(withId(R.id.courseNameView)).check(matches(withText("Calculus 1")));
+        Espresso.pressBack();
     }
 
     @Test

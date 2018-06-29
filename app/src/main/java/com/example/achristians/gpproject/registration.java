@@ -1,5 +1,6 @@
 package com.example.achristians.gpproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -36,7 +37,7 @@ public class registration extends AppCompatActivity {
 
         final ListView courseListView = findViewById(R.id.courseListView);
 
-        firebaseDB.dbInterface = new firebaseDB(getApplicationContext());
+        Database.dbInterface = new Database(getApplicationContext());
         fetchCourses();
 
         //Populate dropdown menu
@@ -53,7 +54,9 @@ public class registration extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO: Navigate to course information activity when user story #1 complete
-                //Log.i("Course selected: ", demoCourses.get(position));
+                Intent intent = new Intent(registration.this, courseDetails.class);
+                intent.putExtra("Course", courseList.get(position));
+                startActivity(intent);
             }
         });
 
@@ -82,7 +85,7 @@ public class registration extends AppCompatActivity {
      * Fetches course information from backing db on startup, no filtering/searching
      */
     public void fetchCourses(){
-        DatabaseReference coursesDataReference = firebaseDB.rootDataReference.child("Courses/");
+        DatabaseReference coursesDataReference = Database.rootDataReference.child("Courses/");
 
         coursesDataReference.addValueEventListener(
                 new ValueEventListener() {
