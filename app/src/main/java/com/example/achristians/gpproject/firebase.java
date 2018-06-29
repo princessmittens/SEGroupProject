@@ -90,8 +90,8 @@ public class firebase extends MainActivity {
                             HashMap<String, String> coursesCompleted = new HashMap<String,String>();
                             HashMap<String, String> coursesRegistered = new HashMap<String,String>();
 
-                            coursesCompleted.put("00000", new Date().toString());
-                            coursesRegistered.put("99999", new Date().toString());
+                            coursesCompleted.put("100", new Date().toString());
+                            coursesRegistered.put("200", new Date().toString());
 
                             Map<String, User> users = new HashMap<>();
                             User u = new User(name, coursesCompleted, coursesRegistered);
