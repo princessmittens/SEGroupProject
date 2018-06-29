@@ -1,7 +1,6 @@
 package com.example.achristians.gpproject;
 
 import android.content.Context;
-import android.text.format.Time;
 import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
@@ -11,7 +10,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Calendar;
 import java.util.HashMap;
 
 //Changing this file so Git will decide that my version is up to date
@@ -94,8 +92,8 @@ public class firebaseDB {
         HashMap<String, Long> registered = new HashMap<>();
         registered.put("CRN", (long)2);
 
-        User testUser = new User("Test", Calendar.getInstance().getTime().toString(), completed, registered);
-        testUserDR.setValue(testUser);
+        //User testUser = new User("Test", completed, registered);
+       // testUserDR.setValue(testUser);
     }
 
     //Adds a listener to the Test object, fetching it once
