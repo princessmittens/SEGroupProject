@@ -44,7 +44,6 @@ public class courseDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_details);
-
         courseCodeView = findViewById(R.id.courseCodeView);
         courseNameView = findViewById(R.id.courseNameView);
         courseSemesterView = findViewById(R.id.courseSemesterView);
