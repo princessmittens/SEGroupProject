@@ -20,7 +20,8 @@
         <activity android:name="signUpPage" android:label="Sign Up"> </activity>
         <activity android:name="registration" android:label="Register"
             android:parentActivityName=".Menu"> </activity>
-        <activity android:name=".courseDetails" android:label="Course Details" />
+        <activity android:name=".courseDetails" android:parentActivityName=".Menu"
+            android:label="Course Details" />
     </application>
     <!--<application android:name="com.example.achristians.gpproject.firebase"></application>-->
 </manifest>
