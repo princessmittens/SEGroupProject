@@ -45,13 +45,11 @@ public class ListTest {
         Thread.sleep(2000);
         registrationActivity = testRule.getActivity();
         utilityCourseList.clear();
-        utilityCourseList.add(new Course("MATH 1000", "", "", "It's a course. It's alive.", "MATH 1000 FALL 2018-2019W", "Calculus 1", "Winter", ""));
-
+        utilityCourseList.add(Course.exampleCourse);
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.i("Test", "Reached");
                 registrationActivity.courseChangeHandler(utilityCourseList);
             }
         });

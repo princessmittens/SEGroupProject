@@ -19,6 +19,9 @@ public class Course implements Serializable{
     public String Requirements;
     public String Semester;
 
+    public static Course exampleCourse = new Course("MATH 1000", "", "", "It's a course. It's alive.", "MATH 1000 FALL 2018-2019W", "Calculus 1", "Winter", "");
+
+
     public Course() {}
 
     public Course(String course_Code, String cross_Listing, String cross_Listing_URL,

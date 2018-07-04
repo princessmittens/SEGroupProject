@@ -32,7 +32,7 @@ public class CourseDetailsTest {
     @Before
     public void init() throws InterruptedException {
         Intent intent = new Intent();
-        Course c = new Course("MATH 1000", "", "", "It's a course. It's alive.", "MATH 1000 FALL 2018-2019W", "Calculus 1", "Winter", "");
+        Course c = Course.exampleCourse;
         intent.putExtra("Course", c);
         activityRule.launchActivity(intent);
         Thread.sleep(2000);
