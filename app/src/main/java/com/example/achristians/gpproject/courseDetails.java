@@ -21,7 +21,7 @@ import java.util.HashMap;
 /**
  * Displays information on a course.
  */
-public class courseDetails extends AppCompatActivity {
+public class courseDetails extends Menu {
 
     private String courseID= "";
     private TextView courseCodeView;
@@ -44,7 +44,6 @@ public class courseDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_details);
-
         courseCodeView = findViewById(R.id.courseCodeView);
         courseNameView = findViewById(R.id.courseNameView);
         courseSemesterView = findViewById(R.id.courseSemesterView);
@@ -59,6 +58,7 @@ public class courseDetails extends AppCompatActivity {
         courseCodeView.setText(courseID);
         id = intent.getIntExtra("id", 0);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         btnRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
