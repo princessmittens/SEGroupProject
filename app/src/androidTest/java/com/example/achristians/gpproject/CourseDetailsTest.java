@@ -8,9 +8,11 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
  * UI tests for the CourseDetails activity.
  */
 @RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @LargeTest
 public class CourseDetailsTest {
 
@@ -68,4 +71,17 @@ public class CourseDetailsTest {
     public void testCrossListingDisplayed() {
         onView(withId(R.id.courseCrossListView)).check(matches(withText("N/A")));
     }
+
+    @Test
+    public void AtestRegisterButton(){
+        onView(withId(R.id.registerButton)).perform(click());
+        assert(User.getUser().getRegistered().containsKey(Listing.exampleListing.CRN));
+    }
+
+    @Test
+    public void BtestDropButton(){
+        onView(withId(R.id.dropCourseButton)).perform(click());
+        assert(!User.getUser().getRegistered().containsKey(Listing.exampleListing.CRN));
+    }
+
 }
