@@ -10,6 +10,9 @@ import java.io.Serializable;
 @IgnoreExtraProperties
 public class Listing implements Serializable{
 
+    public static Listing exampleListing = new Listing(1, "key", 3, "lec", "Boi, Ya",
+                                                                           "1", "The Crib", "Err'day", "Fo'eva");
+
     public long CRN;
     public String Key;
     public long Credit_Hours;

@@ -107,6 +107,7 @@ public class courseDetails extends Menu {
         courseNameView.setText(c.Name);
         courseDescription.setText(c.Description);
         courseSemesterView.setText(c.Semester);
+        courseCrossListView.setText(c.Cross_Listing);
 
         courses_registered = u.getRegistered();
 

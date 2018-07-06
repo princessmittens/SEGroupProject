@@ -1,5 +1,7 @@
 package com.example.achristians.gpproject;
 
+import android.content.Context;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -42,6 +44,9 @@ public class ListTest {
         registrationActivity = testRule.getActivity();
         utilityCourseList.clear();
         utilityCourseList.add(Course.exampleCourse);
+
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        firebaseDB.dbInterface = new firebaseDB(context);
 
         runOnUiThread(new Runnable() {
             @Override

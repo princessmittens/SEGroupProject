@@ -24,17 +24,16 @@ public class User {
     public String getCurrent_Identifier() {
         return loggedIn.Identifier;
     }
-    public void setCurrent_Identifier(String id){ loggedIn.Identifier = id; }
+    public void setCurrent_Identifier(String id){ if(id != null) loggedIn.Identifier = id; }
+
     public String getCurrent_UID() { return loggedIn.UID; }
-    public void setCurrent_UID(String uid){ loggedIn.UID = uid; }
+    public void setCurrent_UID(String uid){ if(uid != null) loggedIn.UID = uid; }
+
     public HashMap<String, String> getCompleted() { return loggedIn.Courses_Completed; }
-    public void setCourses_Completed(HashMap<String, String> CC){
-        loggedIn.Courses_Completed = CC;
-    }
+    public void setCourses_Completed(HashMap<String, String> CC){  if(CC != null) loggedIn.Courses_Completed = CC; }
+
     public HashMap<String, String> getRegistered() { return loggedIn.Courses_Registered; }
-    public void setCourses_Registered(HashMap<String, String> CR){
-        loggedIn.Courses_Registered = CR;
-    }
+    public void setCourses_Registered(HashMap<String, String> CR){ if(CR != null) loggedIn.Courses_Registered = CR;}
 
     public User(){
         //Default no-args constructor is required for firebase RT DB usage.
