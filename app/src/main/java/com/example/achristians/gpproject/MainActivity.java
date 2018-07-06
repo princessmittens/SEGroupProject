@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,11 +41,13 @@ public class MainActivity extends AppCompatActivity {
         Elogpass = findViewById(R.id.Elogpass);
         Echeckpass = findViewById(R.id.Echeckpass);
         Elogemail = findViewById(R.id.Elogemail);
-
         createaccount = findViewById(R.id.createaccount);
         loginbutton = findViewById(R.id.loginbutton);
+
         fb = new firebase();
         firebaseAuth = fb.firebaseInstance();
+
+        firebaseDB.dbInterface = new firebaseDB(getApplicationContext());
 
 
         createaccount.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
         }
         firebaseAuth.addAuthStateListener(mAuth);
     }
+
 
     @Override
     protected void onStop() {

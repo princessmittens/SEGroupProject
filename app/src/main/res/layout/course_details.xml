@@ -91,6 +91,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Register" />
+        <Button
+            android:id="@+id/dropCourseButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Drop Course" />
 
         <Button
             android:id="@+id/timetableButton"
@@ -120,5 +126,24 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingTop="20dp">
 
+        <TextView
+            android:id="@+id/registrationLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Can you register: "
+            android:textAlignment="textEnd" />
+
+        <TextView
+            android:id="@+id/registrationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
 </LinearLayout>

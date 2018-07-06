@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
  * Created by AChristians on 2018-05-14.
  */
 
-public class registration extends AppCompatActivity {
+public class registration extends Menu {
 
     //Full list of courses from DB
     ArrayList<Course> courseList = new ArrayList<>();
@@ -31,7 +31,7 @@ public class registration extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final ListView courseListView = findViewById(R.id.courseListView);
 
         Database.dbInterface = new Database(getApplicationContext());
