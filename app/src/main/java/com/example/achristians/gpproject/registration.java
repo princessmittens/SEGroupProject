@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +25,7 @@ public class registration extends Menu {
 
     //Full list of courses from DB
     ArrayList<Course> courseList = new ArrayList<>();
+    ArrayList<Listing> listingList = new ArrayList<>();
     ArrayAdapter<Course> arrayAdapter;
 
 
@@ -45,7 +47,18 @@ public class registration extends Menu {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(registration.this, courseDetails.class);
-                intent.putExtra("Course", courseList.get(position));
+
+                Course clicked = courseList.get(position);
+                ArrayList<Listing> availableListings = new ArrayList<Listing>();
+
+                for(Listing L : listingList){
+                    if(L.Key.equals(clicked.Key)){
+                        availableListings.add(L);
+                    }
+                }
+
+                intent.putExtra("Course", clicked);
+                intent.putExtra("Listings", availableListings);
                 startActivity(intent);
             }
         });
@@ -58,22 +71,41 @@ public class registration extends Menu {
         DatabaseReference coursesDataReference = Database.rootDataReference.child("Courses/");
 
         coursesDataReference.addValueEventListener(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        ArrayList<Course> inputCourses = new ArrayList<>();
-                        Iterable<DataSnapshot> dataSnapshots = dataSnapshot.getChildren();
-                        for (DataSnapshot dsCourse: dataSnapshots) {
-                            inputCourses.add(dsCourse.getValue(Course.class));
-                        }
-                        courseChangeHandler(inputCourses);
+            new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    ArrayList<Course> inputCourses = new ArrayList<>();
+                    Iterable<DataSnapshot> dataSnapshots = dataSnapshot.getChildren();
+                    for (DataSnapshot dsCourse: dataSnapshots) {
+                        inputCourses.add(dsCourse.getValue(Course.class));
                     }
+                    courseChangeHandler(inputCourses);
+                }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.i("Error",databaseError.toString());
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.i("Error",databaseError.toString());
+                }
+            }
+        );
+
+        DatabaseReference listingsDataReference = Database.rootDataReference.child("Listings/");
+
+        listingsDataReference.addValueEventListener(
+            new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Iterable<DataSnapshot> dataSnapshots = dataSnapshot.getChildren();
+                    for (DataSnapshot dsListing: dataSnapshots) {
+                        listingList.add(dsListing.getValue(Listing.class));
                     }
                 }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.i("Error",databaseError.toString());
+                }
+            }
         );
     }
 
