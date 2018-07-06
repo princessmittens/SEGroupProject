@@ -27,6 +27,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.Calendar;
+
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -52,7 +55,9 @@ public class loginUITest {
     @Before
     //set user input for test
     public void initRegistration() throws Exception{
-        email="espressoTest@android.com";
+        String timePrefix = "" + Calendar.getInstance().getTimeInMillis();
+
+        email=timePrefix + "@android.com";
         psswd="espresso";
         name="EspressoTest";
     }
@@ -69,13 +74,13 @@ public class loginUITest {
 
     //check user registration is success
     @Test
-    public void registerUserTest(){
-//        Intent registerIntent = new Intent();
-//        String response = "ok----";
-//        registerIntent.putExtra("response",response);
-//        Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK,registerIntent);
-//
-//        intending(toPackage("package com.example.achristians.gpproject;")).respondWith(result);
+    public void registerUserTest() throws InterruptedException {
+        //Intent registerIntent = new Intent();
+        //String response = "ok----";
+        //registerIntent.putExtra("response",response);
+        //Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK,registerIntent);
+
+        //intending(toPackage("package com.example.achristians.gpproject;")).respondWith(result);
 
         //click register
         onView(withId(R.id.createaccount)).perform(click());
@@ -87,10 +92,11 @@ public class loginUITest {
         onView(withId(R.id.Echeckpass)).perform(typeText(psswd),closeSoftKeyboard());
         onView(withId(R.id.regbutton)).perform(click());
         //check activity is now at registration page
-//        Intents.init();
-        intended(hasComponent(registration.class.getName()));
+        //Intents.init();
 
+        Thread.sleep(2000);
 
+        intended(hasComponent(Menu.class.getName()));
     }
 
 //    @After
