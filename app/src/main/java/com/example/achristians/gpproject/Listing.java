@@ -13,13 +13,13 @@ public class Listing {
     public int Credit_Hours;
     public String Format;
     public String Instructor;
-    public int Max_Enrollment;
+    public String Max_Enrollment;
     public String Location;
     public String Days;
     public String Time;
 
     public Listing(int CRN, String key, int credit_Hours, String format, String instructor,
-                   int max_Enrollment, String location, String days, String time) {
+                   String max_Enrollment, String location, String days, String time) {
         this.CRN = CRN;
         Key = key;
         Credit_Hours = credit_Hours;
