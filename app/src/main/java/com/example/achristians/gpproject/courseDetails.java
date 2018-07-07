@@ -40,7 +40,7 @@ public class courseDetails extends Menu {
     private String  id_string="";
     private DatabaseReference userRef;
     private DatabaseReference listingsRef;
-    private User u;
+    public static User u;
     private int id;
     private ListView listView;
     private ArrayList<Listing> listingsArray;
@@ -164,10 +164,18 @@ public class courseDetails extends Menu {
                            for (DataSnapshot issue : dataSnapshot.getChildren()) {
                                // do something with the individual "issues"
                                Listing l = issue.getValue(Listing.class);
-                               if (l.Format.equals("Lec")) listingsArray.add(l);
-                               Log.d("LISTING FORMAT",l.Format.toString());
+                               if (l.Format.equals("Lec")) {
+                                   boolean duplicate=false;
+                                   Log.d("listing key ",l.Key);
+                                   Log.d("listing CRN ",String.valueOf(l.CRN));
+                                   for (int i=0;i<listingsArray.size();i++) {
+                                       if (listingsArray.get(i).CRN==l.CRN && listingsArray.get(i).Key.equals(l.Key)) duplicate=true;
+                                   }
+                                   if (!duplicate) listingsArray.add(l);
+                               }
                            }
-                           listingsAdapter.addAll(listingsArray);
+                           Log.d("listing array size",String.valueOf(listingsArray.size()));
+                           //listingsAdapter.addAll(listingsArray);
                            listView.setAdapter(listingsAdapter);
                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                @Override
@@ -178,6 +186,7 @@ public class courseDetails extends Menu {
                                    Log.d("UPDATE_LISTING_STATUS",String.valueOf(clicked_listing.CRN));
                                    //https://stackoverflow.com/questions/16976431/change-background-color-of-selected-item-on-a-listview
                                    //we need to change color of the registered CRN
+                                   listingsAdapter.notifyDataSetChanged();
                                }
                            });
 
