@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="Menu" android:label="Choose an Option"> </activity>
+        <activity android:name="Menu" android:label="Choose an Option" android:exported="true"> </activity>
         <activity android:name="signUpPage" android:label="Sign Up"> </activity>
         <activity android:name="registration" android:label="Register"
             android:parentActivityName=".Menu"> </activity>
