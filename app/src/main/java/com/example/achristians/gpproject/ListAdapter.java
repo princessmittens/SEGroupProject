@@ -41,7 +41,7 @@ public class ListAdapter extends ArrayAdapter<Listing> {
         TextView instructorView = convertView.findViewById(R.id.instructorView);
         TextView daysView = convertView.findViewById(R.id.daysView);
         TextView locationView = convertView.findViewById(R.id.locationView);
-
+        TextView statusView = convertView.findViewById(R.id.statusView);
         crnView.setText(String.valueOf(l.CRN));
         instructorView.setText(l.Instructor);
         daysView.setText(l.Days);
@@ -52,12 +52,16 @@ public class ListAdapter extends ArrayAdapter<Listing> {
             instructorView.setTypeface(null, Typeface.BOLD);
             daysView.setTypeface(null, Typeface.BOLD);
             locationView.setTypeface(null, Typeface.BOLD);
+            statusView.setText("Registered");
+            statusView.setTypeface(null, Typeface.BOLD);
         } else
         {
             crnView.setTypeface(null, Typeface.NORMAL);
             instructorView.setTypeface(null, Typeface.NORMAL);
             daysView.setTypeface(null, Typeface.NORMAL);
             locationView.setTypeface(null, Typeface.NORMAL);
+            statusView.setText("Not registered");
+            statusView.setTypeface(null, Typeface.NORMAL);
         }
         return convertView;
     }
