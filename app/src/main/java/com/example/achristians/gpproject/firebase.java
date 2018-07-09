@@ -40,8 +40,13 @@ public class firebase extends MainActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-                            User.setCurrent_UID(user.getUid());
-                            User.setCurrent_Identifier(user.getEmail());//Can be temporary, if we include UNames
+
+                            User loggedIn = User.getUser();
+                            loggedIn.setCurrent_UID(user.getUid());
+                            loggedIn.setCurrent_Identifier(user.getEmail());
+
+                            firebaseDB.fetchLoggedInUser();
+
                             Toast.makeText(context, "Authentication success.",
                                     Toast.LENGTH_SHORT).show();
                         } else {
@@ -94,8 +99,7 @@ public class firebase extends MainActivity {
                             coursesRegistered.put("200", new Date().toString());
 
                             Map<String, User> users = new HashMap<>();
-                            User u = new User(name, coursesCompleted, coursesRegistered);
-                            usersRef.child(user.getUid()).setValue(u);
+
                             Toast.makeText(context, "Authentication success.",
                                     Toast.LENGTH_SHORT).show();
                             signIn(context, email, password);

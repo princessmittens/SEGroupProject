@@ -27,6 +27,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.Calendar;
+
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -38,44 +41,35 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 
 
 public class loginUITest {
-    private FirebaseAuth firebaseAuth;
-    private firebase fb;
     private String email,psswd,name;
 
     @Rule
     public IntentsTestRule<MainActivity> mActivityRule = new IntentsTestRule<>(
             MainActivity.class);
-//    @Rule
-//    public IntentsTestRule<registration> rActivityRule = new IntentsTestRule<>(
-//            registration.class);
 
     @Before
     //set user input for test
     public void initRegistration() throws Exception{
-        email="espressoTest@android.com";
+        String timePrefix = "" + Calendar.getInstance().getTimeInMillis();
+
+        email=timePrefix + "@android.com";
         psswd="espresso";
         name="EspressoTest";
     }
 
-//    //check that unregistered user cannot login
-//    @Test
-//    public void unregisteredUserLoginTest(){
-//        //login page - unrecognized credentials
-//        onView(withId(R.id.Elogemail)).perform(typeText(email),closeSoftKeyboard());
-//        onView(withId(R.id.Elogpass)).perform(typeText(psswd),closeSoftKeyboard());
-//        onView(withId(R.id.loginbutton)).perform(click());
-//        onView(withText("Authentication failed.")).inRoot(withDecorView(not(is(mActivityRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
-//    }
+    //check that unregistered user cannot login
+    @Test
+    public void unregisteredUserLoginTest(){
+        //login page - unrecognized credentials
+        onView(withId(R.id.Elogemail)).perform(typeText(email),closeSoftKeyboard());
+        onView(withId(R.id.Elogpass)).perform(typeText(psswd),closeSoftKeyboard());
+        onView(withId(R.id.loginbutton)).perform(click());
+        onView(withText("Authentication failed.")).inRoot(withDecorView(not(is(mActivityRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+    }
 
     //check user registration is success
     @Test
-    public void registerUserTest(){
-//        Intent registerIntent = new Intent();
-//        String response = "ok----";
-//        registerIntent.putExtra("response",response);
-//        Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK,registerIntent);
-//
-//        intending(toPackage("package com.example.achristians.gpproject;")).respondWith(result);
+    public void registerUserTest() throws InterruptedException {
 
         //click register
         onView(withId(R.id.createaccount)).perform(click());
@@ -86,16 +80,10 @@ public class loginUITest {
         onView(withId(R.id.Epass)).perform(typeText(psswd),closeSoftKeyboard());
         onView(withId(R.id.Echeckpass)).perform(typeText(psswd),closeSoftKeyboard());
         onView(withId(R.id.regbutton)).perform(click());
+
         //check activity is now at registration page
-//        Intents.init();
-        intended(hasComponent(registration.class.getName()));
+        Thread.sleep(2000);
 
-
+        intended(hasComponent(Menu.class.getName()));
     }
-
-//    @After
-//    public void cleanUp () throws Exception{
-//        Intents.release();
-//    }
-
 }

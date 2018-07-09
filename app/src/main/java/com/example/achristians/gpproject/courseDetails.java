@@ -25,12 +25,11 @@ import java.util.HashMap;
  */
 public class courseDetails extends Menu {
 
-    private String courseID= "";
-    private TextView courseCodeView;
     private TextView courseNameView;
     private TextView courseSemesterView;
     private TextView courseCrossListView;
     private TextView registrationPossibility;
+    private TextView courseDescription;
     private TextView courseKey;
     private Button btnRegistration;
     private Button btnDropCourse;
@@ -39,43 +38,66 @@ public class courseDetails extends Menu {
     private String courseIDInfo="";
     private String  id_string="";
     private DatabaseReference userRef;
-    private DatabaseReference listingsRef;
-    public static User u;
-    private int id;
+    private User u;
     private ListView listView;
-    private ArrayList<Listing> listingsArray;
-    private ListAdapter listingsAdapter;
     private int selectedListingPosition;
+    private ListAdapter listingsAdapter;
+
+    private ArrayList<Listing> listings;
+    private Course inputCourse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_details);
-        courseCodeView = findViewById(R.id.courseCodeView);
+
+        Intent intent = getIntent();
+        inputCourse = (Course) intent.getSerializableExtra("Course");
+        listings = (ArrayList<Listing>) intent.getSerializableExtra("Listings");
+
+        u = User.getUser();
+
+        userRef = firebaseDB.dbInterface.getRootDataReference().child("Users/" + u.getCurrent_UID());
+
         courseNameView = findViewById(R.id.courseNameView);
         courseSemesterView = findViewById(R.id.courseSemesterView);
         courseCrossListView = findViewById(R.id.courseCrossListView);
-        Intent intent = getIntent();
-        courseID = intent.getStringExtra(Menu.courseIDstring);
-        courseCodeView.setText(courseID);
-        id = intent.getIntExtra("id", 0);
+        courseDescription = findViewById(R.id.courseDescriptionView);
         listView=findViewById(R.id.listView);
+        userNameView = findViewById(R.id.userNameView);
         listingsArray=new ArrayList<>();
         listingsAdapter = new ListAdapter(this, listingsArray);
         listView.setAdapter(listingsAdapter);
+        userNameView.setText(User.getUser().getCurrent_Identifier());
+        registrationPossibility = findViewById(R.id.registrationView);
+        btnRegistration = findViewById(R.id.registerButton);
 
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        btnRegistration.setOnClickListener(new View.OnClickListener() {
 
+        populateFromCourse(inputCourse);
+
+        //Drop course button
+        btnDropCourse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Here we need to register user
+                u.getRegistered().remove(id_string);
+                //Update the database to reflect dropping the course
+
+                userRef.setValue(u);
+                btnRegistration.setEnabled(true);
+                btnDropCourse.setEnabled(false);
+                registrationPossibility.setText("You dropped the course successfully!");
+            }
+        });
 
         auth = FirebaseAuth.getInstance();
-
-        String uid="Not signed id";
         if(auth.getCurrentUser()!=null) {
             uid = auth.getCurrentUser().getUid().toString();
         }
-        populateCourseInformation(id, uid);
     }
 
     private void UpdateListing(Listing selected_listing) {
@@ -92,70 +114,41 @@ public class courseDetails extends Menu {
     }
 
     /**
-     * Populates the course information fields.
-     * @param id The id of the course.
+     * Populates text fields with course information based on an inputted course
+     * @param c The course to populate based on
      */
-    private void populateCourseInformation(final int id, final String uid) {
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference ref = db.getReference().child("Courses/" + id);
-        userRef = db.getReference().child("Users/"+uid);
-        listingsRef = db.getReference().child("Listings");
+    private void populateFromCourse(Course c){
+        courseNameView.setText(c.Name);
+        courseDescription.setText(c.Description);
+        courseSemesterView.setText(c.Semester);
+        courseCrossListView.setText(c.Cross_Listing);
 
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                u = dataSnapshot.getValue(User.class);
-               // Log.d("USER_QUERY", u.Identifier.toString());
-                courses_registered = u.Courses_Registered;
-                //https://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
-                id_string = Integer.toString(id);
-                if (courses_registered.containsKey(id_string)) {
-                    //registrationPossibility.setText("You already registered, you can drop");
-                   // btnRegistration.setEnabled(false);
-                   // btnDropCourse.setEnabled(true);
-                }
-                else {
-                    //registrationPossibility.setText("You can register, you cannot drop");
-                    // btnRegistration.setEnabled(true);
-                    // btnDropCourse.setEnabled(false);
-                }
+        courses_registered = u.getRegistered();
 
-                for (String key : courses_registered.keySet()) {
-                    Log.d("COURSES_REGISTERED",key);
-                    Log.d("COURSES_REGISTERED",courses_registered.get(key));
-                }
+        //https://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
 
+        id_string = Long.toString(listings.get(0).CRN);
 
-               // Log.d("USER_QUERY",u.UID.toString());
-            }
+        if (courses_registered.containsKey(id_string)) {
+            registrationPossibility.setText("You already registered, you can drop");
+            btnRegistration.setEnabled(false);
+            btnDropCourse.setEnabled(true);
+        }
+        else {
+            registrationPossibility.setText("You can register, you cannot drop");
+            btnRegistration.setEnabled(true);
+            btnDropCourse.setEnabled(false);
+        }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+        for (String key : courses_registered.keySet()) {
+            Log.d("COURSES_REGISTERED",key);
+            Log.d("COURSES_REGISTERED",courses_registered.get(key));
+        }
 
-            }
-        });
+    }//End populateFromCourse
+}//End Class
 
-
-
-
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Course c = dataSnapshot.getValue(Course.class);
-                courseCodeView.setText(c.Course_Code);
-                courseNameView.setText(c.Name);
-                courseSemesterView.setText(c.Semester);
-//                courseKey.setText(c.Key);
-
-                if (c.Cross_Listing.equals("")) {
-                    courseCrossListView.setText("N/A");
-                } else {
-                    courseCrossListView.setText(c.Cross_Listing);
-                }
-
-                setTitle(c.Course_Code);
                 Query query = listingsRef.orderByChild("Key").equalTo("CSCI 1105 FALL (1) : 04-SEP-2018 - 04-DEC-2018");
-
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {

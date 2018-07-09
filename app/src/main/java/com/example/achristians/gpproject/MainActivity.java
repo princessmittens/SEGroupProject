@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         fb = new firebase();
         firebaseAuth = fb.firebaseInstance();
 
+        firebaseDB.dbInterface = new firebaseDB(getApplicationContext());
+
 
         createaccount.setOnClickListener(new View.OnClickListener() {
             @Override

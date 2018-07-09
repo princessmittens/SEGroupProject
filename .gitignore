@@ -153,12 +153,6 @@ $RECYCLE.BIN/
 
 # End of https://www.gitignore.io/api/windows,androidstudio
 .idea/codeStyles/Project.xml
-.idea/sonarlint/issuestore/3/5/35d72bf1174d9c6c359b804f7e2771c57756b2bb
-.idea/sonarlint/issuestore/8/b/8bfb1bb70fa4de4752bcc4bf672b166535b7ed8d
-.idea/sonarlint/issuestore/9/d/9dfe4df559fa41917f510e4d98962a82ea44d496
-.idea/sonarlint/issuestore/8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
-.idea/sonarlint/issuestore/e/8/e8e53a7a131ceabaff491ddb23d0d5c4ebad5506
-.idea/sonarlint/issuestore/f/1/f1a58581ad8752503b7f00134612d90fe6681599
-.idea/sonarlint/issuestore/f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
-.idea/sonarlint/issuestore/index.pb
+.idea/sonarlint/issuestore/*
 .idea/misc.xml
+.idea/modules.xml
