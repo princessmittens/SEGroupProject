@@ -3,7 +3,9 @@ package com.example.achristians.gpproject;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
@@ -43,6 +45,8 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 public class loginUITest {
     private String email,psswd,name;
 
+    private static boolean hasCreated = false;
+
     @Rule
     public IntentsTestRule<MainActivity> mActivityRule = new IntentsTestRule<>(
             MainActivity.class);
@@ -50,6 +54,9 @@ public class loginUITest {
     @Before
     //set user input for test
     public void initRegistration() throws Exception{
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        firebaseDB.dbInterface = new firebaseDB(context);
+
         String timePrefix = "" + Calendar.getInstance().getTimeInMillis();
 
         email=timePrefix + "@android.com";
@@ -85,5 +92,10 @@ public class loginUITest {
         Thread.sleep(2000);
 
         intended(hasComponent(Menu.class.getName()));
+    }
+
+    @After
+    public void tearDown(){
+        User.deleteUserInfo();
     }
 }

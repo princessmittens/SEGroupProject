@@ -56,4 +56,10 @@ public class User {
 
     public String getCurrent_UID() { return loggedIn.UID; }
     public void setCurrent_UID(String uid){ if(uid != null) loggedIn.UID = uid; }
+
+    public static void deleteUserInfo(){
+        if(loggedIn != null && loggedIn.getCurrent_UID() != null && loggedIn.getCurrent_UID().compareTo("") != 0) {
+            firebaseDB.dbInterface.getRootDataReference().child("Users").child(User.getUser().getCurrent_UID()).removeValue();
+        }
+    }
 }
