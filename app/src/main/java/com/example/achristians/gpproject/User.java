@@ -26,8 +26,8 @@ public class User {
     }
     public static void setUser(User u){ loggedIn = u;}
 
+    //Default constructor is needed by Firebase
     public User(){
-        //Default no-args constructor is required for firebase RT DB usage.
     }
 
     public User(String Identifier, HashMap<String, String> Courses_Completed, HashMap<String, String> Courses_Registered){
