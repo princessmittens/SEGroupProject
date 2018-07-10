@@ -36,6 +36,7 @@ public class Listing implements Serializable{
         Time = time;
     }
 
+    //Firebase interfaces with this, so we need to keep the blank constructor
      public Listing(){
      }
 }

@@ -22,7 +22,6 @@ import static android.content.ContentValues.TAG;
 
 
 public class firebase extends MainActivity {
-    Context context;
     public FirebaseAuth firebaseAuth;
     public FirebaseAuth firebaseInstance() {
         return this.firebaseAuth = FirebaseAuth.getInstance();
@@ -38,7 +37,6 @@ public class firebase extends MainActivity {
                         if (task.isSuccessful()) {
 
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
 
                             User loggedIn = User.getUser();
@@ -88,7 +86,9 @@ public class firebase extends MainActivity {
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
 
-                            //add newly created user to the users table
+                            /* While this section of code is not being explicitly used right now,
+                            we've left this in for now for testing purposes for iteration 3.
+                             */
                             final FirebaseDatabase database = FirebaseDatabase.getInstance();
                             DatabaseReference ref = database.getReference();
                             DatabaseReference usersRef = ref.child("Users/");

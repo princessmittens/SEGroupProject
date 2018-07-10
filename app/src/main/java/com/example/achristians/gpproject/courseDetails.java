@@ -10,12 +10,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,7 +53,8 @@ public class courseDetails extends Menu {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Listing clicked_listing = listingsAdapter.getItem(i);
                 UpdateListing(clicked_listing);
-                Log.d("UPDATE_LISTING_STATUS",String.valueOf(clicked_listing.CRN));
+
+
                 //https://stackoverflow.com/questions/16976431/change-background-color-of-selected-item-on-a-listview
                 //we need to change color of the registered CRN
                 listingsAdapter.notifyDataSetChanged();
@@ -97,5 +92,5 @@ public class courseDetails extends Menu {
         courseDescription.setText(c.Description);
         courseSemesterView.setText(c.Semester);
         courseCrossListView.setText(c.Cross_Listing);
-    }//End populateFromCourse
-}//End Class
+    }
+}

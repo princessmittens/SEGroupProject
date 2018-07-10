@@ -27,14 +27,10 @@ public class ListAdapter extends ArrayAdapter<Listing> {
         }
         boolean match=false;
 
-        //check if the user registered to that course
         //check if the user registered for the course and CRN, then we need to display it differently
         if (User.getUser().getRegistered().containsKey(l.Key) && User.getUser().getRegistered().get(l.Key).equals(String.valueOf(l.CRN))) {
             match = true;
-            Log.d("Match found","Match found");
         }
-        Log.d("USER_DATA_IN_ADAPTER",User.getUser().getCurrent_Identifier());
-        Log.d("l.key is ",l.Key);
 
 
         TextView crnView = convertView.findViewById(R.id.crnView);

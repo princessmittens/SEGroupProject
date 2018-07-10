@@ -29,22 +29,15 @@ public class firebaseDB {
         return rootDataReference;
     }
 
-    //Runs test queries
-    public static void testQueries(){
-
-        /*dbInterface.addTestListener();
-        dbInterface.setTestObject();
-        dbInterface.getUserSpec();
-        dbInterface.setUserTest();*/
-    }
-
     public firebaseDB(Context appContext){
         FirebaseApp.initializeApp(appContext);
         rootDataSource = FirebaseDatabase.getInstance();
         rootDataReference = rootDataSource.getReference();
     }
 
-    //Adds a listener to a database path, whose result will be stored in result
+    /*Adds a listener to a database path, whose result will be stored in result
+    Not being explicitly used right now, but keeping it in for testing in iteration 3
+     */
     public void addObjectListener(String DB_path){
         testDataReference = rootDataReference.child(DB_path);
 
@@ -88,42 +81,5 @@ public class firebaseDB {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-    }
-
-    //Sets a test user in the database
-    public void setUserTest(){
-        usersDataReference = rootDataReference.child("Users");
-        DatabaseReference testUserDR = usersDataReference.child("Test");
-
-        HashMap<String, Long> completed = new HashMap<>();
-        completed.put("CRN", (long)1);
-        HashMap<String, Long> registered = new HashMap<>();
-        registered.put("CRN", (long)2);
-
-    }
-
-    //Adds a listener to the Test object, fetching it once
-    public void addTestListener(){
-        testDataReference = rootDataReference.child("Test");
-
-        testDataReference.addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        result = dataSnapshot.getValue(String.class);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        result = databaseError.toString();
-                    }
-                }
-        );
-    }
-
-    //Sets a single test data point in the database, no template object
-    public void setTestObject(){
-        testDataReference = rootDataReference.child("Test");
-        testDataReference.setValue("Testing...");
     }
 }
