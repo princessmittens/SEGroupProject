@@ -14,6 +14,7 @@ import java.util.ArrayList;
 //https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
 
 public class ListAdapter extends ArrayAdapter<Listing> {
+
     public ListAdapter(Context context, ArrayList<Listing> listing) {
         super(context, 0, listing);
     }
@@ -27,13 +28,12 @@ public class ListAdapter extends ArrayAdapter<Listing> {
         boolean match=false;
 
         //check if the user registered to that course
-        User u = courseDetails.u;
         //check if the user registered for the course and CRN, then we need to display it differently
-        if (u.Courses_Registered.containsKey(l.Key) && u.Courses_Registered.get(l.Key).equals(String.valueOf(l.CRN))) {
+        if (User.getUser().getRegistered().containsKey(l.Key) && User.getUser().getRegistered().get(l.Key).equals(String.valueOf(l.CRN))) {
             match = true;
             Log.d("Match found","Match found");
         }
-        Log.d("USER_DATA_IN_ADAPTER",u.Identifier);
+        Log.d("USER_DATA_IN_ADAPTER",User.getUser().getCurrent_Identifier());
         Log.d("l.key is ",l.Key);
 
 
@@ -42,6 +42,7 @@ public class ListAdapter extends ArrayAdapter<Listing> {
         TextView daysView = convertView.findViewById(R.id.daysView);
         TextView locationView = convertView.findViewById(R.id.locationView);
         TextView statusView = convertView.findViewById(R.id.statusView);
+
         crnView.setText(String.valueOf(l.CRN));
         instructorView.setText(l.Instructor);
         daysView.setText(l.Days);

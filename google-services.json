@@ -31,16 +31,12 @@
           }
         },
         {
-          "client_id": "626965145142-39hj5kkb2e62om4sof81bnco0sae6b3n.apps.googleusercontent.com",
+          "client_id": "626965145142-a731a0i877lkm135cjauhos8qcdk9p0d.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.achristians.gpproject",
-            "certificate_hash": "01ecf4fe69bf214a254be8435c8ab0b5e6ccd9d1"
+            "certificate_hash": "720d6f89314c1ba5e054e22439b52d4b737e3ef2"
           }
-        },
-        {
-          "client_id": "626965145142-v0vp33j2eneivkplbctoku9u8hge7n4g.apps.googleusercontent.com",
-          "client_type": 3
         },
         {
           "client_id": "626965145142-v0vp33j2eneivkplbctoku9u8hge7n4g.apps.googleusercontent.com",

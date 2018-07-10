@@ -11,6 +11,8 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+
 
 public class Menu extends AppCompatActivity{
 
@@ -23,7 +25,7 @@ public class Menu extends AppCompatActivity{
         setContentView(R.layout.menu);
         navCourseDes=findViewById(R.id.navigateCourseDescription);
         navListView = findViewById(R.id.navListView);
-        courseIDstring="CourseID";
+        courseIDstring="Course";
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -39,7 +41,11 @@ public class Menu extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),courseDetails.class);
-                intent.putExtra(courseIDstring,"CSCI3130");
+                intent.putExtra(courseIDstring, Course.exampleCourse);
+                Listing l = Listing.exampleListing;
+                ArrayList<Listing> listings = new ArrayList<>();
+                listings.add(l);
+                intent.putExtra("Listings", listings);
                 startActivity(intent);
             }
         });

@@ -25,14 +25,17 @@ public class firebaseDB {
 
     public static firebaseDB dbInterface;
 
+    public DatabaseReference getRootDataReference() {
+        return rootDataReference;
+    }
+
     //Runs test queries
     public static void testQueries(){
-        dbInterface.addTestListener();
+
+        /*dbInterface.addTestListener();
         dbInterface.setTestObject();
         dbInterface.getUserSpec();
-        dbInterface.setUserTest();
-
-        User test = User.SpecUser;
+        dbInterface.setUserTest();*/
     }
 
     public firebaseDB(Context appContext){
@@ -46,40 +49,45 @@ public class firebaseDB {
         testDataReference = rootDataReference.child(DB_path);
 
         testDataReference.addValueEventListener(
-            new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    //result = dataSnapshot.getValue(Course.class).Name;
-                    Course c = dataSnapshot.getValue(Course.class);
-                    Log.i("TEST", c.toString());
-                }
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //result = dataSnapshot.getValue(Course.class).Name;
+                        Course c = dataSnapshot.getValue(Course.class);
+                        Log.i("TEST", c.toString());
+                    }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    result = databaseError.toString();
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        result = databaseError.toString();
+                    }
                 }
-            }
         );
     }
 
-    //Gets the spec user from the database
-    public void getUserSpec(){
-        usersDataReference = rootDataReference.child("Users");
-        DatabaseReference specUserDR = usersDataReference.child("Spec");
+    public static void fetchLoggedInUser(){
+        usersDataReference = rootDataReference.child("Users/" + User.getUser().getCurrent_UID());
+        usersDataReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User u = dataSnapshot.getValue(User.class);
+                if (u == null) {
+                    u = User.getUser();
+                    u.setCourses_Completed(new HashMap<String, String>());
+                    u.setCourses_Registered(new HashMap<String, String>());
 
-        specUserDR.addListenerForSingleValueEvent(
-            new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    User.setSpecUser(dataSnapshot.getValue(User.class));
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    result = databaseError.toString();
+                    usersDataReference = rootDataReference.child("Users/" + User.getUser().getCurrent_UID());
+                    usersDataReference.setValue(u);
+                } else {
+                    User.getUser().setCourses_Completed(new HashMap<String, String>());
+                    User.getUser().setCourses_Registered(new HashMap<String, String>());
                 }
             }
-        );
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
     //Sets a test user in the database
@@ -92,8 +100,6 @@ public class firebaseDB {
         HashMap<String, Long> registered = new HashMap<>();
         registered.put("CRN", (long)2);
 
-        //User testUser = new User("Test", completed, registered);
-       // testUserDR.setValue(testUser);
     }
 
     //Adds a listener to the Test object, fetching it once

@@ -6,6 +6,7 @@ import android.support.test.rule.ActivityTestRule;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +28,12 @@ public class MenuTest {
 
     @Rule
     public ActivityTestRule<Menu> testRule = new ActivityTestRule<>(Menu.class);
+
+    @Before
+    public void init(){
+        User.MockUser();
+    }
+
     //Test 1: check if the menu exists
     @Test
     public void menuExists() {
