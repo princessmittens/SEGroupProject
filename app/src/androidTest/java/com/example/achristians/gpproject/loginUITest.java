@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
@@ -21,6 +22,7 @@ import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intending;
+import static android.support.test.espresso.intent.VerificationModes.times;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -91,11 +93,17 @@ public class loginUITest {
         //check activity is now at registration page
         Thread.sleep(2000);
 
-        intended(hasComponent(Menu.class.getName()));
+        //This will fail if the update window is still open
+        try{
+            onView(withId(R.id.regbutton)).perform(click());
+            assert(false);
+        }
+        catch(NoMatchingViewException e){ }
     }
 
     @After
     public void tearDown(){
+        mActivityRule.finishActivity();
         User.deleteUserInfo();
     }
 }
