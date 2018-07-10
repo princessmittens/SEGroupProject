@@ -30,6 +30,12 @@ public class courseDetails extends Menu {
     private ArrayList<Listing> listings;
     private Course inputCourse;
 
+    /**
+     * Basic activity functionality once activity is launched.
+     * Shows course details fetched from Firebase
+     *
+     * @param savedInstanceState: app context passed to activity on creation
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +55,15 @@ public class courseDetails extends Menu {
         listView.setAdapter(listingsAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            /**
+             * Used to notify Firebase which listing (section) was selected by the user
+             *
+             * @param adapterView: adapterview used to show the list of listings
+             * @param view: current view context
+             * @param i: index of listview clicked
+             * @param l: course ID
+             */
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Listing clicked_listing = listingsAdapter.getItem(i);
@@ -70,6 +85,11 @@ public class courseDetails extends Menu {
         auth = FirebaseAuth.getInstance();
     }
 
+    /**
+     * Update the database with either the section registered for, or the section that was dropped
+     *
+     * @param selected_listing: listing selected from the course details
+     */
     private void UpdateListing(Listing selected_listing) {
         //If we have exactly the same course key and crn we remove it (DROP COURSE)
         if (User.getUser().getRegistered().containsKey(selected_listing.Key)

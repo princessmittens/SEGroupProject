@@ -26,7 +26,12 @@ public class registration extends Menu {
     ArrayList<Listing> listingList = new ArrayList<>();
     ArrayAdapter<Course> arrayAdapter;
 
-
+    /**
+     *Basic activity functionality once the activity is instantiated.
+     * Generates ListView of courses, fetched from Firebase
+     *
+     * @param savedInstanceState: App context passed into activity on creation
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +47,16 @@ public class registration extends Menu {
         courseListView.setAdapter(arrayAdapter);
 
         courseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            /**
+             * Fetch the listings (i.e. sections) available for each section, so that a
+             * particular section can be selected in the course details page.
+             *
+             * @param parent: AdapterView being clicked on
+             * @param view: current view context
+             * @param position: position of the clicked item
+             * @param id: course identifier for Firebase integration
+             */
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(registration.this, courseDetails.class);
@@ -70,6 +85,10 @@ public class registration extends Menu {
 
         coursesDataReference.addValueEventListener(
             new ValueEventListener() {
+                /**
+                 * Used to refresh the list of courses from Firebase
+                 * @param dataSnapshot: returned data segment from Firebase
+                 */
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     ArrayList<Course> inputCourses = new ArrayList<>();
@@ -80,6 +99,10 @@ public class registration extends Menu {
                     courseChangeHandler(inputCourses);
                 }
 
+                /**
+                 * Database error handling
+                 * @param databaseError: database error context
+                 */
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                     Log.i("Error",databaseError.toString());
@@ -91,6 +114,10 @@ public class registration extends Menu {
 
         listingsDataReference.addValueEventListener(
             new ValueEventListener() {
+                /**
+                 * Refresh again based on data context
+                 * @param dataSnapshot: data fetched from Firebase
+                 */
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Iterable<DataSnapshot> dataSnapshots = dataSnapshot.getChildren();
@@ -99,6 +126,10 @@ public class registration extends Menu {
                     }
                 }
 
+                /**
+                 * Database error catching
+                 * @param databaseError: error from Firebase
+                 */
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                     Log.i("Error",databaseError.toString());
