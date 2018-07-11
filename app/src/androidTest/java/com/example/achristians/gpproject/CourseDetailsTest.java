@@ -15,12 +15,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -35,8 +33,8 @@ import static org.hamcrest.CoreMatchers.anything;
 public class CourseDetailsTest {
 
     @Rule
-    public ActivityTestRule<courseDetails> activityRule =
-            new ActivityTestRule<courseDetails>(courseDetails.class,
+    public ActivityTestRule<CourseDetails> activityRule =
+            new ActivityTestRule<CourseDetails>(CourseDetails.class,
                     true, false);
 
     /* Launch the activity. Thread sleeps to allow activity to be created. */
@@ -52,7 +50,7 @@ public class CourseDetailsTest {
         User.MockUser();
 
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        firebaseDB.dbInterface = new firebaseDB(context);
+        Firebase.initializeFirebase(context);
 
         intent.putExtra("Course", c);
         intent.putExtra("Listings", listings);

@@ -1,29 +1,15 @@
 package com.example.achristians.gpproject;
 
-import android.app.Activity;
-import android.app.Instrumentation;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.NoMatchingViewException;
-import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
-import android.support.test.rule.ActivityTestRule;
-import android.util.Log;
 
-import com.google.firebase.auth.FirebaseAuth;
-
-import static android.content.Intent.getIntent;
-import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.intent.Intents.intending;
-import static android.support.test.espresso.intent.VerificationModes.times;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
@@ -34,20 +20,14 @@ import org.junit.Test;
 
 import java.util.Calendar;
 
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static android.support.test.espresso.intent.Intents.intended;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 
 
 public class loginUITest {
     private String email,psswd,name;
-
-    private static boolean hasCreated = false;
 
     @Rule
     public IntentsTestRule<MainActivity> mActivityRule = new IntentsTestRule<>(
@@ -57,7 +37,7 @@ public class loginUITest {
     //set user input for test
     public void initRegistration() throws Exception{
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        firebaseDB.dbInterface = new firebaseDB(context);
+        Firebase.initializeFirebase(context);
 
         String timePrefix = "" + Calendar.getInstance().getTimeInMillis();
 

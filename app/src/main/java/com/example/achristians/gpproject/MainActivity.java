@@ -1,41 +1,40 @@
 package com.example.achristians.gpproject;
 
-
-import android.nfc.Tag;
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-// assumes user open to availibility of course with list view
+// Assumes user open to availability of course with list view
 public class MainActivity extends AppCompatActivity {
 
     TextView Vlogpass, Vlogemail;
     EditText Elogpass, Elogemail, Echeckpass;
     Button createaccount, loginbutton;
-    public static FirebaseAuth firebaseAuth;
-    public static firebase fb;
 
+    //This activity, stored as a field so it is accessible to click listeners
+    Activity thisActivity = this;
+
+    /**
+     * Actions to perform on startup of this activity
+     * @param savedInstanceState Saved information about the activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
+        //Connecting XML view elements and their local counterparts
         Vlogemail = findViewById(R.id.Vlogemail);
         Vlogpass = findViewById(R.id.Vlogpass);
         Elogpass = findViewById(R.id.Elogpass);
@@ -44,22 +43,19 @@ public class MainActivity extends AppCompatActivity {
         createaccount = findViewById(R.id.createaccount);
         loginbutton = findViewById(R.id.loginbutton);
 
-        fb = new firebase();
-        firebaseAuth = fb.firebaseInstance();
+        //Initializing the firebase interface
+        Firebase.initializeFirebase(getApplicationContext());
 
-        firebaseDB.dbInterface = new firebaseDB(getApplicationContext());
-
-
+        //Click handler for the Sign-up button
         createaccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, signUpPage.class);
+                Intent i = new Intent(MainActivity.this, SignUpPage.class);
                 startActivity(i);
             }
         });
 
-
-        final Context context = this;
+        //Click handler for the login button
         loginbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,13 +63,14 @@ public class MainActivity extends AppCompatActivity {
                 String pass = Elogpass.getText().toString();
                 boolean isValidEmailPass = checkEmailPass(email, pass);
                 if (isValidEmailPass) {
-                    fb.signIn(MainActivity.this, email, pass);
+                    Firebase.getFirebase().signIn(MainActivity.this, email, pass, thisActivity);
                 }
             }
         });
 
     }
 
+    //Small email and password validator
     private boolean checkEmailPass(String email, String pass) {
         if ((email.equals("") || pass.equals("") || !email.contains("@"))) {
             Toast.makeText(this, "Please enter a valid email or password.",
@@ -102,11 +99,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        FirebaseUser currentUser = Firebase.getFirebase().getAuth().getCurrentUser();
         if (currentUser != null) {
             FirebaseAuth.getInstance().signOut();
         }
-        firebaseAuth.addAuthStateListener(mAuth);
+        Firebase.getFirebase().getAuth().addAuthStateListener(mAuth);
     }
 
 
