@@ -37,7 +37,7 @@ public class loginUITest {
     //set user input for test
     public void initRegistration() throws Exception{
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        firebaseDB.dbInterface = new firebaseDB(context);
+        Firebase.initializeFirebase(context);
 
         String timePrefix = "" + Calendar.getInstance().getTimeInMillis();
 

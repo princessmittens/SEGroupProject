@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
  * Created by AChristians on 2018-05-14.
  */
 
-public class registration extends Menu {
+public class CourseList extends Menu {
 
     //Full list of courses from DB
     ArrayList<Course> courseList = new ArrayList<>();
@@ -39,13 +39,14 @@ public class registration extends Menu {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final ListView courseListView = findViewById(R.id.courseListView);
 
-        Database.dbInterface = new Database(getApplicationContext());
+        //Retrieve the courses from the DB
         fetchCourses();
 
         //Add data to courseListView
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, courseList);
         courseListView.setAdapter(arrayAdapter);
 
+        //Register the click listener for a course in the list
         courseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             /**
@@ -59,20 +60,23 @@ public class registration extends Menu {
              */
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(registration.this, courseDetails.class);
+            Intent intent = new Intent(CourseList.this, CourseDetails.class);
 
-                Course clicked = courseList.get(position);
-                ArrayList<Listing> availableListings = new ArrayList<Listing>();
+            //Get the clicked course
+            Course clicked = courseList.get(position);
+            ArrayList<Listing> availableListings = new ArrayList<Listing>();
 
-                for(Listing L : listingList){
-                    if(L.Key.equals(clicked.Key)){
-                        availableListings.add(L);
-                    }
+            //Find the listings associated with the course
+            for(Listing L : listingList){
+                if(L.Key.equals(clicked.Key)){
+                    availableListings.add(L);
                 }
+            }
 
-                intent.putExtra("Course", clicked);
-                intent.putExtra("Listings", availableListings);
-                startActivity(intent);
+            //Putting parameters in the intent
+            intent.putExtra("Course", clicked);
+            intent.putExtra("Listings", availableListings);
+            startActivity(intent);
             }
         });
     }
@@ -81,7 +85,8 @@ public class registration extends Menu {
      * Fetches course information from backing db on startup, no filtering/searching
      */
     public void fetchCourses(){
-        DatabaseReference coursesDataReference = Database.rootDataReference.child("Courses/");
+        //Courses subsection of Database
+        DatabaseReference coursesDataReference = Firebase.getRootDataReference().child("Courses/");
 
         coursesDataReference.addValueEventListener(
             new ValueEventListener() {
@@ -110,7 +115,8 @@ public class registration extends Menu {
             }
         );
 
-        DatabaseReference listingsDataReference = Database.rootDataReference.child("Listings/");
+        //Listings subsection of Database
+        DatabaseReference listingsDataReference = Firebase.getRootDataReference().child("Listings/");
 
         listingsDataReference.addValueEventListener(
             new ValueEventListener() {
@@ -142,7 +148,7 @@ public class registration extends Menu {
      * Handles the event of course data being pushed to the application from an external source
      * (The DB). Extracted from the value event listener so functionality/inputs can be mocked for
      * testing.
-     * @param courseListNew A new arraylist of courses to display
+     * @param courseListNew A new arrayList of courses to display
      */
     public void courseChangeHandler(ArrayList<Course> courseListNew){
         //Emptying the course list, as anytime data is changed db side this method will
