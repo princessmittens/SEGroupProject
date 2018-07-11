@@ -10,7 +10,6 @@ import java.io.Serializable;
 @IgnoreExtraProperties
 public class Course implements Serializable{
 
-    //Course Properties
     public String Course_Code;
     public String Cross_Listing;
     public String Cross_Listing_URL;
@@ -20,14 +19,10 @@ public class Course implements Serializable{
     public String Requirements;
     public String Semester;
 
-    /**
-     * This is an example course, predominantly used for testing.
-     */
     public static Course exampleCourse = new Course("MATH 1000", "N/A", "", "It's a course. It's alive.", "MATH 9530 WINTER (2) : 07-JAN-2019 - 08-APR-2019", "Calculus 1", "Winter", "");
 
     /**
-     * Firebase RealtimeDatabase serializes and deserializes this class
-     * to/from dataSnapshots, so a non-argumented constructor is required.
+     * Empty constructor used for Firebase integration
      */
     public Course() {}
 
@@ -57,7 +52,7 @@ public class Course implements Serializable{
 
     /**
      * toString method
-     * @return: The name of the course
+     * @return: name of the course
      */
     @Override
     public String toString(){

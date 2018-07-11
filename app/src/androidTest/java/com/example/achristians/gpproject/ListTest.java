@@ -32,15 +32,15 @@ import static org.junit.Assert.assertTrue;
 public class ListTest {
 
     @Rule
-    public ActivityTestRule<CourseList> testRule = new ActivityTestRule<>(CourseList.class);
+    public ActivityTestRule<registration> testRule = new ActivityTestRule<>(registration.class);
 
-    private CourseList courseListActivity = testRule.getActivity();
+    private registration registrationActivity = testRule.getActivity();
     private final ArrayList<Course> utilityCourseList = new ArrayList<>();
 
     @Before
     public void setupForTests() throws Throwable {
         //Thread.sleep(2000);
-        courseListActivity = testRule.getActivity();
+        registrationActivity = testRule.getActivity();
 
         utilityCourseList.clear();
         utilityCourseList.add(Course.exampleCourse);
@@ -48,12 +48,12 @@ public class ListTest {
         User.MockUser();
 
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        Firebase.initializeFirebase(context);
+        firebaseDB.dbInterface = new firebaseDB(context);
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                courseListActivity.courseChangeHandler(utilityCourseList);
+                registrationActivity.courseChangeHandler(utilityCourseList);
             }
         });
 
@@ -89,11 +89,11 @@ public class ListTest {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                courseListActivity.courseChangeHandler(utilityCourseList);
+                registrationActivity.courseChangeHandler(utilityCourseList);
             }
         });
 
-        ArrayList<Course> storedCourses = courseListActivity.courseList;
+        ArrayList<Course> storedCourses = registrationActivity.courseList;
         Course displayedCourse = storedCourses.get(0);
         assertTrue(displayedCourse.equals(newCourse));
     }

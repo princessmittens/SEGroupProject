@@ -33,8 +33,8 @@ import static org.hamcrest.CoreMatchers.anything;
 public class CourseDetailsTest {
 
     @Rule
-    public ActivityTestRule<CourseDetails> activityRule =
-            new ActivityTestRule<CourseDetails>(CourseDetails.class,
+    public ActivityTestRule<courseDetails> activityRule =
+            new ActivityTestRule<courseDetails>(courseDetails.class,
                     true, false);
 
     /* Launch the activity. Thread sleeps to allow activity to be created. */
@@ -50,7 +50,7 @@ public class CourseDetailsTest {
         User.MockUser();
 
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        Firebase.initializeFirebase(context);
+        firebaseDB.dbInterface = new firebaseDB(context);
 
         intent.putExtra("Course", c);
         intent.putExtra("Listings", listings);

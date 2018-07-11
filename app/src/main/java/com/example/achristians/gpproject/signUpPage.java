@@ -1,6 +1,5 @@
 package com.example.achristians.gpproject;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,18 +8,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 /**
  * Created by AChristians on 2018-06-05.
  */
 
-public class SignUpPage extends AppCompatActivity {
+public class signUpPage extends AppCompatActivity {
 
     TextView Vname, Vemail, Vpass, Vcheckpass;
     EditText Ename, Eemail, Epass, Echeckpass;
     Button regbutton;
-
-    Activity thisActivity = this;
+    firebase fb;
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,9 @@ public class SignUpPage extends AppCompatActivity {
         Vcheckpass = findViewById(R.id.Vcheckpass);
         regbutton = findViewById(R.id.regbutton);
 
+        fb = new firebase();
+        firebaseAuth = fb.firebaseInstance();
+
         regbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,10 +49,10 @@ public class SignUpPage extends AppCompatActivity {
                 String pass = Epass.getText().toString();
 
                 String secondPass = Echeckpass.getText().toString();
-                FirebaseUser user = Firebase.getFirebase().getAuth().getCurrentUser();
+                FirebaseUser user = firebaseAuth.getCurrentUser();
                 boolean checkPass = verifyPassword(secondPass, pass);
                 if (checkPass == true) {
-                    Firebase.getFirebase().createUser(SignUpPage.this, email, pass, name, thisActivity);
+                    fb.createUser(signUpPage.this, email, pass, name);
                 }
 
             }

@@ -5,35 +5,35 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.Exclude;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Displays information on a course.
  */
-public class CourseDetails extends Menu {
+public class courseDetails extends Menu {
 
-    //Textviews of XML
     private TextView courseNameView;
     private TextView courseSemesterView;
     private TextView courseCrossListView;
     private TextView courseDescription;
+    private FirebaseAuth auth;
     private ListView listView;
-    private ListingAdapter listingsAdapter;
+    private ListAdapter listingsAdapter;
 
-    //Displayed course, passed from calling activity
-    private Course inputCourse;
-    //Relevant listings to the opened course, passed from calling activity
     private ArrayList<Listing> listings;
+    private Course inputCourse;
 
     /**
      * Basic activity functionality once activity is launched.
      * Shows course details fetched from Firebase
+     *
      * @param savedInstanceState: app context passed to activity on creation
      */
     @Override
@@ -41,7 +41,6 @@ public class CourseDetails extends Menu {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_details);
 
-        //Connecting view objects with their XML
         courseNameView = findViewById(R.id.courseNameView);
         courseSemesterView = findViewById(R.id.courseSemesterView);
         courseCrossListView = findViewById(R.id.courseCrossListView);
@@ -49,25 +48,12 @@ public class CourseDetails extends Menu {
         listView=findViewById(R.id.listView);
 
         Intent intent = getIntent();
-        //Retrieving passed in information
-        try{
-            inputCourse = (Course) intent.getSerializableExtra("Course");
-            listings = (ArrayList<Listing>) intent.getSerializableExtra("Listings");
-        }
-        catch(Exception e){
-            Log.d("Deserialization Error", "An error occured when deserializing the course and listings:\n" + e.getMessage());
-        }
+        inputCourse = (Course) intent.getSerializableExtra("Course");
+        listings = (ArrayList<Listing>) intent.getSerializableExtra("Listings");
 
-        //Populating with dummy information if either is null
-        if(inputCourse == null || listings == null){
-            inputCourse = Course.exampleCourse;
-            listings = Listing.exampleList();
-        }
-
-        listingsAdapter = new ListingAdapter(this, listings);
+        listingsAdapter = new ListAdapter(this, listings);
         listView.setAdapter(listingsAdapter);
 
-        //Setting the handler for a Listing click
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             /**
@@ -83,15 +69,20 @@ public class CourseDetails extends Menu {
                 Listing clicked_listing = listingsAdapter.getItem(i);
                 UpdateListing(clicked_listing);
 
+
                 //https://stackoverflow.com/questions/16976431/change-background-color-of-selected-item-on-a-listview
                 //we need to change color of the registered CRN
                 listingsAdapter.notifyDataSetChanged();
             }
         });
 
+        //userNameView.setText(User.getUser().getCurrent_Identifier());
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         populateFromCourse(inputCourse);
+
+        auth = FirebaseAuth.getInstance();
     }
 
     /**
@@ -100,17 +91,16 @@ public class CourseDetails extends Menu {
      * @param selected_listing: listing selected from the course details
      */
     private void UpdateListing(Listing selected_listing) {
-        //If the user has this CRN in their registered list, remove it (DROP COURSE)
+        //If we have exactly the same course key and crn we remove it (DROP COURSE)
         if (User.getUser().getRegistered().containsKey(selected_listing.Key)
                 && User.getUser().getRegistered().get(selected_listing.Key).equals(String.valueOf(selected_listing.CRN))) {
             User.getUser().getRegistered().remove(selected_listing.Key);
         }
-        //Otherwise, we add this to the user's registered list with listing.key as it's Key (ADD/SWITCH SECTION)
-        //This means that a user can only register for one CRN per course, as it is overwritten
+        //Otherwise we update the CRN or add new Key/CRN pair (SWITCH SECTION)
         else{
             User.getUser().getRegistered().put(selected_listing.Key,String.valueOf(selected_listing.CRN));
         }
-        Firebase.getRootDataReference().child("Users").child(User.getUser().getCurrent_UID()).setValue(User.getUser());
+        firebaseDB.dbInterface.getRootDataReference().child("Users").child(User.getUser().getCurrent_UID()).setValue(User.getUser());
     }
 
     /**
