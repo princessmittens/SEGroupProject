@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class Menu extends AppCompatActivity{
 
-    private Button navCourseDes, navListView;
+    private Button navCourseDes, navListView, myCourses;
     public static String courseIDstring;
 
     @Override
@@ -25,6 +25,7 @@ public class Menu extends AppCompatActivity{
         setContentView(R.layout.menu);
         navCourseDes=findViewById(R.id.navigateCourseDescription);
         navListView = findViewById(R.id.navListView);
+        myCourses = findViewById(R.id.myCoursesButton);
         courseIDstring="Course";
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -46,6 +47,14 @@ public class Menu extends AppCompatActivity{
                 ArrayList<Listing> listings = new ArrayList<>();
                 listings.add(l);
                 intent.putExtra("Listings", listings);
+                startActivity(intent);
+            }
+        });
+
+        myCourses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),MyCourses.class);
                 startActivity(intent);
             }
         });
