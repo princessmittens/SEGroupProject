@@ -1,6 +1,5 @@
 package com.example.achristians.gpproject;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 
 public class Menu extends AppCompatActivity{
 
-    private Button navCourseDes, navListView;
+    private Button navCourseDes, navListView, timetable;
     public static String courseIDstring;
 
     @Override
@@ -25,6 +24,7 @@ public class Menu extends AppCompatActivity{
         setContentView(R.layout.menu);
         navCourseDes=findViewById(R.id.navigateCourseDescription);
         navListView = findViewById(R.id.navListView);
+        timetable = findViewById(R.id.timetableButton);
         courseIDstring="Course";
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -50,6 +50,13 @@ public class Menu extends AppCompatActivity{
             }
         });
 
+        timetable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),weeklySchedule.class);
+                startActivity(intent);
+            }
+        });
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -22,6 +22,7 @@
             android:parentActivityName=".Menu"> </activity>
         <activity android:name=".courseDetails" android:parentActivityName=".Menu"
             android:label="Course Details" />
+        <activity android:name=".weeklySchedule" android:parentActivityName=".Menu" android:label="Sign Up"></activity>
     </application>
     <!--<application android:name="com.example.achristians.gpproject.firebase"></application>-->
 </manifest>

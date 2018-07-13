@@ -35,5 +35,14 @@
         android:layout_below="@id/navigateCourseDescription"
         android:text="Course List" />
 
+    <Button
+        android:id="@+id/timetableButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="171dp"
+        android:text="Timetable" />
+
 
 </RelativeLayout>
