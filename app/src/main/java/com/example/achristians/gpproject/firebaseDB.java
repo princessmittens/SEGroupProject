@@ -66,22 +66,16 @@ public class firebaseDB {
     }
 
     public static void fetchLoggedInUser(){
-        usersDataReference = rootDataReference.child("Users/" + User.getUser().getCurrent_UID());
-        usersDataReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        usersDataReference = rootDataReference.child("Users").child(User.getUser().getUID());
+
+        usersDataReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User u = dataSnapshot.getValue(User.class);
-                if (u == null) {
+                if (u == null || u.getIdentifier() == null) {
                     u = User.getUser();
-                    u.setCourses_Completed(new HashMap<String, String>());
-                    u.setCourses_Registered(new HashMap<String, String>());
-
-                    usersDataReference = rootDataReference.child("Users/" + User.getUser().getCurrent_UID());
-                    usersDataReference.setValue(u);
-                } else {
-                    User.getUser().setCourses_Completed(new HashMap<String, String>());
-                    User.getUser().setCourses_Registered(new HashMap<String, String>());
                 }
+                User.setUser(u);
             }
 
             @Override
