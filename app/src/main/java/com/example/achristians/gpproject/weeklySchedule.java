@@ -1,9 +1,11 @@
 package com.example.achristians.gpproject;
 
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -44,12 +46,25 @@ public class weeklySchedule extends AppCompatActivity {
             daysColumn.setHorizontalGravity(1);
 
             daysLayout.addView(daysColumn);
+            View blackLine = new View(this);
+            daysLayout.addView(blackLine);
+            blackLine.setLayoutParams(new LinearLayout.LayoutParams(3, LinearLayout.LayoutParams.MATCH_PARENT));
+            blackLine.setBackgroundColor(Color.parseColor("#000000"));
+
             daysColumns.add(daysColumn);
+
             TextView day=new TextView(this);
             day.setWidth(width/days.length);
+            day.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             day.setText(days[i]);
             daysColumn.addView(day);
+            blackLine = new View(this);
+            daysColumn.addView(blackLine);
+            blackLine.setLayoutParams(new LinearLayout.LayoutParams(width/days.length,2 ));
+            blackLine.setBackgroundColor(Color.parseColor("#000000"));
+
             daysNames.add(day);
+
         }
     }
 }
