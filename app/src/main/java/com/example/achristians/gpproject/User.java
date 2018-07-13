@@ -16,16 +16,11 @@ public class User {
         loggedIn.UID = "UserIdentifier";
     }
 
-    private static User loggedIn;
-
-    public static User getUser(){
-        if (loggedIn == null){
-            loggedIn = new User("", new HashMap<String, String>(), new HashMap<String, String>());
-            loggedIn.UID = "";
+    public static void deleteUserInfo(){
+        if(loggedIn != null && loggedIn.UID != null && loggedIn.UID.compareTo("") != 0) {
+            firebaseDB.dbInterface.getRootDataReference().child("Users").child(User.getUser().UID).removeValue();
         }
-        return loggedIn;
     }
-    public static void setUser(User u){ loggedIn = u;}
 
     public User(){
         //Default no-args constructor is required for firebase RT DB usage.
@@ -37,6 +32,17 @@ public class User {
         this.setRegistered(registered);
     }
 
+    private static User loggedIn;
+
+    public static User getUser(){
+        if (loggedIn == null){
+            loggedIn = new User("", new HashMap<String, String>(), new HashMap<String, String>());
+            loggedIn.UID = "";
+        }
+        return loggedIn;
+    }
+
+    public static void setUser(User u){ loggedIn = u;}
 
     private String UID;
     private String Identifier;
@@ -79,10 +85,20 @@ public class User {
         Registered = registered;
     }
 
+    /**
+     * Adds an event to a user's calendar, on the condition that there are no scheduling conflicts
+     * @param l
+     * @return Whether the course was added successfully
+     */
+    public boolean addEvent(Listing l){
+        return false;
+    }
 
-    public static void deleteUserInfo(){
-        if(loggedIn != null && loggedIn.UID != null && loggedIn.UID.compareTo("") != 0) {
-            firebaseDB.dbInterface.getRootDataReference().child("Users").child(User.getUser().UID).removeValue();
-        }
+    /**
+     * Adds an event to a user's calendar, irrelevant to whether there are scheduling conflicts
+     * @param l
+     */
+    public void addEventOverride(Listing l){
+
     }
 }

@@ -1,8 +1,11 @@
 package com.example.achristians.gpproject;
 
+import android.util.Pair;
+
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 
 //Changing this file so Git will decide that my version is up to date
@@ -38,6 +41,20 @@ public class Listing implements Serializable{
         Time = time;
     }
 
-     public Listing(){
-     }
+    public Listing(){
+    }
+
+    private int StartMinute;
+    private int EndMinute;
+
+    private ArrayList<Pair<Integer,Integer>> startEndPairs;
+
+    /**
+     * Checks whether the time of this course conflicts with the time of another course
+     * @param l The course to check conflicts against
+     * @return Whether a conflict exists
+     */
+    public boolean checkConflict(Listing l){
+       return false;
+    }
 }
