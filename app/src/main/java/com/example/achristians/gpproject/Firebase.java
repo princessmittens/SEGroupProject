@@ -84,9 +84,9 @@ public class Firebase {
                     // Sign in success, update UI with the signed-in user's information
                     FirebaseUser user = firebaseAuth.getCurrentUser();
 
-                    User loggedIn = User.getUser();
-                    loggedIn.setCurrent_UID(user.getUid());
-                    loggedIn.setCurrent_Identifier(user.getEmail());
+                            User loggedIn = User.getUser();
+                            loggedIn.setUID(user.getUid());
+                            loggedIn.setIdentifier(user.getEmail());
 
                     instance.fetchLoggedInUser();
 
