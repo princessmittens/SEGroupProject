@@ -55,6 +55,21 @@ public class Listing implements Serializable{
      * @return Whether a conflict exists
      */
     public boolean checkConflict(Listing l){
-       return false;
+        if(Days == null || l == null || Time == null || l.Time == null || Time.compareTo("C/D") == 0 || l.Time.compareTo("C/D") == 0){
+            return false;
+        }
+
+        for(int i=0; i<Days.length(); i++){
+            if(l.Days.indexOf(Days.charAt(i)) != -1){
+                if((Integer.parseInt(Time.substring(0,4)) > Integer.parseInt(l.Time.substring(0,4)) &&  //Is MY start time within YOUR range
+                     Integer.parseInt(Time.substring(0,4)) < Integer.parseInt(l.Time.substring(5,9))) ||
+                    (Integer.parseInt(Time.substring(5,9)) > Integer.parseInt(l.Time.substring(0,4)) &&  //Or is MY end time within YOUR range
+                     Integer.parseInt(Time.substring(5,9)) < Integer.parseInt(l.Time.substring(5,9)))){
+                    return true; //There is a time conflict
+                }
+            }
+        }
+
+        return false;
     }
 }
