@@ -2,7 +2,6 @@ package com.example.achristians.gpproject;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +12,27 @@ import java.util.ArrayList;
 
 //https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
 
-public class ListAdapter extends ArrayAdapter<Listing> {
+/**
+ * List adapter to display listings on the CourseDetails page
+ */
+public class ListingAdapter extends ArrayAdapter<Listing> {
 
-    public ListAdapter(Context context, ArrayList<Listing> listing) {
+    /**
+     * Constructor, calls the super
+     * @param context AppContext to run with
+     * @param listing Input list of Listings
+     */
+    public ListingAdapter(Context context, ArrayList<Listing> listing) {
         super(context, 0, listing);
     }
 
+    /**
+     * Creates the view for a listing (Called for each input listing)
+     * @param position Position within the list
+     * @param convertView
+     * @param parent Parent view item
+     * @return A view to display the listing within a list
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Listing l = getItem(position);
@@ -27,14 +41,12 @@ public class ListAdapter extends ArrayAdapter<Listing> {
         }
         boolean match=false;
 
-        //check if the user registered to that course
+        User.getUser().getRegistered();
+
         //check if the user registered for the course and CRN, then we need to display it differently
         if (User.getUser().getRegistered().containsKey(l.Key) && User.getUser().getRegistered().get(l.Key).equals(String.valueOf(l.CRN))) {
             match = true;
-            Log.d("Match found","Match found");
         }
-        Log.d("USER_DATA_IN_ADAPTER",User.getUser().getIdentifier());
-        Log.d("l.key is ",l.Key);
 
 
         TextView crnView = convertView.findViewById(R.id.crnView);
@@ -48,6 +60,7 @@ public class ListAdapter extends ArrayAdapter<Listing> {
         daysView.setText(l.Days);
         locationView.setText(l.Location);
 
+        //If the user is registered for the course, indicate with bold text
         if (match) {
             crnView.setTypeface(null, Typeface.BOLD);
             instructorView.setTypeface(null, Typeface.BOLD);

@@ -17,10 +17,10 @@
             </intent-filter>
         </activity>
         <activity android:name="Menu" android:label="Choose an Option" android:exported="true"> </activity>
-        <activity android:name="signUpPage" android:label="Sign Up"> </activity>
-        <activity android:name="registration" android:label="Register"
+        <activity android:name=".SignUpPage" android:label="Sign Up"> </activity>
+        <activity android:name=".CourseList" android:label="Register"
             android:parentActivityName=".Menu"> </activity>
-        <activity android:name=".courseDetails" android:parentActivityName=".Menu"
+        <activity android:name=".CourseDetails" android:parentActivityName=".Menu"
             android:label="Course Details" />
     </application>
     <!--<application android:name="com.example.achristians.gpproject.firebase"></application>-->

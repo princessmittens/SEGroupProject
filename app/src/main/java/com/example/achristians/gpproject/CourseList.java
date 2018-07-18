@@ -2,7 +2,6 @@ package com.example.achristians.gpproject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,14 +19,19 @@ import com.google.firebase.database.ValueEventListener;
  * Created by AChristians on 2018-05-14.
  */
 
-public class registration extends Menu {
+public class CourseList extends Menu {
 
     //Full list of courses from DB
     ArrayList<Course> courseList = new ArrayList<>();
     ArrayList<Listing> listingList = new ArrayList<>();
     ArrayAdapter<Course> arrayAdapter;
 
-
+    /**
+     *Basic activity functionality once the activity is instantiated.
+     * Generates ListView of courses, fetched from Firebase
+     *
+     * @param savedInstanceState: App context passed into activity on creation
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,30 +39,44 @@ public class registration extends Menu {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final ListView courseListView = findViewById(R.id.courseListView);
 
-        Database.dbInterface = new Database(getApplicationContext());
+        //Retrieve the courses from the DB
         fetchCourses();
 
         //Add data to courseListView
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, courseList);
         courseListView.setAdapter(arrayAdapter);
 
+        //Register the click listener for a course in the list
         courseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            /**
+             * Fetch the listings (i.e. sections) available for each section, so that a
+             * particular section can be selected in the course details page.
+             *
+             * @param parent: AdapterView being clicked on
+             * @param view: current view context
+             * @param position: position of the clicked item
+             * @param id: course identifier for Firebase integration
+             */
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(registration.this, courseDetails.class);
+            Intent intent = new Intent(CourseList.this, CourseDetails.class);
 
-                Course clicked = courseList.get(position);
-                ArrayList<Listing> availableListings = new ArrayList<Listing>();
+            //Get the clicked course
+            Course clicked = courseList.get(position);
+            ArrayList<Listing> availableListings = new ArrayList<Listing>();
 
-                for(Listing L : listingList){
-                    if(L.Key.equals(clicked.Key)){
-                        availableListings.add(L);
-                    }
+            //Find the listings associated with the course
+            for(Listing L : listingList){
+                if(L.Key.equals(clicked.Key)){
+                    availableListings.add(L);
                 }
+            }
 
-                intent.putExtra("Course", clicked);
-                intent.putExtra("Listings", availableListings);
-                startActivity(intent);
+            //Putting parameters in the intent
+            intent.putExtra("Course", clicked);
+            intent.putExtra("Listings", availableListings);
+            startActivity(intent);
             }
         });
     }
@@ -68,10 +85,15 @@ public class registration extends Menu {
      * Fetches course information from backing db on startup, no filtering/searching
      */
     public void fetchCourses(){
-        DatabaseReference coursesDataReference = Database.rootDataReference.child("Courses/");
+        //Courses subsection of Database
+        DatabaseReference coursesDataReference = Firebase.getRootDataReference().child("Courses/");
 
         coursesDataReference.addValueEventListener(
             new ValueEventListener() {
+                /**
+                 * Used to refresh the list of courses from Firebase
+                 * @param dataSnapshot: returned data segment from Firebase
+                 */
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     ArrayList<Course> inputCourses = new ArrayList<>();
@@ -82,6 +104,10 @@ public class registration extends Menu {
                     courseChangeHandler(inputCourses);
                 }
 
+                /**
+                 * Database error handling
+                 * @param databaseError: database error context
+                 */
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                     Log.i("Error",databaseError.toString());
@@ -89,10 +115,15 @@ public class registration extends Menu {
             }
         );
 
-        DatabaseReference listingsDataReference = Database.rootDataReference.child("Listings/");
+        //Listings subsection of Database
+        DatabaseReference listingsDataReference = Firebase.getRootDataReference().child("Listings/");
 
         listingsDataReference.addValueEventListener(
             new ValueEventListener() {
+                /**
+                 * Refresh again based on data context
+                 * @param dataSnapshot: data fetched from Firebase
+                 */
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Iterable<DataSnapshot> dataSnapshots = dataSnapshot.getChildren();
@@ -101,6 +132,10 @@ public class registration extends Menu {
                     }
                 }
 
+                /**
+                 * Database error catching
+                 * @param databaseError: error from Firebase
+                 */
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                     Log.i("Error",databaseError.toString());
@@ -113,7 +148,7 @@ public class registration extends Menu {
      * Handles the event of course data being pushed to the application from an external source
      * (The DB). Extracted from the value event listener so functionality/inputs can be mocked for
      * testing.
-     * @param courseListNew A new arraylist of courses to display
+     * @param courseListNew A new arrayList of courses to display
      */
     public void courseChangeHandler(ArrayList<Course> courseListNew){
         //Emptying the course list, as anytime data is changed db side this method will
