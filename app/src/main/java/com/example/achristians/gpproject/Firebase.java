@@ -56,11 +56,11 @@ public class Firebase {
     }
 
     //Database references and Authentication instance
-    private FirebaseDatabase rootDataSource;
-    private DatabaseReference rootDataReference;
-    private DatabaseReference usersDataReference;
-    private DatabaseReference generalDataReference;
-    private FirebaseAuth firebaseAuth;
+    private static FirebaseDatabase rootDataSource;
+    private static DatabaseReference rootDataReference;
+    private static DatabaseReference usersDataReference;
+    private static DatabaseReference generalDataReference;
+    private static FirebaseAuth firebaseAuth;
 
     public static FirebaseAuth getAuth() {
         return instance.firebaseAuth = FirebaseAuth.getInstance();
@@ -128,22 +128,17 @@ public class Firebase {
      * Fetches the database information (Registered courses, completed courses)
      * for an authenticated user
      */
-    public void fetchLoggedInUser(){
-        usersDataReference = rootDataReference.child("Users/" + User.getUser().getCurrent_UID());
-        usersDataReference.addListenerForSingleValueEvent(new ValueEventListener() {
+    public static void fetchLoggedInUser(){
+        usersDataReference = rootDataReference.child("Users").child(User.getUser().getUID());
+
+        usersDataReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User u = dataSnapshot.getValue(User.class);
-                if (u == null) {
+                if (u == null || u.getIdentifier() == null) {
                     u = User.getUser();
-                    u.setCourses_Completed(new HashMap<String, String>());
-                    u.setCourses_Registered(new HashMap<String, String>());
-
-                    //Sets the DatabaseReference for accessing  User info to the
-                    //authenticated user
-                    usersDataReference = rootDataReference.child("Users/" + User.getUser().getCurrent_UID());
-                    usersDataReference.setValue(u);
                 }
+                User.setUser(u);
             }
 
             @Override

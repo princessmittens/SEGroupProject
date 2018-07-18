@@ -110,7 +110,7 @@ public class CourseDetails extends Menu {
         else{
             User.getUser().getRegistered().put(selected_listing.Key,String.valueOf(selected_listing.CRN));
         }
-        Firebase.getRootDataReference().child("Users").child(User.getUser().getCurrent_UID()).setValue(User.getUser());
+        Firebase.getRootDataReference().child("Users").child(User.getUser().getUID()).setValue(User.getUser());
     }
 
     /**

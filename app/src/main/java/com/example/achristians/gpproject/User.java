@@ -83,7 +83,7 @@ public class User {
 
     public static void deleteUserInfo(){
         if(loggedIn != null && loggedIn.UID != null && loggedIn.UID.compareTo("") != 0) {
-            firebaseDB.dbInterface.getRootDataReference().child("Users").child(User.getUser().UID).removeValue();
+            Firebase.getRootDataReference().child("Users").child(User.getUser().UID).removeValue();
         }
     }
 }
