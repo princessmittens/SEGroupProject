@@ -7,9 +7,10 @@ import java.io.Serializable;
 @IgnoreExtraProperties
 public class Listing implements Serializable {
 
-    public static Listing exampleListing = new Listing(99999, "TEST_COURSE_KEY", 3,
-            "lec", "Doe, John", 0, "99", "Goldberg 127", "MWF",
-            "1135-1225");
+    public static ArrayList<Listing> listings;
+
+    public static Listing exampleListing = new Listing(99999, "TEST_COURSE_KEY", 3, "lec", "Doe, John", 0,
+                                                                           "99", "Goldberg 127", "MWF", "1705-1755");
 
     /** The course CRN. */
     public long CRN;

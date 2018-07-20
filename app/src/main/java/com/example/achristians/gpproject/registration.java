@@ -24,8 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 public class registration extends Menu {
 
     //Full list of courses from DB
-    ArrayList<Course> courseList = new ArrayList<>();
-    ArrayList<Listing> listingList = new ArrayList<>();
     ArrayAdapter<Course> arrayAdapter;
 
 
@@ -36,11 +34,14 @@ public class registration extends Menu {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final ListView courseListView = findViewById(R.id.courseListView);
 
+        Listing.listings = new ArrayList<>();
+        Course.courses = new ArrayList<>();
+
         Database.dbInterface = new Database(getApplicationContext());
         fetchCourses();
 
         //Add data to courseListView
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, courseList);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Course.courses);
         courseListView.setAdapter(arrayAdapter);
 
         courseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -48,10 +49,10 @@ public class registration extends Menu {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(registration.this, courseDetails.class);
 
-                Course clicked = courseList.get(position);
+                Course clicked = Course.courses.get(position);
                 ArrayList<Listing> availableListings = new ArrayList<Listing>();
 
-                for(Listing L : listingList){
+                for(Listing L : Listing.listings){
                     if(L.Key.equals(clicked.Key)){
                         availableListings.add(L);
                     }
@@ -96,8 +97,9 @@ public class registration extends Menu {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Iterable<DataSnapshot> dataSnapshots = dataSnapshot.getChildren();
+                    Listing.listings.clear();
                     for (DataSnapshot dsListing: dataSnapshots) {
-                        listingList.add(dsListing.getValue(Listing.class));
+                        Listing.listings.add(dsListing.getValue(Listing.class));
                     }
                 }
 
@@ -118,8 +120,8 @@ public class registration extends Menu {
     public void courseChangeHandler(ArrayList<Course> courseListNew){
         //Emptying the course list, as anytime data is changed db side this method will
         //be called, and add all elements to the end of the list
-        courseList.clear();
-        courseList.addAll(courseListNew);
+        Course.courses.clear();
+        Course.courses.addAll(courseListNew);
         arrayAdapter.notifyDataSetChanged();
     }
 }

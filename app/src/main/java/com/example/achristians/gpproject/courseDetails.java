@@ -65,8 +65,12 @@ public class courseDetails extends Menu {
                 && User.getUser().getRegistered().get(selected_listing.Key).equals(String.valueOf(selected_listing.CRN))) {
             //Otherwise we update the CRN or add new Key/CRN pair (SWITCH SECTION)
             User.getUser().getRegistered().remove(selected_listing.Key);
-        } else {
-            //Otherwise we update the CRN or add new Key/CRN pair (SWITCH SECTION)
+        }
+        //Otherwise we update the CRN or add new Key/CRN pair (SWITCH SECTION)
+        else{
+            if(User.getUser().checkConflict(selected_listing)){
+                return;
+            }
             User.getUser().getRegistered().put(selected_listing.Key,String.valueOf(selected_listing.CRN));
         }
         firebaseDB.dbInterface.getRootDataReference().child("Users").child(User.getUser().getUID()).setValue(User.getUser());

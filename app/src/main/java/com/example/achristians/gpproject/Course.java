@@ -2,10 +2,13 @@ package com.example.achristians.gpproject;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /** Represents a course in Firebase. */
 @IgnoreExtraProperties
 public class Course implements Serializable{
+
+    public static ArrayList<Course> courses;
 
     public static Course exampleCourse = new Course("MATH 1000", "N/A",
             "", "It's a course. It's alive.",
