@@ -85,7 +85,7 @@ public class courseDetails extends Menu {
         else{
             User.getUser().getRegistered().put(selected_listing.Key,String.valueOf(selected_listing.CRN));
         }
-        firebaseDB.dbInterface.getRootDataReference().child("Users").child(User.getUser().getCurrent_UID()).setValue(User.getUser());
+        firebaseDB.dbInterface.getRootDataReference().child("Users").child(User.getUser().getUID()).setValue(User.getUser());
     }
 
     /**

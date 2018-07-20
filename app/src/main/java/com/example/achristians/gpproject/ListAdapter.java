@@ -33,7 +33,7 @@ public class ListAdapter extends ArrayAdapter<Listing> {
             match = true;
             Log.d("Match found","Match found");
         }
-        Log.d("USER_DATA_IN_ADAPTER",User.getUser().getCurrent_Identifier());
+        Log.d("USER_DATA_IN_ADAPTER",User.getUser().getIdentifier());
         Log.d("l.key is ",l.Key);
 
 

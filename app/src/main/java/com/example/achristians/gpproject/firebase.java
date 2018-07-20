@@ -42,8 +42,8 @@ public class firebase extends MainActivity {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
 
                             User loggedIn = User.getUser();
-                            loggedIn.setCurrent_UID(user.getUid());
-                            loggedIn.setCurrent_Identifier(user.getEmail());
+                            loggedIn.setUID(user.getUid());
+                            loggedIn.setIdentifier(user.getEmail());
 
                             firebaseDB.fetchLoggedInUser();
 
