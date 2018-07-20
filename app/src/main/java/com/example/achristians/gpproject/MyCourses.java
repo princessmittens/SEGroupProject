@@ -34,7 +34,6 @@ public class MyCourses extends Menu {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_courses);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final ListView courseListView = findViewById(R.id.myCourseListView);
 
         Database.dbInterface = new Database(getApplicationContext());
@@ -63,6 +62,7 @@ public class MyCourses extends Menu {
                 startActivity(intent);
             }
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     /**

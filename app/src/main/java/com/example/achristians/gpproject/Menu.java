@@ -68,6 +68,10 @@ public class Menu extends AppCompatActivity{
                 Intent i = new Intent(this, MainActivity.class);
                 startActivity(i);
                 return true;
+            //toolbar back arrow functionality
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
