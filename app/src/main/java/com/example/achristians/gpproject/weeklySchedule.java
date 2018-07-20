@@ -4,10 +4,16 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -21,6 +27,7 @@ public class weeklySchedule extends AppCompatActivity {
     ArrayList<TextView> daysNames=new ArrayList<>();
     ArrayList<LinearLayout> daysColumns = new ArrayList<>();
     LinearLayout daysLayout;
+    ArrayList<Listing> listingList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +71,41 @@ public class weeklySchedule extends AppCompatActivity {
             blackLine.setBackgroundColor(Color.parseColor("#000000"));
 
             daysNames.add(day);
-
         }
+
+        Database.dbInterface = new Database(getApplicationContext());
+        fetchListings();
+        Log.d("LISTINGS ADDED: ", String.valueOf(listingList.size()));
+    }
+
+
+    void fetchListings() {
+        DatabaseReference listingsDataReference = Database.rootDataReference.child("Listings/");
+
+        listingsDataReference.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Iterable<DataSnapshot> dataSnapshots = dataSnapshot.getChildren();
+                        for (DataSnapshot dsListing: dataSnapshots) {
+                            //add listings only for the current user
+                            Listing l = dsListing.getValue(Listing.class);
+                            if (User.getUser().getRegistered().containsKey(l.Key) && User.getUser().getRegistered().get(l.Key).equals(String.valueOf(l.CRN))) {
+                                listingList.add(dsListing.getValue(Listing.class));
+                                Log.d("Match found","Match found. add listing to the list");
+                                Log.d("CRN is ", String.valueOf(l.CRN));
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.i("Error",databaseError.toString());
+                    }
+                }
+        );
+
     }
 }
 
