@@ -94,7 +94,7 @@ public class ListTest {
             }
         });
 
-        ArrayList<Course> storedCourses = registrationActivity.courseList;
+        ArrayList<Course> storedCourses = Course.courses;
         Course displayedCourse = storedCourses.get(0);
         assertTrue(displayedCourse.equals(newCourse));
     }

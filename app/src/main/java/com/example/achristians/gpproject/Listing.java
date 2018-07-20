@@ -2,6 +2,7 @@ package com.example.achristians.gpproject;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /** Represents a course listing in Firebase. */
 @IgnoreExtraProperties
