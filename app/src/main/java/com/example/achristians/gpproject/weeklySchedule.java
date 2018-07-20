@@ -74,8 +74,11 @@ public class weeklySchedule extends AppCompatActivity {
         }
 
         Database.dbInterface = new Database(getApplicationContext());
+
+
         fetchListings();
         Log.d("LISTINGS ADDED: ", String.valueOf(listingList.size()));
+        Log.d("USER HASH MAP SIZE",String.valueOf(User.getUser().getRegistered().size()));
     }
 
 
@@ -90,11 +93,13 @@ public class weeklySchedule extends AppCompatActivity {
                         for (DataSnapshot dsListing: dataSnapshots) {
                             //add listings only for the current user
                             Listing l = dsListing.getValue(Listing.class);
+                            //Log.d("LISTING:",String.valueOf(l.CRN));
                             if (User.getUser().getRegistered().containsKey(l.Key) && User.getUser().getRegistered().get(l.Key).equals(String.valueOf(l.CRN))) {
                                 listingList.add(dsListing.getValue(Listing.class));
                                 Log.d("Match found","Match found. add listing to the list");
                                 Log.d("CRN is ", String.valueOf(l.CRN));
                             }
+                            if (User.getUser().getRegistered().containsKey(l.Key)) Log.d("FOUND MATCH KEY", l.Key);
 
                         }
                     }
