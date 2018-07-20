@@ -1,30 +1,30 @@
 package com.example.achristians.gpproject;
 
-import android.util.Pair;
-
 import com.google.firebase.database.IgnoreExtraProperties;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 
-
-//Changing this file so Git will decide that my version is up to date
-
+/** Represents a course listing in Firebase. */
 @IgnoreExtraProperties
-public class Listing implements Serializable{
+public class Listing implements Serializable {
 
-    public static Listing exampleListing = new Listing(99999, "TEST_COURSE_KEY", 3, "lec", "Doe, John", 0,
-                                                                           "99", "Goldberg 127", "MWF", "1135-1225");
-
+    /** The course CRN. */
     public long CRN;
     public String Key;
+    /** Course credit hours. */
     public long Credit_Hours;
+    /** The course format. */
     public String Format;
+    /** The course instructor. */
     public String Instructor;
+    /** Current number of students enrolled. */
     public long Current_Enrollment;
+    /** Max number of students that can enroll. */
     public String Max_Enrollment;
+    /** The location of the course. */
     public String Location;
+    /** The days the course is held on. */
     public String Days;
+    /** The time the course is held at. */
     public String Time;
 
     public Listing(long crn, String key, long credit_Hours, String format, String instructor,
@@ -42,12 +42,8 @@ public class Listing implements Serializable{
     }
 
     public Listing(){
+        /* Empty constructor for Firebase. */
     }
-
-    private int StartMinute;
-    private int EndMinute;
-
-    private ArrayList<Pair<Integer,Integer>> startEndPairs;
 
     /**
      * Checks whether the time of this course conflicts with the time of another course
@@ -55,17 +51,22 @@ public class Listing implements Serializable{
      * @return Whether a conflict exists
      */
     public boolean checkConflict(Listing l){
-        if(Days == null || l == null || Time == null || l.Time == null || Time.compareTo("C/D") == 0 || l.Time.compareTo("C/D") == 0){
+        if (Days == null || l == null || Time == null || l.Time == null ||
+                Time.compareTo("C/D") == 0 || l.Time.compareTo("C/D") == 0) {
             return false;
         }
 
-        for(int i=0; i<Days.length(); i++){
-            if(l.Days.indexOf(Days.charAt(i)) != -1){
-                if((Integer.parseInt(Time.substring(0,4)) > Integer.parseInt(l.Time.substring(0,4)) &&  //Is MY start time within YOUR range
-                     Integer.parseInt(Time.substring(0,4)) < Integer.parseInt(l.Time.substring(5,9))) ||
-                    (Integer.parseInt(Time.substring(5,9)) > Integer.parseInt(l.Time.substring(0,4)) &&  //Or is MY end time within YOUR range
-                     Integer.parseInt(Time.substring(5,9)) < Integer.parseInt(l.Time.substring(5,9)))){
-                    return true; //There is a time conflict
+        /* Parse start and end times. */
+        int thisStart = Integer.parseInt(Time.substring(0, 4));
+        int thisEnd = Integer.parseInt(Time.substring(5,9));
+        int otherStart = Integer.parseInt(l.Time.substring(0,4));
+        int otherEnd = Integer.parseInt(l.Time.substring(5,9));
+
+        for (int i = 0; i < Days.length(); i++){
+            if (l.Days.indexOf(Days.charAt(i)) != -1) {
+                if (((thisStart >= otherEnd && thisStart <= otherEnd)) ||
+                    (thisEnd >= otherStart && thisEnd <= otherEnd)) {
+                    return true;
                 }
             }
         }
