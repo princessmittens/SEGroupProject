@@ -7,6 +7,11 @@ import java.io.Serializable;
 @IgnoreExtraProperties
 public class Course implements Serializable{
 
+    public static Course exampleCourse = new Course("MATH 1000", "N/A",
+            "", "It's a course. It's alive.",
+            "MATH 9530 WINTER(2): 07-JAN-2019 - 08-APR-2019", "Calculus 1",
+            "Winter", "");
+
     /** The course code. */
     public String Course_Code;
     /** The cross-listings. */
