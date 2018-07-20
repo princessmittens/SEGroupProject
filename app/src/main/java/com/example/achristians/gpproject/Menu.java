@@ -13,6 +13,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
+import static android.app.PendingIntent.getActivity;
+
 
 public class Menu extends AppCompatActivity{
 
@@ -28,7 +30,6 @@ public class Menu extends AppCompatActivity{
         myCourses = findViewById(R.id.myCoursesButton);
         courseIDstring="Course";
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         navListView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +59,10 @@ public class Menu extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+        //hide back arrow in toolbar, given the logout option in top right corner
+        ActionBar action = getActionBar();
+        if(getClass()==Menu.class&&action!=null)
+            action.setDisplayHomeAsUpEnabled(false);
 
     }
     @Override
@@ -76,6 +81,7 @@ public class Menu extends AppCompatActivity{
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
