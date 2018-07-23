@@ -27,6 +27,7 @@ public class registration extends Menu {
     ArrayList<Course> courseList = new ArrayList<>();
     ArrayList<Listing> listingList = new ArrayList<>();
     ArrayAdapter<Course> arrayAdapter;
+    ArrayList<Integer> listingNum = new ArrayList<>();
 
 
     @Override
@@ -51,14 +52,18 @@ public class registration extends Menu {
                 Course clicked = courseList.get(position);
                 ArrayList<Listing> availableListings = new ArrayList<Listing>();
 
+                int index = 0;
                 for(Listing L : listingList){
                     if(L.Key.equals(clicked.Key)){
                         availableListings.add(L);
+                        listingNum.add(index);
                     }
+                    index++;
                 }
 
                 intent.putExtra("Course", clicked);
                 intent.putExtra("Listings", availableListings);
+                intent.putExtra("Listings index", listingNum);
                 startActivity(intent);
             }
         });

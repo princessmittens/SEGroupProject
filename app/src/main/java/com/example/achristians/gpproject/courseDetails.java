@@ -35,6 +35,7 @@ public class courseDetails extends Menu {
 
     private ArrayList<Listing> listings;
     private Course inputCourse;
+    private ArrayList<Integer> listingNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class courseDetails extends Menu {
         Intent intent = getIntent();
         inputCourse = (Course) intent.getSerializableExtra("Course");
         listings = (ArrayList<Listing>) intent.getSerializableExtra("Listings");
+        listingNum = (ArrayList<Integer>) intent.getSerializableExtra("Listings index");
 
         listingsAdapter = new ListAdapter(this, listings);
         listView.setAdapter(listingsAdapter);
@@ -58,7 +60,7 @@ public class courseDetails extends Menu {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Listing clicked_listing = listingsAdapter.getItem(i);
-                UpdateListing(clicked_listing);
+                UpdateListing(clicked_listing, i);
                 Log.d("UPDATE_LISTING_STATUS",String.valueOf(clicked_listing.CRN));
                 Log.d("KEY:", clicked_listing.Key);
                 //https://stackoverflow.com/questions/16976431/change-background-color-of-selected-item-on-a-listview
@@ -76,7 +78,7 @@ public class courseDetails extends Menu {
         auth = FirebaseAuth.getInstance();
     }
 
-    private void UpdateListing(Listing selected_listing) {
+    private void UpdateListing(Listing selected_listing, int index) {
 
         //If we have exactly the same course key and crn we remove it (DROP COURSE)
         if (User.getUser().getRegistered().containsKey(selected_listing.Key)
@@ -86,7 +88,7 @@ public class courseDetails extends Menu {
             Log.d("KEY:", selected_listing.Key);
 //
             selected_listing.setCurrent_Enrollment(selected_listing.getCurrent_Enrollment() - 1);
-            firebaseDB.dbInterface.getRootDataReference().child("Listings").child("13").child("Current_Enrollment").setValue(selected_listing.getCurrent_Enrollment());
+            firebaseDB.dbInterface.getRootDataReference().child("Listings").child(String.valueOf(listingNum.get(index))).child("Current_Enrollment").setValue(selected_listing.getCurrent_Enrollment());
         }
         //Otherwise we update the CRN or add new Key/CRN pair (SWITCH SECTION)
         else{
@@ -95,7 +97,7 @@ public class courseDetails extends Menu {
             Log.d("KEY:", selected_listing.Key);
 //
             selected_listing.setCurrent_Enrollment(selected_listing.getCurrent_Enrollment() + 1);
-            firebaseDB.dbInterface.getRootDataReference().child("Listings").child("13").child("Current_Enrollment").setValue(selected_listing.getCurrent_Enrollment());
+            firebaseDB.dbInterface.getRootDataReference().child("Listings").child(String.valueOf(listingNum.get(index))).child("Current_Enrollment").setValue(selected_listing.getCurrent_Enrollment());
         }
         firebaseDB.dbInterface.getRootDataReference().child("Users").child(User.getUser().getUID()).setValue(User.getUser());
 //
