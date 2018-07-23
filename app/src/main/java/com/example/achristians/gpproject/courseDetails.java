@@ -60,6 +60,7 @@ public class courseDetails extends Menu {
                 Listing clicked_listing = listingsAdapter.getItem(i);
                 UpdateListing(clicked_listing);
                 Log.d("UPDATE_LISTING_STATUS",String.valueOf(clicked_listing.CRN));
+                Log.d("KEY:", clicked_listing.Key);
                 //https://stackoverflow.com/questions/16976431/change-background-color-of-selected-item-on-a-listview
                 //we need to change color of the registered CRN
                 listingsAdapter.notifyDataSetChanged();
@@ -76,16 +77,28 @@ public class courseDetails extends Menu {
     }
 
     private void UpdateListing(Listing selected_listing) {
+
         //If we have exactly the same course key and crn we remove it (DROP COURSE)
         if (User.getUser().getRegistered().containsKey(selected_listing.Key)
                 && User.getUser().getRegistered().get(selected_listing.Key).equals(String.valueOf(selected_listing.CRN))) {
             User.getUser().getRegistered().remove(selected_listing.Key);
+            Log.d("UPDATE_LISTING_STATUS",String.valueOf(selected_listing.CRN));
+            Log.d("KEY:", selected_listing.Key);
+//
+            selected_listing.setCurrent_Enrollment(selected_listing.getCurrent_Enrollment() - 1);
+            firebaseDB.dbInterface.getRootDataReference().child("Listings").child("13").child("Current_Enrollment").setValue(selected_listing.getCurrent_Enrollment());
         }
         //Otherwise we update the CRN or add new Key/CRN pair (SWITCH SECTION)
         else{
             User.getUser().getRegistered().put(selected_listing.Key,String.valueOf(selected_listing.CRN));
+            Log.d("UPDATE_LISTING_STATUS",String.valueOf(selected_listing.CRN));
+            Log.d("KEY:", selected_listing.Key);
+//
+            selected_listing.setCurrent_Enrollment(selected_listing.getCurrent_Enrollment() + 1);
+            firebaseDB.dbInterface.getRootDataReference().child("Listings").child("13").child("Current_Enrollment").setValue(selected_listing.getCurrent_Enrollment());
         }
         firebaseDB.dbInterface.getRootDataReference().child("Users").child(User.getUser().getUID()).setValue(User.getUser());
+//
     }
 
     /**
