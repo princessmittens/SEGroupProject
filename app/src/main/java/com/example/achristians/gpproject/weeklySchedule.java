@@ -172,9 +172,20 @@ public class weeklySchedule extends AppCompatActivity {
                 TextView listingView=new TextView(this);
                 listingView.setWidth(width/days.length);
                 //To make text like "CSCI 1105"
-                listingView.setText(l.Key.substring(0,9));
+                String text="";
+                text+="CRN: "+l.CRN;
+                text+= "\n"+l.Key.substring(0,9);
+                text+="\n"+l.Time;
+                listingView.setText(text);
                 LinearLayout column = daysColumns.get(index);
                 column.addView(listingView);
+
+                // add black line separator between coures
+                View blackLine = new View(this);
+                column.addView(blackLine);
+                blackLine.setLayoutParams(new LinearLayout.LayoutParams(width/days.length, 3));
+                blackLine.setBackgroundColor(Color.parseColor("#000000"));
+
             }
 
             //we need to count index to know to what layout to add listing
