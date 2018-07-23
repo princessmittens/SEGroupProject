@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
  * Created by AChristians on 2018-05-14.
  */
 
-public class weeklySchedule extends AppCompatActivity {
+public class WeeklySchedule extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
