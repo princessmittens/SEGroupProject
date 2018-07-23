@@ -2,6 +2,7 @@ package com.example.achristians.gpproject;
 
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -36,6 +37,7 @@ public class weeklySchedule extends AppCompatActivity {
     HashMap<Character, Integer> daysAbbr= new HashMap<>();
     //display width
     int width;
+    int height;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class weeklySchedule extends AppCompatActivity {
         Point size = new Point();
         display.getSize(size);
         width = size.x;
+        height=size.y;
 
         daysLayout = findViewById(R.id.horizontalLayout);
         for (int i = 0;i<days.length;i++) {
@@ -77,10 +80,12 @@ public class weeklySchedule extends AppCompatActivity {
             day.setWidth(width/days.length);
             day.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             day.setText(days[i]);
+            day.setTypeface(null, Typeface.BOLD);
+            day.setBackgroundColor(Color.parseColor("#E0E0E0"));
             daysColumn.addView(day);
             blackLine = new View(this);
             daysColumn.addView(blackLine);
-            blackLine.setLayoutParams(new LinearLayout.LayoutParams(width/days.length,2 ));
+            blackLine.setLayoutParams(new LinearLayout.LayoutParams(width/days.length,8 ));
             blackLine.setBackgroundColor(Color.parseColor("#000000"));
 
             daysNames.add(day);
@@ -168,6 +173,7 @@ public class weeklySchedule extends AppCompatActivity {
         //now we need just iterate through all days and add all listings to the corresponding timetable layouts
         int index=0;
         for (ArrayList<Listing> day: listingsByDays) {
+            LinearLayout column = daysColumns.get(index);
             for (Listing l: day) {
                 TextView listingView=new TextView(this);
                 listingView.setWidth(width/days.length);
@@ -176,17 +182,35 @@ public class weeklySchedule extends AppCompatActivity {
                 text+="CRN: "+l.CRN;
                 text+= "\n"+l.Key.substring(0,9);
                 text+="\n"+l.Time;
-                listingView.setText(text);
-                LinearLayout column = daysColumns.get(index);
-                column.addView(listingView);
 
+                //lets try to make it height depending on the time
+                double start = 0;
+                double end = 0;
+                start = Double.valueOf(l.Time.substring(0,2))*100;
+                start += Double.valueOf(l.Time.substring(2,4))*100/60;
+
+                end = Double.valueOf(l.Time.substring(5,7))*100;
+                end += Double.valueOf(l.Time.substring(7,9))*100/60;
+
+                double diff = (end - start)/100; //one hour will have coefficient 1
+
+                listingView.setHeight((int)(210*diff));
+
+                listingView.setText(text);
+                column.addView(listingView);
                 // add black line separator between coures
                 View blackLine = new View(this);
                 column.addView(blackLine);
                 blackLine.setLayoutParams(new LinearLayout.LayoutParams(width/days.length, 3));
                 blackLine.setBackgroundColor(Color.parseColor("#000000"));
-
             }
+            View endBox=new TextView(this);
+            endBox.setBackgroundColor(Color.parseColor("#E0E0E0"));
+
+
+
+            column.addView(endBox);
+            endBox.setLayoutParams(new LinearLayout.LayoutParams(width/days.length, height-column.getTop()));
 
             //we need to count index to know to what layout to add listing
             index++;
