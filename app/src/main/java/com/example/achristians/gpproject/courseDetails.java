@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
@@ -69,6 +71,8 @@ public class courseDetails extends Menu {
         //Otherwise we update the CRN or add new Key/CRN pair (SWITCH SECTION)
         else{
             if(User.getUser().checkConflict(selected_listing)){
+                Toast.makeText(this, "You're registered for a course with a time conflict.",
+                        Toast.LENGTH_LONG).show();
                 return;
             }
             User.getUser().getRegistered().put(selected_listing.Key,String.valueOf(selected_listing.CRN));
