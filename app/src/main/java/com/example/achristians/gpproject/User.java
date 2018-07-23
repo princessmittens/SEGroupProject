@@ -12,7 +12,10 @@ import java.util.HashMap;
 public class User {
 
     public static void MockUser(){
-        loggedIn = new User("TestUser",new HashMap<String, String>(), new HashMap<String, String>());
+        HashMap<String,String> mockRegistered = new HashMap<>();
+        mockRegistered.put("CSCI 1105 WINTER (1) : 07-JAN-2019 - 08-APR-2019", "20615");
+        mockRegistered.put("CSCI 1110 WINTER (1) : 07-JAN-2019 - 08-APR-2019", "20629");
+        loggedIn = new User("TestUser",new HashMap<String, String>(), mockRegistered);
         loggedIn.UID = "UserIdentifier";
     }
 

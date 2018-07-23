@@ -21,6 +21,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.internal.runner.junit4.statement.UiThreadStatement.runOnUiThread;
 import static org.hamcrest.CoreMatchers.anything;
 
 @RunWith(AndroidJUnit4.class)
@@ -32,38 +33,44 @@ public class UserCourseViewTest {
         private MyCourses myCourseActivity = testRule.getActivity();
         private final ArrayList<Course> utilityCourseList = new ArrayList<>();
 
-        @Before
-        public void setupForTests() throws Throwable {
-            //Thread.sleep(2000);
-            myCourseActivity = testRule.getActivity();
+    @Before
+    public void setupForTests() throws Throwable {
+        //Thread.sleep(2000);
+        myCourseActivity = testRule.getActivity();
 
-            utilityCourseList.clear();
-            utilityCourseList.add(Course.exampleCourse);
+        utilityCourseList.clear();
+        utilityCourseList.add(Course.exampleCourse);
 
-            User.MockUser();
+        User.MockUser();
 
-            Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-            firebaseDB.dbInterface = new firebaseDB(context);
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        firebaseDB.dbInterface = new firebaseDB(context);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                myCourseActivity.courseChangeHandler(utilityCourseList);
+            }
+        });
 
-        }
+    }
 
         //Test 1: check if the listview exists
-        @Test
-        public void listViewExists() {
-            onView(withId(R.id.myCourseListView)).check(matches(isDisplayed()));
-        }
+//        @Test
+//        public void listViewExists() throws InterruptedException {
+//            onData(withId(R.id.myCoursesText)).check(matches(isDisplayed()));
+//        }
 
 
         //Test 2: Listen to make sure a cell in the listview is clickable
         @Test
         public void cellClicks() {
-            onData(anything()).inAdapterView(withId(R.id.courseListView)).atPosition(0).perform(click());
+            onData(anything()).inAdapterView(withId(R.id.myCourseListView)).atPosition(0).perform(click());
             Espresso.pressBack();
         }
 
         @Test
         public void cellClickOpensDescription(){
-            onData(anything()).inAdapterView(withId(R.id.courseListView)).atPosition(0).perform(click());
+            onData(anything()).inAdapterView(withId(R.id.myCourseListView)).atPosition(0).perform(click());
             onView(withId(R.id.courseNameView)).check(matches(withText("Calculus 1")));
             Espresso.pressBack();
         }
