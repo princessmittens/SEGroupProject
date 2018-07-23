@@ -38,6 +38,7 @@ public class weeklySchedule extends AppCompatActivity {
     //display width
     int width;
     int height;
+    int activityTopHeight=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +90,11 @@ public class weeklySchedule extends AppCompatActivity {
             blackLine.setBackgroundColor(Color.parseColor("#000000"));
 
             daysNames.add(day);
+            //remember height of this view, for the future calculations
+            if (i==0) activityTopHeight+=day.getHeight();
+            if (i==0) activityTopHeight+=blackLine.getHeight();
         }
+
 
         Database.dbInterface = new Database(getApplicationContext());
 
@@ -172,6 +177,13 @@ public class weeklySchedule extends AppCompatActivity {
 
         //now we need just iterate through all days and add all listings to the corresponding timetable layouts
         int index=0;
+
+        String day_start_end_string="0835-2100";
+        double dayStart=StartTime(day_start_end_string);
+        double dayEnd=EndTime(day_start_end_string);
+        double dayDuration=dayEnd-dayStart;
+        double windowHeight = height - activityTopHeight;
+        Log.d("RESULT_LOG:","Size of the listingsByDays is "+String.valueOf(listingsByDays.size()));
         for (ArrayList<Listing> day: listingsByDays) {
             LinearLayout column = daysColumns.get(index);
             for (Listing l: day) {
@@ -186,15 +198,12 @@ public class weeklySchedule extends AppCompatActivity {
                 //lets try to make it height depending on the time
                 double start = 0;
                 double end = 0;
-                start = Double.valueOf(l.Time.substring(0,2))*100;
-                start += Double.valueOf(l.Time.substring(2,4))*100/60;
-
-                end = Double.valueOf(l.Time.substring(5,7))*100;
-                end += Double.valueOf(l.Time.substring(7,9))*100/60;
+                start = StartTime(l.Time);
+                end = EndTime(l.Time);
 
                 double diff = (end - start)/100; //one hour will have coefficient 1
-
-                listingView.setHeight((int)(210*diff));
+                int courseHeight=(int)((end-start)*windowHeight/dayDuration);
+                listingView.setHeight(courseHeight);
 
                 listingView.setText(text);
                 column.addView(listingView);
@@ -218,5 +227,18 @@ public class weeklySchedule extends AppCompatActivity {
 
     }
 
+    private double StartTime(String time) {
+        double start=0;
+        start = Double.valueOf(time.substring(0,2))*100;
+        start += Double.valueOf(time.substring(2,4))*100/60;
+        return start;
+    }
+
+    private double EndTime(String time) {
+        double end=0;
+        end = Double.valueOf(time.substring(5, 7)) * 100;
+        end += Double.valueOf(time.substring(7, 9)) * 100 / 60;
+        return end;
+    }
 }
 
