@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -91,8 +92,6 @@ public class weeklySchedule extends AppCompatActivity {
 
             daysNames.add(day);
             //remember height of this view, for the future calculations
-            if (i==0) activityTopHeight+=day.getHeight();
-            if (i==0) activityTopHeight+=blackLine.getHeight();
         }
 
 
@@ -182,36 +181,70 @@ public class weeklySchedule extends AppCompatActivity {
         double dayStart=StartTime(day_start_end_string);
         double dayEnd=EndTime(day_start_end_string);
         double dayDuration=dayEnd-dayStart;
+        Log.d("RESULT_LOG:","Day duration is "+String.valueOf(dayDuration));
+        //will figure out activityTopHeight later
+        activityTopHeight=50;
         double windowHeight = height - activityTopHeight;
+        Log.d("RESULT_LOG:","Screen height is "+String.valueOf(height));
+        Log.d("RESULT_LOG:","Timetable height is "+String.valueOf(windowHeight));
+
         Log.d("RESULT_LOG:","Size of the listingsByDays is "+String.valueOf(listingsByDays.size()));
         for (ArrayList<Listing> day: listingsByDays) {
             LinearLayout column = daysColumns.get(index);
+            //in the beggining of the day previous course end is actually start of the day
+            double endOfPreviousCourse=StartTime(day_start_end_string);
             for (Listing l: day) {
-                TextView listingView=new TextView(this);
-                listingView.setWidth(width/days.length);
+
+                //add empty box before the course
+
+                TextView listingView = new TextView(this);
+
+                TextView emptyView = new TextView(this);
+                listingView.setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
+                listingView.setWidth(width / days.length);
                 //To make text like "CSCI 1105"
-                String text="";
-                text+="CRN: "+l.CRN;
-                text+= "\n"+l.Key.substring(0,9);
-                text+="\n"+l.Time;
+                String text = "";
+                text += "CRN: " + l.CRN;
+                text += "\n" + l.Key.substring(0, 9);
+                text += "\n" + l.Time;
 
                 //lets try to make it height depending on the time
-                double start = 0;
-                double end = 0;
-                start = StartTime(l.Time);
-                end = EndTime(l.Time);
+                double courseStart = 0;
+                double courseEnd = 0;
+                courseStart = StartTime(l.Time);
+                courseEnd = EndTime(l.Time);
+                double courseDuration = 0;
+                double emptyDuration=0;
+                courseDuration = courseEnd - courseStart;
+                emptyDuration=courseStart-endOfPreviousCourse;
+                Log.d("RESULT_LOG:", "Course " + l.CRN + " duration is " + String.valueOf(courseDuration));
 
-                double diff = (end - start)/100; //one hour will have coefficient 1
-                int courseHeight=(int)((end-start)*windowHeight/dayDuration);
+                int courseHeight = (int) ((courseDuration) * windowHeight / dayDuration);
+                int emptyHeight = (int) ((emptyDuration) * windowHeight / dayDuration);
+                Log.d("RESULT_LOG:", "Course " + l.CRN + " height is " + String.valueOf(courseHeight));
                 listingView.setHeight(courseHeight);
+                emptyView.setHeight(emptyHeight);
+                //update end of PreviouseCourse for the next course;
+                endOfPreviousCourse = courseEnd;
 
+                emptyView.setBackgroundColor(Color.parseColor("#E0E0E0"));
                 listingView.setText(text);
-                column.addView(listingView);
-                // add black line separator between coures
+
+                column.addView(emptyView);
+
                 View blackLine = new View(this);
                 column.addView(blackLine);
                 blackLine.setLayoutParams(new LinearLayout.LayoutParams(width/days.length, 3));
                 blackLine.setBackgroundColor(Color.parseColor("#000000"));
+
+                column.addView(listingView);
+
+
+                // add black line separator between coures
+                View lineAfterEmptyBox = new View(this);
+                column.addView(lineAfterEmptyBox);
+                lineAfterEmptyBox.setLayoutParams(new LinearLayout.LayoutParams(width/days.length, 3));
+                lineAfterEmptyBox.setBackgroundColor(Color.parseColor("#000000"));
             }
             View endBox=new TextView(this);
             endBox.setBackgroundColor(Color.parseColor("#E0E0E0"));
