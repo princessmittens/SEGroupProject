@@ -1,6 +1,5 @@
 package com.example.achristians.gpproject;
 
-import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.HashMap;
@@ -27,9 +26,11 @@ public class User {
     }
     public static void setUser(User u){ loggedIn = u;}
 
-    public User(){
-        //Default no-args constructor is required for firebase RT DB usage.
-    }
+    /**
+     * Firebase RealtimeDatabase serializes and deserializes this class
+     * to/from dataSnapshots, so a non-argumented constructor is required.
+     */
+    public User(){  }
 
     public User(String Identifier, HashMap<String, String> Courses_Completed, HashMap<String, String> registered){
         this.setIdentifier(Identifier);
@@ -82,7 +83,7 @@ public class User {
 
     public static void deleteUserInfo(){
         if(loggedIn != null && loggedIn.UID != null && loggedIn.UID.compareTo("") != 0) {
-            firebaseDB.dbInterface.getRootDataReference().child("Users").child(User.getUser().UID).removeValue();
+            Firebase.getRootDataReference().child("Users").child(User.getUser().UID).removeValue();
         }
     }
 }

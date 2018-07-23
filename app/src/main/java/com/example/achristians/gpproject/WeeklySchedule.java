@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * Created by AChristians on 2018-05-14.
  */
 
-public class weeklySchedule extends AppCompatActivity {
+public class WeeklySchedule extends AppCompatActivity {
 
     String[] days = {"Mon","Tue","Wed","Thu","Fri"};
     ArrayList<TextView> daysNames=new ArrayList<>();

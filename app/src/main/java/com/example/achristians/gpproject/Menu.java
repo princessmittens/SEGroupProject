@@ -32,7 +32,7 @@ public class Menu extends AppCompatActivity{
         navListView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),registration.class);
+                Intent intent = new Intent(getApplicationContext(),CourseList.class);
                 startActivity(intent);
             }
         });
@@ -40,7 +40,7 @@ public class Menu extends AppCompatActivity{
         navCourseDes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),courseDetails.class);
+                Intent intent = new Intent(getApplicationContext(),CourseDetails.class);
                 intent.putExtra(courseIDstring, Course.exampleCourse);
                 Listing l = Listing.exampleListing;
                 ArrayList<Listing> listings = new ArrayList<>();
