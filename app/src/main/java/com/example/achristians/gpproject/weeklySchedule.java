@@ -200,7 +200,7 @@ public class weeklySchedule extends AppCompatActivity {
                 TextView listingView = new TextView(this);
 
                 TextView emptyView = new TextView(this);
-                listingView.setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
+                listingView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
                 listingView.setWidth(width / days.length);
                 //To make text like "CSCI 1105"
                 String text = "";
@@ -214,9 +214,9 @@ public class weeklySchedule extends AppCompatActivity {
                 courseStart = StartTime(l.Time);
                 courseEnd = EndTime(l.Time);
                 double courseDuration = 0;
-                double emptyDuration=0;
+                double emptyDuration = 0;
                 courseDuration = courseEnd - courseStart;
-                emptyDuration=courseStart-endOfPreviousCourse;
+                emptyDuration = courseStart - endOfPreviousCourse;
                 Log.d("RESULT_LOG:", "Course " + l.CRN + " duration is " + String.valueOf(courseDuration));
 
                 int courseHeight = (int) ((courseDuration) * windowHeight / dayDuration);
@@ -230,21 +230,23 @@ public class weeklySchedule extends AppCompatActivity {
                 emptyView.setBackgroundColor(Color.parseColor("#E0E0E0"));
                 listingView.setText(text);
 
-                column.addView(emptyView);
-
-                View blackLine = new View(this);
-                column.addView(blackLine);
-                blackLine.setLayoutParams(new LinearLayout.LayoutParams(width/days.length, 3));
-                blackLine.setBackgroundColor(Color.parseColor("#000000"));
-
+                if (emptyHeight>0)  {
+                    column.addView(emptyView);
+                    View blackLine = new View(this);
+                    column.addView(blackLine);
+                    blackLine.setLayoutParams(new LinearLayout.LayoutParams(width / days.length, 3));
+                    blackLine.setBackgroundColor(Color.parseColor("#000000"));
+                }
                 column.addView(listingView);
 
 
                 // add black line separator between coures
-                View lineAfterEmptyBox = new View(this);
-                column.addView(lineAfterEmptyBox);
-                lineAfterEmptyBox.setLayoutParams(new LinearLayout.LayoutParams(width/days.length, 3));
-                lineAfterEmptyBox.setBackgroundColor(Color.parseColor("#000000"));
+
+                    View lineAfterEmptyBox = new View(this);
+                    column.addView(lineAfterEmptyBox);
+                    lineAfterEmptyBox.setLayoutParams(new LinearLayout.LayoutParams(width / days.length, 3));
+                    lineAfterEmptyBox.setBackgroundColor(Color.parseColor("#000000"));
+
             }
             View endBox=new TextView(this);
             endBox.setBackgroundColor(Color.parseColor("#E0E0E0"));
