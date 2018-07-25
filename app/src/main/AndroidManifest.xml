@@ -18,10 +18,11 @@
         </activity>
         <activity android:name="Menu" android:label="Choose an Option" android:exported="true"> </activity>
         <activity android:name=".SignUpPage" android:label="Sign Up"> </activity>
-        <activity android:name=".CourseList" android:label="Register"
+        <activity android:name=".CourseList" android:label="Course List"
             android:parentActivityName=".Menu"> </activity>
         <activity android:name=".CourseDetails" android:parentActivityName=".Menu"
             android:label="Course Details" />
+        <activity android:name=".WeeklySchedule" android:parentActivityName=".Menu" android:label="View Your Timetable"></activity>
     </application>
     <!--<application android:name="com.example.achristians.gpproject.firebase"></application>-->
 </manifest>
