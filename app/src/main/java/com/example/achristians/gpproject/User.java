@@ -141,6 +141,29 @@ public class User {
         /* Stub */
     }
 
+    /**
+     * Check if a listing conflicts with the courses a user is registered in.
+     * @param l The listing to check against.
+     * @return
+     */
+    public boolean checkConflict(Listing l) {
+        boolean listingFound = false;
+
+        for (String value : getRegistered().values()) {
+            for (int i = 0; i < Listing.listings.size() && !listingFound; i++) {
+                if (Listing.listings.get(i).CRN == Long.parseLong(value)) {
+                   listingFound = true;
+
+                   if (Listing.listings.get(i).checkConflict(l)) {
+                       return true;
+                   }
+                }
+            }
+        }
+
+        return false;
+    }
+
     /* For testing. */
     public static void MockUser(){
         loggedIn = new User("TestUser",new HashMap<String, String>(),
