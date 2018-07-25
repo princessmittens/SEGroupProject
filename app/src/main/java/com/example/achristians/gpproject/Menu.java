@@ -53,7 +53,7 @@ public class Menu extends AppCompatActivity{
         timetable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),weeklySchedule.class);
+                Intent intent = new Intent(getApplicationContext(),WeeklySchedule.class);
                 startActivity(intent);
             }
         });

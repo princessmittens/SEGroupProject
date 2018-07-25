@@ -95,7 +95,6 @@ public class WeeklySchedule extends AppCompatActivity {
         }
 
 
-        Database.dbInterface = new Database(getApplicationContext());
 
 
         fetchListings();
@@ -104,7 +103,7 @@ public class WeeklySchedule extends AppCompatActivity {
 
 
     void fetchListings() {
-        DatabaseReference listingsDataReference = Database.rootDataReference.child("Listings/");
+        DatabaseReference listingsDataReference = Firebase.getRootDataReference().child("Listings/");
 
         listingsDataReference.addValueEventListener(
                 new ValueEventListener() {
