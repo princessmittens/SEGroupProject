@@ -27,7 +27,7 @@ public class registration extends Menu {
     ArrayList<Course> courseList = new ArrayList<>();
     ArrayList<Listing> listingList = new ArrayList<>();
     ArrayAdapter<Course> arrayAdapter;
-    ArrayList<Integer> listingNum = new ArrayList<>();
+    int index;
 
 
     @Override
@@ -51,8 +51,9 @@ public class registration extends Menu {
 
                 Course clicked = courseList.get(position);
                 ArrayList<Listing> availableListings = new ArrayList<Listing>();
+                ArrayList<Integer> listingNum = new ArrayList<>();
 
-                int index = 0;
+                index = 0;
                 for(Listing L : listingList){
                     if(L.Key.equals(clicked.Key)){
                         availableListings.add(L);
