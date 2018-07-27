@@ -286,7 +286,7 @@ public class WeeklySchedule extends AppCompatActivity {
      */
     public static double EndTime(String time) {
         double end=0;
-        if (time.length()<6) return 0;
+        if (time.length()<9) return 0;
         end = Double.valueOf(time.substring(5, 7)) * 100;
         end += Double.valueOf(time.substring(7, 9)) * 100 / 60;
         return end;

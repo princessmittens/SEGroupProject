@@ -24,11 +24,11 @@ public class WeeklyScheduleTests {
 
     @Test
     public void NoStartTimeTest() {
-        assertEquals(0, WeeklySchedule.StartTime("12"));
+        assertEquals(0.0, WeeklySchedule.StartTime("12"));
     }
 
     @Test
     public void NoEndTimeTest() {
-        assertEquals(0, WeeklySchedule.EndTime("1235-1"));
+        assertEquals(0.0, WeeklySchedule.EndTime("1235-1"));
     }
 }
