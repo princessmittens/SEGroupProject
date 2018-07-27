@@ -44,6 +44,7 @@ public class WeeklySchedule extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.weekly_sched);
 
         daysAbbr.put('M',0); //monday

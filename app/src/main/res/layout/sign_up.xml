@@ -5,89 +5,61 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/Vname"
-        android:layout_marginTop="30sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Name:"
-        android:textSize="15sp"
-        android:layout_marginStart="10sp"
-        />
     <EditText
         android:id="@+id/Ename"
-        android:hint="Enter your name here..."
+        android:hint="Name"
+        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_marginTop="5sp"
+        android:layout_marginTop="20sp"
         android:layout_marginBottom="5sp"
         android:inputType="textPersonName"
-    android:layout_margin="10sp"/>
+    android:layout_margin="10sp"
+        android:theme="@style/EditTextTheme"/>
 
-    <TextView
-        android:id="@+id/Vemail"
-        android:layout_marginTop="30sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email:"
-        android:textSize="15sp"
-        android:layout_marginStart="10sp"
-        />
     <EditText
         android:id="@+id/Eemail"
-        android:hint="Enter your email here..."
+        android:hint="Email"
+        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:layout_marginTop="5sp"
         android:layout_marginBottom="5sp"
         android:inputType="text"
-        android:layout_margin="10sp"/>
+        android:layout_margin="10sp"
+        android:theme="@style/EditTextTheme"/>
 
-    <TextView
-        android:id="@+id/Vpass"
-        android:layout_marginTop="30sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Password:"
-        android:textSize="15sp"
-        android:layout_marginStart="10sp"
-        />
     <EditText
         android:id="@+id/Epass"
-        android:hint="Enter your password here:"
+        android:hint="Password"
+        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:layout_marginTop="5sp"
         android:layout_marginBottom="5sp"
         android:inputType="textPassword"
-        android:layout_margin="10sp"/>
+        android:layout_margin="10sp"
+        android:theme="@style/EditTextTheme"/>
 
-    <TextView
-        android:id="@+id/Vcheckpass"
-        android:layout_marginTop="30sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enter your password again:"
-        android:textSize="15sp"
-        android:layout_marginStart="10sp"
-        />
     <EditText
         android:id="@+id/Echeckpass"
-        android:hint="Verify your password."
+        android:hint="Verify your password"
+        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:layout_marginTop="5sp"
         android:layout_marginBottom="5sp"
         android:inputType="textPassword"
-        android:layout_margin="10sp"/>
+        android:layout_margin="10sp"
+        android:theme="@style/EditTextTheme"/>
 
     <Button
         android:id="@+id/regbutton"
         android:layout_width="match_parent"
+        android:background="@drawable/change_color"
         android:layout_height="wrap_content"
         android:text="Register" />
 </LinearLayout>

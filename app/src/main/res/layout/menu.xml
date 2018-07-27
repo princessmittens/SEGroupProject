@@ -13,18 +13,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_weight="1"
-        android:paddingBottom="20dp"
         android:text="WELCOME!"
         android:textSize="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="20dp"/>
 
     <Button
         android:id="@+id/myCoursesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:text="Course Description"
+        android:layout_below="@id/textView"
+        android:background="@drawable/white_color"
+        android:layout_centerHorizontal="true"
         android:layout_weight="1"
         android:text="My Courses"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -37,10 +38,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_weight="1"
-        android:text="Course List"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:background="@drawable/white_color"
+        android:layout_below="@id/navigateCourseDescription"
+        android:text="Course List" />
 
     <Button
         android:id="@+id/timetableButton"
