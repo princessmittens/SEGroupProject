@@ -1,6 +1,7 @@
 package com.example.achristians.gpproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.filters.LargeTest;
@@ -29,14 +30,20 @@ import static org.hamcrest.CoreMatchers.anything;
 @LargeTest
 public class UserCourseViewTest {
     @Rule
-    public ActivityTestRule<MyCourses> testRule = new ActivityTestRule<>(MyCourses.class);
+    public ActivityTestRule<MyCourses> testRule;
 
-    private MyCourses myCourseActivity = testRule.getActivity();
+    private MyCourses myCourseActivity;
     private final ArrayList<Course> utilityCourseList = new ArrayList<>();
 
     @Before
     public void setupForTests() throws Throwable {
-        //Thread.sleep(2000);
+        testRule = new ActivityTestRule<>(MyCourses.class);
+
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        Firebase.initializeFirebase(context);
+
+        testRule.launchActivity(new Intent());
+
         myCourseActivity = testRule.getActivity();
 
         utilityCourseList.clear();
@@ -44,8 +51,6 @@ public class UserCourseViewTest {
 
         User.MockUser();
 
-        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        Firebase.initializeFirebase(context);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

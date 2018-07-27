@@ -1,5 +1,8 @@
 package com.example.achristians.gpproject;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 
@@ -29,6 +32,14 @@ public class MenuTest {
     @Before
     public void init(){
         User.MockUser();
+
+        testRule = new ActivityTestRule<>(Menu.class);
+
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        Firebase.initializeFirebase(context);
+
+        testRule.launchActivity(new Intent());
+
     }
 
     //Test 1: check if the menu exists
