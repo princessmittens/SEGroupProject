@@ -27,8 +27,7 @@ public class Listing implements Serializable{
     }
     /** The course CRN. */
     public long CRN;
-    //Listing Properties
-
+    /** The course Key. */
     public String Key;
     /** Course credit hours. */
     public long Credit_Hours;
@@ -46,8 +45,6 @@ public class Listing implements Serializable{
     public String Days;
     /** The time the course is held at. */
     public String Time;
-    public long Credit_Hours;
-    public long CRN;
 
     /**
      * Argumented Constructor, no real complicated stuff here

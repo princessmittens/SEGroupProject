@@ -1,48 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:id="@+id/relativeLayout">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="WELCOME!"
         android:layout_marginTop="20dp"
         android:layout_weight="1"
+        android:paddingBottom="20dp"
+        android:text="WELCOME!"
         android:textSize="20dp"
-        android:layout_centerHorizontal="true"
-        android:paddingBottom="20dp"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
-        android:id="@+id/navigateCourseDescription"
+        android:id="@+id/myCoursesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Course Description"
-        android:layout_below="@id/textView"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
         android:layout_weight="1"
- />
+        android:text="My Courses"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timetableButton" />
 
     <Button
         android:id="@+id/navListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="8dp"
         android:layout_weight="1"
-        android:layout_below="@id/navigateCourseDescription"
-        android:text="Course List" />
+        android:text="Course List"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/timetableButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="171dp"
-        android:text="Timetable" />
+        android:layout_marginTop="8dp"
+        android:text="Timetable"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/navListView" />
 
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

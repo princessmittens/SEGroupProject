@@ -1,6 +1,7 @@
 package com.example.achristians.gpproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.filters.LargeTest;
@@ -32,14 +33,19 @@ import static org.junit.Assert.assertTrue;
 public class ListTest {
 
     @Rule
-    public ActivityTestRule<CourseList> testRule = new ActivityTestRule<>(CourseList.class);
-
-    private CourseList courseListActivity = testRule.getActivity();
+    public ActivityTestRule<CourseList> testRule;
+    private CourseList courseListActivity;
     private final ArrayList<Course> utilityCourseList = new ArrayList<>();
 
     @Before
     public void setupForTests() throws Throwable {
-        //Thread.sleep(2000);
+        testRule = new ActivityTestRule<>(CourseList.class);
+
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        Firebase.initializeFirebase(context);
+
+        testRule.launchActivity(new Intent());
+
         courseListActivity = testRule.getActivity();
 
         utilityCourseList.clear();
@@ -47,8 +53,6 @@ public class ListTest {
 
         User.MockUser();
 
-        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        Firebase.initializeFirebase(context);
 
         runOnUiThread(new Runnable() {
             @Override
@@ -76,7 +80,7 @@ public class ListTest {
     @Test
     public void cellClickOpensDescription(){
         onData(anything()).inAdapterView(withId(R.id.courseListView)).atPosition(0).perform(click());
-        onView(withId(R.id.courseNameView)).check(matches(withText("Calculus 1")));
+        onView(withId(R.id.courseNameView)).check(matches(withText(Course.exampleCourse.Name)));
         Espresso.pressBack();
     }
 
@@ -94,7 +98,6 @@ public class ListTest {
         });
 
         ArrayList<Course> storedCourses = Course.courses;
-        ArrayList<Course> storedCourses = courseListActivity.courseList;
         Course displayedCourse = storedCourses.get(0);
         assertTrue(displayedCourse.equals(newCourse));
     }

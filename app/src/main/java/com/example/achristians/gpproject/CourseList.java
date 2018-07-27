@@ -21,9 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class CourseList extends Menu {
 
-    //Full list of courses from DB
-    ArrayList<Course> courseList = new ArrayList<>();
-    ArrayList<Listing> listingList = new ArrayList<>();
     ArrayAdapter<Course> arrayAdapter;
 
     /**
@@ -39,11 +36,14 @@ public class CourseList extends Menu {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final ListView courseListView = findViewById(R.id.courseListView);
 
+        Listing.listings = new ArrayList<>();
+        Course.courses = new ArrayList<>();
+
         //Retrieve the courses from the DB
         fetchCourses();
 
         //Add data to courseListView
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, courseList);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Course.courses);
         courseListView.setAdapter(arrayAdapter);
 
         //Register the click listener for a course in the list
@@ -63,11 +63,11 @@ public class CourseList extends Menu {
             Intent intent = new Intent(CourseList.this, CourseDetails.class);
 
             //Get the clicked course
-            Course clicked = courseList.get(position);
+            Course clicked = Course.courses.get(position);
             ArrayList<Listing> availableListings = new ArrayList<Listing>();
 
             //Find the listings associated with the course
-            for(Listing L : listingList){
+            for(Listing L : Listing.listings){
                 if(L.Key.equals(clicked.Key)){
                     availableListings.add(L);
                 }
@@ -127,9 +127,12 @@ public class CourseList extends Menu {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Iterable<DataSnapshot> dataSnapshots = dataSnapshot.getChildren();
+                    ArrayList<Listing> listingList = new ArrayList<>();
                     for (DataSnapshot dsListing: dataSnapshots) {
                         listingList.add(dsListing.getValue(Listing.class));
                     }
+                    Listing.listings.clear();
+                    Listing.listings.addAll(listingList);
                 }
 
                 /**
@@ -153,8 +156,8 @@ public class CourseList extends Menu {
     public void courseChangeHandler(ArrayList<Course> courseListNew){
         //Emptying the course list, as anytime data is changed db side this method will
         //be called, and add all elements to the end of the list
-        courseList.clear();
-        courseList.addAll(courseListNew);
+        Course.courses.clear();
+        Course.courses.addAll(courseListNew);
         arrayAdapter.notifyDataSetChanged();
     }
 }

@@ -6,20 +6,18 @@ import java.util.HashMap;
 @IgnoreExtraProperties
 public class User {
 
+    public static void MockUser(){
+        HashMap<String,String> mockRegistered = new HashMap<>();
+        mockRegistered.put("CSCI 1105 WINTER (1) : 07-JAN-2019 - 08-APR-2019", "20615");
+        mockRegistered.put("CSCI 1110 WINTER (1) : 07-JAN-2019 - 08-APR-2019", "20629");
+        loggedIn = new User("TestUser",new HashMap<String, String>(), mockRegistered);
+        loggedIn.UID = "UserIdentifier";
+    }
     private String UID;
     private String Identifier;
     private HashMap<String, String> Completed;
     private HashMap<String, String> Registered;
     private static User loggedIn;
-
-    public static User getUser(){
-        if (loggedIn == null){
-            loggedIn = new User("", new HashMap<String, String>(), new HashMap<String, String>());
-            loggedIn.UID = "";
-        }
-        return loggedIn;
-    }
-    public static void setUser(User u){ loggedIn = u;}
 
     /**
      * Firebase RealtimeDatabase serializes and deserializes this class
@@ -37,7 +35,7 @@ public class User {
     /** Deletes the current user's data. */
     public static void deleteUserInfo(){
         if(loggedIn != null && loggedIn.UID != null && loggedIn.UID.compareTo("") != 0) {
-            firebaseDB.dbInterface.getRootDataReference().child("Users")
+            Firebase.getRootDataReference().child("Users")
                     .child(User.getUser().UID).removeValue();
         }
     }
@@ -163,25 +161,14 @@ public class User {
         for (String value : getRegistered().values()) {
             for (int i = 0; i < Listing.listings.size() && !listingFound; i++) {
                 if (Listing.listings.get(i).CRN == Long.parseLong(value)) {
-                   listingFound = true;
+                    listingFound = true;
 
-                   if (Listing.listings.get(i).checkConflict(l)) {
-                       return true;
-                   }
+                    if (Listing.listings.get(i).checkConflict(l)) {
+                        return true;
+                    }
                 }
             }
-    public static void deleteUserInfo(){
-        if(loggedIn != null && loggedIn.UID != null && loggedIn.UID.compareTo("") != 0) {
-            Firebase.getRootDataReference().child("Users").child(User.getUser().UID).removeValue();
         }
-
         return false;
-    }
-
-    /* For testing. */
-    public static void MockUser(){
-        loggedIn = new User("TestUser",new HashMap<String, String>(),
-                new HashMap<String, String>());
-        loggedIn.UID = "UserIdentifier";
     }
 }
