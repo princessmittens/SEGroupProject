@@ -261,15 +261,17 @@ public class WeeklySchedule extends AppCompatActivity {
 
     }
 
-    private double StartTime(String time) {
+    public static double StartTime(String time) {
         double start=0;
+        if (time.length()<4) return 0;
         start = Double.valueOf(time.substring(0,2))*100;
         start += Double.valueOf(time.substring(2,4))*100/60;
         return start;
     }
 
-    private double EndTime(String time) {
+    public static double EndTime(String time) {
         double end=0;
+        if (time.length()<6) return 0;
         end = Double.valueOf(time.substring(5, 7)) * 100;
         end += Double.valueOf(time.substring(7, 9)) * 100 / 60;
         return end;
