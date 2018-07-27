@@ -12,9 +12,20 @@ public class User {
     private HashMap<String, String> Registered;
     private static User loggedIn;
 
-    public User(){
-        //Default no-args constructor is required for firebase RT DB usage.
+    public static User getUser(){
+        if (loggedIn == null){
+            loggedIn = new User("", new HashMap<String, String>(), new HashMap<String, String>());
+            loggedIn.UID = "";
+        }
+        return loggedIn;
     }
+    public static void setUser(User u){ loggedIn = u;}
+
+    /**
+     * Firebase RealtimeDatabase serializes and deserializes this class
+     * to/from dataSnapshots, so a non-argumented constructor is required.
+     */
+    public User(){  }
 
     public User(String Identifier, HashMap<String, String> Courses_Completed,
                 HashMap<String, String> registered){
@@ -159,6 +170,9 @@ public class User {
                    }
                 }
             }
+    public static void deleteUserInfo(){
+        if(loggedIn != null && loggedIn.UID != null && loggedIn.UID.compareTo("") != 0) {
+            Firebase.getRootDataReference().child("Users").child(User.getUser().UID).removeValue();
         }
 
         return false;

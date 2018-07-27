@@ -1,10 +1,14 @@
 package com.example.achristians.gpproject;
 
 import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.database.PropertyName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/** Represents a course in Firebase. */
+/**
+ * Course class used to implement Course objects
+ */
 @IgnoreExtraProperties
 public class Course implements Serializable{
 
@@ -15,7 +19,7 @@ public class Course implements Serializable{
             "MATH 9530 WINTER(2): 07-JAN-2019 - 08-APR-2019", "Calculus 1",
             "Winter", "");
 
-    /** The course code. */
+    //Course Properties
     public String Course_Code;
     /** The cross-listings. */
     public String Cross_Listing;
@@ -31,10 +35,26 @@ public class Course implements Serializable{
     /** The semester the course is held during. */
     public String Semester;
 
-    public Course() {
-        /* Empty contructor for Firebase. */
-    }
+    
 
+    /**
+     * Firebase RealtimeDatabase serializes and deserializes this class
+     * to/from dataSnapshots, so a non-argumented constructor is required.
+     */
+    public Course() {}
+
+    /**
+     * Course object constructor
+     *
+     * @param course_Code: Course number (ex: CSCI 3130)
+     * @param cross_Listing: Cross listings
+     * @param cross_Listing_URL: Not currently used on the database (might be changed later)
+     * @param description: Course description
+     * @param key: Key for Firebase functionality
+     * @param name: Course name
+     * @param semester: Semester the course is being offered in
+     * @param requirements: Listing of prerequisite courses
+     */
     public Course(String course_Code, String cross_Listing, String cross_Listing_URL,
                   String description, String key, String name, String semester, String requirements) {
         Course_Code = course_Code;
@@ -47,6 +67,10 @@ public class Course implements Serializable{
         Requirements = requirements;
     }
 
+    /**
+     * toString method
+     * @return: The name of the course
+     */
     @Override
     public String toString(){
         return Name;
