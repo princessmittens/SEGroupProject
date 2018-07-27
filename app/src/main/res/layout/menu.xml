@@ -16,8 +16,23 @@
         android:text="WELCOME!"
         android:textSize="20dp"
         android:layout_centerHorizontal="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:paddingBottom="20dp"/>
 
+
+    <Button
+        android:id="@+id/timetableButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Timetable"
+        android:background="@drawable/white_color"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+         />
     <Button
         android:id="@+id/myCoursesButton"
         android:layout_width="wrap_content"
@@ -27,29 +42,20 @@
         android:layout_centerHorizontal="true"
         android:layout_weight="1"
         android:text="My Courses"
+        android:layout_marginTop="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timetableButton" />
-
     <Button
         android:id="@+id/navListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:background="@drawable/white_color"
-        android:layout_below="@id/myCoursesButton"
-        android:text="Course List" />
-
-    <Button
-        android:id="@+id/timetableButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Timetable"
+        app:layout_constraintTop_toBottomOf="@+id/myCoursesButton"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/navListView" />
-
+        android:text="Course List" />
 
 </android.support.constraint.ConstraintLayout>
