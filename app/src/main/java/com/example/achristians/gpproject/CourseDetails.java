@@ -8,9 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.Exclude;
-
 import java.util.ArrayList;
 
 /**
@@ -57,6 +54,13 @@ public class CourseDetails extends Menu {
         catch(Exception e){
             Log.d("Deserialization Error", "An error occured when deserializing the course and listings:\n" + e.getMessage());
         }
+
+        //we work only with lecture format
+        ArrayList<Listing> filteredListings = new ArrayList<>();
+        for (Listing l: listings) {
+            if (l.Format.equals("Lec")) filteredListings.add(l);
+        }
+        listings = filteredListings;
 
         //Populating with dummy information if either is null
         if(inputCourse == null || listings == null){
