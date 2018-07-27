@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.achristians.gpproject">
-
+    <!-- <application android:name="com.example.achristians.gpproject.firebase"></application> -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,10 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".MainActivity" android:label="Login">
+        <activity
+            android:name=".MainActivity"
+            android:label="Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -23,6 +25,7 @@
         <activity android:name=".CourseDetails" android:parentActivityName=".Menu"
             android:label="Course Details" />
         <activity android:name=".WeeklySchedule" android:parentActivityName=".Menu" android:label="View Your Timetable"></activity>
+        <activity android:name=".MyCourses"></activity>
     </application>
-    <!--<application android:name="com.example.achristians.gpproject.firebase"></application>-->
+
 </manifest>

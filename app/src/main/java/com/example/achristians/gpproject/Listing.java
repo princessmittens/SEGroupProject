@@ -1,7 +1,6 @@
 package com.example.achristians.gpproject;
 
 import com.google.firebase.database.IgnoreExtraProperties;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -13,8 +12,9 @@ import java.util.ArrayList;
 @IgnoreExtraProperties
 public class Listing implements Serializable{
 
+    public static ArrayList<Listing> listings;
     public static Listing exampleListing = new Listing(99999, "TEST_COURSE_KEY", 3, "lec", "Doe, John", 0,
-                                                                           "99", "Goldberg 127", "MWF", "1135-1225");
+                                                                           "99", "Goldberg 127", "MWF", "1705-1755");
 
     /**
      * Example list of listings, used for testing
@@ -25,21 +25,26 @@ public class Listing implements Serializable{
         output.add(exampleListing);
         return output;
     }
-
-    //Listing Properties
-    //
-    //The key is a string that matches this listing to a single course,
-    //in a single semester.
-    public String Key;
-    public String Format;
-    public String Instructor;
-    public long Current_Enrollment;
-    public String Max_Enrollment;
-    public String Location;
-    public String Days;
-    public String Time;
-    public long Credit_Hours;
+    /** The course CRN. */
     public long CRN;
+    /** The course Key. */
+    public String Key;
+    /** Course credit hours. */
+    public long Credit_Hours;
+    /** The course format. */
+    public String Format;
+    /** The course instructor. */
+    public String Instructor;
+    /** Current number of students enrolled. */
+    public long Current_Enrollment;
+    /** Max number of students that can enroll. */
+    public String Max_Enrollment;
+    /** The location of the course. */
+    public String Location;
+    /** The days the course is held on. */
+    public String Days;
+    /** The time the course is held at. */
+    public String Time;
 
     /**
      * Argumented Constructor, no real complicated stuff here
@@ -71,5 +76,36 @@ public class Listing implements Serializable{
      * Firebase RealtimeDatabase serializes and deserializes this class
      * to/from dataSnapshots, so a non-argumented constructor is required.
      */
-     public Listing(){  }
+    public Listing(){
+        /* Empty constructor for Firebase. */
+    }
+
+    /**
+     * Checks whether the time of this course conflicts with the time of another course
+     * @param l The course to check conflicts against
+     * @return Whether a conflict exists
+     */
+    public boolean checkConflict(Listing l){
+        if (Days == null || l == null || Time == null || l.Time == null ||
+                Time.compareTo("C/D") == 0 || l.Time.compareTo("C/D") == 0) {
+            return false;
+        }
+
+        /* Parse start and end times. */
+        int thisStart = Integer.parseInt(Time.substring(0, 4));
+        int thisEnd = Integer.parseInt(Time.substring(5,9));
+        int otherStart = Integer.parseInt(l.Time.substring(0,4));
+        int otherEnd = Integer.parseInt(l.Time.substring(5,9));
+
+        for (int i = 0; i < Days.length(); i++){
+            if (l.Days.indexOf(Days.charAt(i)) != -1) {
+                if (((thisStart >= otherEnd && thisStart <= otherEnd)) ||
+                    (thisEnd >= otherStart && thisEnd <= otherEnd)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }

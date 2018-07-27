@@ -42,10 +42,14 @@ public class CourseDetailsTest {
     public void init() throws InterruptedException {
         Intent intent = new Intent();
         Course c = Course.exampleCourse;
+        Course.courses = new ArrayList<>();
+        Course.courses.add(c);
 
         Listing l = Listing.exampleListing;
         ArrayList<Listing> listings = new ArrayList<>();
         listings.add(l);
+        Listing.listings = new ArrayList<>();
+        Listing.listings.addAll(listings);
 
         User.MockUser();
 

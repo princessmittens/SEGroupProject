@@ -7,10 +7,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.Exclude;
-
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 /**
@@ -103,11 +109,17 @@ public class CourseDetails extends Menu {
         //If the user has this CRN in their registered list, remove it (DROP COURSE)
         if (User.getUser().getRegistered().containsKey(selected_listing.Key)
                 && User.getUser().getRegistered().get(selected_listing.Key).equals(String.valueOf(selected_listing.CRN))) {
+            //Otherwise we update the CRN or add new Key/CRN pair (SWITCH SECTION)
             User.getUser().getRegistered().remove(selected_listing.Key);
         }
         //Otherwise, we add this to the user's registered list with listing.key as it's Key (ADD/SWITCH SECTION)
         //This means that a user can only register for one CRN per course, as it is overwritten
         else{
+            if(User.getUser().checkConflict(selected_listing)){
+                Toast.makeText(this, "You're registered for a course with a time conflict.",
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
             User.getUser().getRegistered().put(selected_listing.Key,String.valueOf(selected_listing.CRN));
         }
         Firebase.getRootDataReference().child("Users").child(User.getUser().getUID()).setValue(User.getUser());

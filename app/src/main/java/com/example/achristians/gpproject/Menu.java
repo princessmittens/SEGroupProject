@@ -7,27 +7,29 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.app.ActionBar;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
+import static android.app.PendingIntent.getActivity;
+
 
 public class Menu extends AppCompatActivity{
 
-    private Button navCourseDes, navListView, timetable;
+    private Button navListView, myCourses, timetable;
     public static String courseIDstring;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
-        navCourseDes=findViewById(R.id.navigateCourseDescription);
         navListView = findViewById(R.id.navListView);
+        myCourses = findViewById(R.id.myCoursesButton);
         timetable = findViewById(R.id.timetableButton);
         courseIDstring="Course";
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         navListView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,18 +39,17 @@ public class Menu extends AppCompatActivity{
             }
         });
 
-        navCourseDes.setOnClickListener(new View.OnClickListener() {
+        myCourses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),CourseDetails.class);
-                intent.putExtra(courseIDstring, Course.exampleCourse);
-                Listing l = Listing.exampleListing;
-                ArrayList<Listing> listings = new ArrayList<>();
-                listings.add(l);
-                intent.putExtra("Listings", listings);
+                Intent intent = new Intent(getApplicationContext(),MyCourses.class);
                 startActivity(intent);
             }
         });
+        //hide back arrow in toolbar, given the logout option in top right corner
+        ActionBar action = getActionBar();
+        if(getClass()==Menu.class&&action!=null)
+            action.setDisplayHomeAsUpEnabled(false);
 
         timetable.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,10 +67,15 @@ public class Menu extends AppCompatActivity{
                 Intent i = new Intent(this, MainActivity.class);
                 startActivity(i);
                 return true;
+            //toolbar back arrow functionality
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {

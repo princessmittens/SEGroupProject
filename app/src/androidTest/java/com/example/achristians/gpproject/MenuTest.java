@@ -1,5 +1,8 @@
 package com.example.achristians.gpproject;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 
@@ -29,33 +32,33 @@ public class MenuTest {
     @Before
     public void init(){
         User.MockUser();
+
+        testRule = new ActivityTestRule<>(Menu.class);
+
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        Firebase.initializeFirebase(context);
+
+        testRule.launchActivity(new Intent());
+
     }
 
     //Test 1: check if the menu exists
     @Test
     public void menuExists() {
-        onView(withId(R.id.navigateCourseDescription)).check(matches(isDisplayed()));
         onView(withId(R.id.navListView)).check(matches(isDisplayed()));
     }
 
-    //Test 2: Click menu button navListView
-    @Test
-    public void clickCourseDescription() {
-        onView(withText("Course Description")).perform(click());
-        pressBack();
-    }
-
-    //Test 3: Click menu button navigateCourseDescription
+    //Test 2: Click menu button navigateCourseDescription
     @Test
     public void clickCourseList() {
         onView(withText("Course List")).perform(click());
         pressBack();
     }
 
-    //Test 4: Both buttons
+    //Test 3: Both buttons
     @Test
     public void clickBothButtons() {
-        onView(withText("Course Description")).perform(click());
+        onView(withText("My Courses")).perform(click());
         pressBack();
         onView(withText("Course List")).perform(click());
         pressBack();
