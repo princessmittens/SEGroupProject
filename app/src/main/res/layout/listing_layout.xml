@@ -62,8 +62,29 @@
                 android:layout_weight="1"
                 android:text="DaysText" />
 
-        </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Time" />
 
+            <TextView
+                android:id="@+id/TimeView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TimeText" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/anotherLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,6 +114,20 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Format" />
+
+            <TextView
+                android:id="@+id/formatView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Unknown" />
+
+            <TextView
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -107,5 +142,13 @@
                 android:text="Unknown" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/Line"
+            android:layout_width="fill_parent"
+            android:layout_height="2sp"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:text="Unknown" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

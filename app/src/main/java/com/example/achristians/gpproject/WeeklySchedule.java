@@ -101,7 +101,10 @@ public class WeeklySchedule extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Retrieve the list of user lectures from the firebase database.
+     * Does not take any params
+     */
     void fetchListings() {
         DatabaseReference listingsDataReference = Firebase.getRootDataReference().child("Listings/");
 
@@ -139,7 +142,11 @@ public class WeeklySchedule extends AppCompatActivity {
         );
 
     }
-
+    /**
+     * Put text views with the lectures to the timetable layout by days and time.
+     * Each lecture box height depends on the duration of the lecture
+     * @param listingList stores all the lectures of the student that should be displayed
+     */
     void PopulateTimetable(ArrayList<Listing> listingList) {
 
         //create 5 lists for 5 days
@@ -261,15 +268,25 @@ public class WeeklySchedule extends AppCompatActivity {
 
     }
 
-    private double StartTime(String time) {
+    /**
+     * Extract and convert lecture start time from the string
+     * @param time stores the string with the start and end time of the lecture
+     */
+    public static double StartTime(String time) {
         double start=0;
+        if (time.length()<4) return 0;
         start = Double.valueOf(time.substring(0,2))*100;
         start += Double.valueOf(time.substring(2,4))*100/60;
         return start;
     }
 
-    private double EndTime(String time) {
+    /**
+     * Extract and convert lecture end time from the string
+     * @param time stores the string with the start and end time of the lecture
+     */
+    public static double EndTime(String time) {
         double end=0;
+        if (time.length()<9) return 0;
         end = Double.valueOf(time.substring(5, 7)) * 100;
         end += Double.valueOf(time.substring(7, 9)) * 100 / 60;
         return end;
