@@ -16,16 +16,6 @@
         android:layout_centerHorizontal="true"
         android:paddingBottom="20dp"/>
     <Button
-        android:id="@+id/navigateCourseDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Course Description"
-        android:layout_below="@id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_weight="1"
- />
-
-    <Button
         android:id="@+id/myCoursesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,9 +29,9 @@
         android:id="@+id/navListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/navigateCourseDescription"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="109dp"
         android:layout_weight="1"
         android:text="Course List" />
 

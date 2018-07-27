@@ -25,7 +25,6 @@ public class Menu extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
-        navCourseDes=findViewById(R.id.navigateCourseDescription);
         navListView = findViewById(R.id.navListView);
         myCourses = findViewById(R.id.myCoursesButton);
         courseIDstring="Course";
@@ -35,19 +34,6 @@ public class Menu extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),registration.class);
-                startActivity(intent);
-            }
-        });
-
-        navCourseDes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),courseDetails.class);
-                intent.putExtra(courseIDstring, Course.exampleCourse);
-                Listing l = Listing.exampleListing;
-                ArrayList<Listing> listings = new ArrayList<>();
-                listings.add(l);
-                intent.putExtra("Listings", listings);
                 startActivity(intent);
             }
         });
