@@ -15,12 +15,14 @@
         android:textSize="20dp"
         android:layout_centerHorizontal="true"
         android:paddingBottom="20dp"/>
+
     <Button
         android:id="@+id/navigateCourseDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Course Description"
         android:layout_below="@id/textView"
+        android:background=""
         android:layout_centerHorizontal="true"
         android:layout_weight="1"
  />
@@ -32,6 +34,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_weight="1"
+        android:background=""
         android:layout_below="@id/navigateCourseDescription"
         android:text="Course List" />
 
