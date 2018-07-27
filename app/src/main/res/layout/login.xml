@@ -25,7 +25,8 @@
         android:layout_marginTop="5sp"
         android:layout_marginBottom="5sp"
         android:inputType="textEmailAddress"
-        android:layout_margin="10sp"/>
+        android:layout_margin="10sp"
+        android:theme="@style/EditTextTheme"/>
 
         <EditText
             android:id="@+id/Elogpass"
@@ -38,7 +39,8 @@
             android:layout_marginTop="5sp"
             android:layout_marginBottom="5sp"
             android:inputType="textPassword"
-            android:layout_margin="10sp"/>
+            android:layout_margin="10sp"
+            android:theme="@style/EditTextTheme"/>
 
     <Button
         android:id="@+id/loginbutton"

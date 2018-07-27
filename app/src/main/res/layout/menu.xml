@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:text="Course Description"
         android:layout_below="@id/textView"
-        android:background=""
+        android:background="@drawable/white_color"
         android:layout_centerHorizontal="true"
         android:layout_weight="1"
  />
@@ -34,7 +34,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_weight="1"
-        android:background=""
+        android:background="@drawable/white_color"
         android:layout_below="@id/navigateCourseDescription"
         android:text="Course List" />
 

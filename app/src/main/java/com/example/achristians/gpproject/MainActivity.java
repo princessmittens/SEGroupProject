@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.login);
 
         //Connecting XML view elements and their local counterparts
-        Vlogemail = findViewById(R.id.Vlogemail);
-        Vlogpass = findViewById(R.id.Vlogpass);
         Elogpass = findViewById(R.id.Elogpass);
         Echeckpass = findViewById(R.id.Echeckpass);
         Elogemail = findViewById(R.id.Elogemail);
