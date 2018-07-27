@@ -92,6 +92,19 @@ public class courseDetails extends Menu {
         }
         //Otherwise we update the CRN or add new Key/CRN pair (SWITCH SECTION)
         else{
+            String registered_CRN;
+            if((registered_CRN = User.getUser().getRegistered().get(selected_listing.Key)) != null){
+                long CRN = Long.parseLong(registered_CRN);
+                Listing l;
+                for(int i = 0; i<listings.size(); i++){
+                    l = listings.get(i);
+                    if(l.CRN == CRN){
+                        l.setCurrent_Enrollment(l.getCurrent_Enrollment() - 1);
+                        firebaseDB.dbInterface.getRootDataReference().child("Listings").child(String.valueOf(listingNum.get(i))).child("Current_Enrollment").setValue(l.getCurrent_Enrollment());
+                    }
+                }
+            }
+
             User.getUser().getRegistered().put(selected_listing.Key,String.valueOf(selected_listing.CRN));
             Log.d("UPDATE_LISTING_STATUS",String.valueOf(selected_listing.CRN));
             Log.d("KEY:", selected_listing.Key);

@@ -54,6 +54,7 @@ public class registration extends Menu {
                 ArrayList<Integer> listingNum = new ArrayList<>();
 
                 index = 0;
+
                 for(Listing L : listingList){
                     if(L.Key.equals(clicked.Key)){
                         availableListings.add(L);
@@ -102,6 +103,7 @@ public class registration extends Menu {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Iterable<DataSnapshot> dataSnapshots = dataSnapshot.getChildren();
+                    listingList.clear();
                     for (DataSnapshot dsListing: dataSnapshots) {
                         listingList.add(dsListing.getValue(Listing.class));
                     }
