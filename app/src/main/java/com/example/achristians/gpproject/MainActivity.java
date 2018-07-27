@@ -18,9 +18,9 @@ import com.google.firebase.auth.FirebaseUser;
 // Assumes user open to availability of course with list view
 public class MainActivity extends AppCompatActivity {
 
-    TextView Vlogpass, Vlogemail;
+    TextView Vlogpass, Vlogemail, createaccount;
     EditText Elogpass, Elogemail, Echeckpass;
-    Button createaccount, loginbutton;
+    Button loginbutton;
 
     //This activity, stored as a field so it is accessible to click listeners
     Activity thisActivity = this;
@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.login);
 
         //Connecting XML view elements and their local counterparts
-        Vlogemail = findViewById(R.id.Vlogemail);
-        Vlogpass = findViewById(R.id.Vlogpass);
         Elogpass = findViewById(R.id.Elogpass);
         Echeckpass = findViewById(R.id.Echeckpass);
         Elogemail = findViewById(R.id.Elogemail);

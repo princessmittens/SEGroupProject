@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GPProject</string>
+    <string name="message">Don\'t have an account? \n Sign up <a href="https://www.google.com/">HERE</a></string>
 </resources>
