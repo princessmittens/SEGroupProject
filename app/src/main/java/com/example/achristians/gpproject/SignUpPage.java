@@ -31,11 +31,6 @@ public class SignUpPage extends AppCompatActivity {
         Eemail = findViewById(R.id.Eemail);
         Epass = findViewById(R.id.Epass);
         Echeckpass = findViewById(R.id.Echeckpass);
-
-        Vname = findViewById(R.id.Vname);
-        Vemail = findViewById(R.id.Vemail);
-        Vpass = findViewById(R.id.Vpass);
-        Vcheckpass = findViewById(R.id.Vcheckpass);
         regbutton = findViewById(R.id.regbutton);
 
         regbutton.setOnClickListener(new View.OnClickListener() {
