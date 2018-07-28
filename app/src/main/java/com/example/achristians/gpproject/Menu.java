@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.app.ActionBar;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -18,7 +19,7 @@ import static android.app.PendingIntent.getActivity;
 
 public class Menu extends AppCompatActivity{
 
-    private Button navListView, myCourses, timetable;
+    private TextView navListView, myCourses, timetable;
     public static String courseIDstring;
 
     @Override
