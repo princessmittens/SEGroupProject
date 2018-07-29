@@ -13,6 +13,9 @@ import java.util.ArrayList;
 
 //https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
 
+/**
+ * List Adapter class that calls the list_view.xml
+ */
 public class ListAdapter extends ArrayAdapter<Listing> {
 
     public ListAdapter(Context context, ArrayList<Listing> listing) {

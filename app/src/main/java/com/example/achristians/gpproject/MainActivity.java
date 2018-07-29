@@ -26,8 +26,7 @@ public class MainActivity extends AppCompatActivity {
     Activity thisActivity = this;
 
     /**
-     * Actions to perform on startup of this activity
-     * @param savedInstanceState Saved information about the activity
+     * Creates a login page
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Navigates to menu page if login is successful
+     */
     public FirebaseAuth.AuthStateListener mAuth = new FirebaseAuth.AuthStateListener() {
         @Override
         public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -94,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Gets current user and signs out user exiting the application
+     */
     @Override
     public void onStart() {
         super.onStart();

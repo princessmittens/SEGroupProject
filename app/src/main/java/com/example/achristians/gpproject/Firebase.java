@@ -27,7 +27,9 @@ import java.util.concurrent.Executor;
 
 import static android.content.ContentValues.TAG;
 
-
+/**
+ * A Firebase class that does all the back-end operations
+ */
 public class Firebase {
 
     //Singleton instance

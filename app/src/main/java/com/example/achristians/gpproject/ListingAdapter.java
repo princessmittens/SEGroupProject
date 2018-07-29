@@ -13,7 +13,7 @@ import java.util.ArrayList;
 //https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
 
 /**
- * List adapter to display listings on the CourseDetails page
+ * List adapter to display listings of the CourseDetails page
  */
 public class ListingAdapter extends ArrayAdapter<Listing> {
 
