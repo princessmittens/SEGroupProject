@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ public class CourseDetails extends Menu {
     private TextView courseCrossListView;
     private TextView courseDescription;
     private ListView listView;
+    private Button timetableLink;
     private ListingAdapter listingsAdapter;
 
     //Displayed course, passed from calling activity
@@ -53,6 +55,7 @@ public class CourseDetails extends Menu {
         courseCrossListView = findViewById(R.id.courseCrossListView);
         courseDescription = findViewById(R.id.courseDescriptionView);
         listView=findViewById(R.id.listView);
+        timetableLink = findViewById(R.id.timetableButton);
 
         Intent intent = getIntent();
         //Retrieving passed in information
@@ -63,6 +66,15 @@ public class CourseDetails extends Menu {
         catch(Exception e){
             Log.d("Deserialization Error", "An error occured when deserializing the course and listings:\n" + e.getMessage());
         }
+
+        //Link to timetable
+        timetableLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CourseDetails.this, WeeklySchedule.class);
+                startActivity(i);
+            }
+        });
 
         //we work only with lecture format
         ArrayList<Listing> filteredListings = new ArrayList<>();
