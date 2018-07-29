@@ -25,7 +25,7 @@
         <activity android:name=".CourseDetails" android:parentActivityName=".Menu"
             android:label="Course Details" />
         <activity android:name=".WeeklySchedule" android:parentActivityName=".Menu" android:label="View Your Timetable"></activity>
-        <activity android:name=".MyCourses"></activity>
+        <activity android:name=".MyCourses" android:label="My Courses"></activity>
     </application>
 
 </manifest>
