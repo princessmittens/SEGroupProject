@@ -154,4 +154,9 @@ public class CourseDetails extends Menu {
         courseSemesterView.setText(c.Semester);
         courseCrossListView.setText(c.Cross_Listing);
     }
+
+    @Override
+    public void onBackPressed(){
+        childBackPressed();
+    }
 }
