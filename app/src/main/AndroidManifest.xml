@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="Login">
+            android:label="DalOffline">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
