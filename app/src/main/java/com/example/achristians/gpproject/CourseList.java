@@ -160,4 +160,9 @@ public class CourseList extends Menu {
         Course.courses.addAll(courseListNew);
         arrayAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onBackPressed(){
+        childBackPressed();
+    }
 }

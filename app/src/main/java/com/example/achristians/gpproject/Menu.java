@@ -1,5 +1,6 @@
 package com.example.achristians.gpproject;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -64,10 +65,7 @@ public class Menu extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.logout:
-                FirebaseAuth.getInstance().signOut();
-                User.setUser(null);
-                Intent i = new Intent(this, MainActivity.class);
-                startActivity(i);
+                logout();
                 return true;
             //toolbar back arrow functionality
             case android.R.id.home:
@@ -78,11 +76,28 @@ public class Menu extends AppCompatActivity{
         }
     }
 
+    private void logout(){
+        FirebaseAuth.getInstance().signOut();
+        User.setUser(null);
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.mainmenu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onBackPressed(){
+        logout();
+        super.onBackPressed();
+    }
+
+    public void childBackPressed(){
+        super.onBackPressed();
     }
     }

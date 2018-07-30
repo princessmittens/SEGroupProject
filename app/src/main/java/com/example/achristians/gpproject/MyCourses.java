@@ -163,4 +163,9 @@ public class MyCourses extends Menu {
         courseList.addAll(courseListNew);
         arrayAdapter.notifyDataSetChanged();
     }
+    
+    @Override
+    public void onBackPressed(){
+        childBackPressed();
+    }
 }
