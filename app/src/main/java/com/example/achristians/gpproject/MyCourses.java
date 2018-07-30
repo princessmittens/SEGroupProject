@@ -25,8 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 public class MyCourses extends Menu {
 
     //Full list of courses from DB
-    ArrayList<Course> courseList = new ArrayList<>();
-    ArrayList<Listing> listingList = new ArrayList<>();
     ArrayAdapter<Course> arrayAdapter;
 
     /**
@@ -40,10 +38,13 @@ public class MyCourses extends Menu {
         setContentView(R.layout.my_courses);
         final ListView courseListView = findViewById(R.id.myCourseListView);
 
+        Course.courses = new ArrayList<>();
+        Listing.listings = new ArrayList<>();
+
         fetchCourses();
 
         //Add data to courseListView
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, courseList);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Course.courses);
         courseListView.setAdapter(arrayAdapter);
 
         courseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -59,10 +60,10 @@ public class MyCourses extends Menu {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MyCourses.this, CourseDetails.class);
 
-                Course clicked = courseList.get(position);
+                Course clicked = Course.courses.get(position);
                 ArrayList<Listing> availableListings = new ArrayList<Listing>();
 
-                for(Listing L : listingList){
+                for(Listing L : Listing.listings){
                     if(L.Key.equals(clicked.Key)){
                         availableListings.add(L);
                     }
@@ -105,6 +106,10 @@ public class MyCourses extends Menu {
                                 }
                             }
                         }
+
+                        if(Course.courses == null){
+                            Course.courses = new ArrayList<>();
+                        }
                         courseChangeHandler(inputCourses);
                     }
 
@@ -132,9 +137,18 @@ public class MyCourses extends Menu {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Iterable<DataSnapshot> dataSnapshots = dataSnapshot.getChildren();
+                        ArrayList<Listing> listingsList = new ArrayList<>();
+
                         for (DataSnapshot dsListing: dataSnapshots) {
-                            listingList.add(dsListing.getValue(Listing.class));
+                            listingsList.add(dsListing.getValue(Listing.class));
                         }
+
+                        if(Listing.listings == null){
+                            Listing.listings = new ArrayList<>();
+                        }
+
+                        Listing.listings.clear();
+                        Listing.listings.addAll(listingsList);
                     }
 
                     /**
@@ -159,8 +173,8 @@ public class MyCourses extends Menu {
     public void courseChangeHandler(ArrayList<Course> courseListNew){
         //Emptying the course list, as anytime data is changed db side this method will
         //be called, and add all elements to the end of the list
-        courseList.clear();
-        courseList.addAll(courseListNew);
+        Course.courses.clear();
+        Course.courses.addAll(courseListNew);
         arrayAdapter.notifyDataSetChanged();
     }
     
