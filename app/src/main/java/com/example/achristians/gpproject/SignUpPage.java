@@ -24,6 +24,8 @@ public class SignUpPage extends AppCompatActivity {
 
     Activity thisActivity = this;
 
+    static boolean regButtonPressed = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +46,8 @@ public class SignUpPage extends AppCompatActivity {
                 String secondPass = Echeckpass.getText().toString();
                 FirebaseUser user = Firebase.getFirebase().getAuth().getCurrentUser();
                 boolean isValidCredentials = checkCred(name, email, pass, secondPass);
-                if (isValidCredentials == true) {
+                if (isValidCredentials == true && !regButtonPressed) {
+                    regButtonPressed = true;
                     Firebase.getFirebase().createUser(SignUpPage.this, email, pass, name, thisActivity);
                 }
             }

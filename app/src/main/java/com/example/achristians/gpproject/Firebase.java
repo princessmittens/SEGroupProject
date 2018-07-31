@@ -162,42 +162,56 @@ public class Firebase {
             firebaseAuth = FirebaseAuth.getInstance();
         }
 
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(callingActivity, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "createUserWithEmail:success");
-                        FirebaseUser user = firebaseAuth.getCurrentUser();
+        try {
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(callingActivity, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
 
-                        /* While this section of code is not being explicitly used right now,
-                        we've left this in for now for testing purposes for iteration 3.
-                         */
-                        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        DatabaseReference ref = database.getReference();
-                        DatabaseReference usersRef = ref.child("Users/");
-                        HashMap<String, String> coursesCompleted = new HashMap<String,String>();
-                        HashMap<String, String> coursesRegistered = new HashMap<String,String>();
+                            //Re-enabling the register button (Not strictly necessary as it should
+                            //leave the registration page)
+                            SignUpPage.regButtonPressed = false;
 
-                        //coursesCompleted.put("100", new Date().toString());
-                        //coursesRegistered.put("200", new Date().toString());
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
 
-                        Map<String, User> users = new HashMap<>();
+                            /* While this section of code is not being explicitly used right now,
+                            we've left this in for now for testing purposes for iteration 3.
+                             */
+                            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference ref = database.getReference();
+                            DatabaseReference usersRef = ref.child("Users/");
+                            HashMap<String, String> coursesCompleted = new HashMap<String, String>();
+                            HashMap<String, String> coursesRegistered = new HashMap<String, String>();
 
-                        Toast.makeText(context, "Authentication success.",
-                                Toast.LENGTH_SHORT).show();
-                        signIn(context, email, password, callingActivity);
+                            //coursesCompleted.put("100", new Date().toString());
+                            //coursesRegistered.put("200", new Date().toString());
 
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "createUserWith Email:failure", task.getException());
-                        Toast.makeText(context, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
+                            Map<String, User> users = new HashMap<>();
+
+                            Toast.makeText(context, "User created.",
+                                    Toast.LENGTH_SHORT).show();
+                            signIn(context, email, password, callingActivity);
+
+                        } else {
+                            //Re-enabling the register button if this failed.
+                            SignUpPage.regButtonPressed = false;
+
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWith Email:failure", task.getException());
+                            Toast.makeText(context, "User creation failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
-            }
-        );
+            );
+        }
+        catch (Exception e){
+            Toast.makeText(context, "Fatal error when creating user remotely.", Toast.LENGTH_SHORT).show();
+            SignUpPage.regButtonPressed = false;
+        }
     }
 
 
