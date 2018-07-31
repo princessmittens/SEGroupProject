@@ -54,26 +54,27 @@ public class SignUpPage extends AppCompatActivity {
     }
 
     private boolean checkCred(String name, String email, String pass, String checkpass) {
-        if (name.equals("")) {
+        if (name == null || name.equals("")) {
             Toast.makeText(this, "Please enter a valid name.",
                     Toast.LENGTH_SHORT).show();
             return false;
-        } else if (!isValidEmail(email)) {
-            Toast.makeText(this, "Please enter a valid email.",
-                    Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (email.equals("")) {
+        } else if (email == null || email.equals("")) {
             Toast.makeText(this, "Please fill in your email.",
                     Toast.LENGTH_SHORT).show();
             return false;
-        } else if (pass.equals("")) {
-            Toast.makeText(this, "Please enter an empty string",
+        }else if (!isValidEmail(email)) {
+            Toast.makeText(this, "Please enter a valid email.",
                     Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (pass == null || pass.equals("")) {
+            Toast.makeText(this, "Please enter a password.",
+                    Toast.LENGTH_SHORT).show();
+            return false;
         } else if (pass.length() < 6) {
             Toast.makeText(this, "Password length is not long enough.",
                     Toast.LENGTH_SHORT).show();
             return false;
-        } else if (!pass.equals(checkpass)) {
+        } else if (checkpass == null || !pass.equals(checkpass)) {
             Toast.makeText(this, "Passwords must match.",
                     Toast.LENGTH_SHORT).show();
             return false;
