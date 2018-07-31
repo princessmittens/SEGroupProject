@@ -65,17 +65,23 @@ public class CourseList extends Menu {
             //Get the clicked course
             Course clicked = Course.courses.get(position);
             ArrayList<Listing> availableListings = new ArrayList<Listing>();
+            ArrayList<Integer> listingNum = new ArrayList<>();
+
+            int index = 0;
 
             //Find the listings associated with the course
             for(Listing L : Listing.listings){
                 if(L.Key.equals(clicked.Key)){
                     availableListings.add(L);
+                    listingNum.add(index);
                 }
+                index++;
             }
 
             //Putting parameters in the intent
             intent.putExtra("Course", clicked);
             intent.putExtra("Listings", availableListings);
+            intent.putExtra("Listings index", listingNum);
             startActivity(intent);
             }
         });

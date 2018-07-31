@@ -38,7 +38,6 @@ public class CourseDetails extends Menu {
     private Course inputCourse;
     //Relevant listings to the opened course, passed from calling activity
     private ArrayList<Listing> listings;
-    private Course inputCourse;
     private ArrayList<Integer> listingNum;
 
     /**
@@ -138,7 +137,7 @@ public class CourseDetails extends Menu {
             Log.d("KEY:", selected_listing.Key);
 //
             selected_listing.setCurrent_Enrollment(selected_listing.getCurrent_Enrollment() - 1);
-            firebaseDB.dbInterface.getRootDataReference().child("Listings").child(String.valueOf(listingNum.get(index))).child("Current_Enrollment").setValue(selected_listing.getCurrent_Enrollment());
+            Firebase.getRootDataReference().child("Listings").child(String.valueOf(listingNum.get(index))).child("Current_Enrollment").setValue(selected_listing.getCurrent_Enrollment());
         }
         //Otherwise, we add this to the user's registered list with listing.key as it's Key (ADD/SWITCH SECTION)
         //This means that a user can only register for one CRN per course, as it is overwritten
@@ -156,7 +155,7 @@ public class CourseDetails extends Menu {
                     l = listings.get(i);
                     if(l.CRN == CRN){
                         l.setCurrent_Enrollment(l.getCurrent_Enrollment() - 1);
-                        firebaseDB.dbInterface.getRootDataReference().child("Listings").child(String.valueOf(listingNum.get(i))).child("Current_Enrollment").setValue(l.getCurrent_Enrollment());
+                        Firebase.getRootDataReference().child("Listings").child(String.valueOf(listingNum.get(i))).child("Current_Enrollment").setValue(l.getCurrent_Enrollment());
                     }
                 }
             }
@@ -166,7 +165,7 @@ public class CourseDetails extends Menu {
             Log.d("KEY:", selected_listing.Key);
 //
             selected_listing.setCurrent_Enrollment(selected_listing.getCurrent_Enrollment() + 1);
-            firebaseDB.dbInterface.getRootDataReference().child("Listings").child(String.valueOf(listingNum.get(index))).child("Current_Enrollment").setValue(selected_listing.getCurrent_Enrollment());
+            Firebase.getRootDataReference().child("Listings").child(String.valueOf(listingNum.get(index))).child("Current_Enrollment").setValue(selected_listing.getCurrent_Enrollment());
         }
         Firebase.getRootDataReference().child("Users").child(User.getUser().getUID()).setValue(User.getUser());
     }
