@@ -38,6 +38,8 @@ public class CourseDetails extends Menu {
     private Course inputCourse;
     //Relevant listings to the opened course, passed from calling activity
     private ArrayList<Listing> listings;
+    private Course inputCourse;
+    private ArrayList<Integer> listingNum;
 
     /**
      * Basic activity functionality once activity is launched.
@@ -62,6 +64,7 @@ public class CourseDetails extends Menu {
         try{
             inputCourse = (Course) intent.getSerializableExtra("Course");
             listings = (ArrayList<Listing>) intent.getSerializableExtra("Listings");
+        listingNum = (ArrayList<Integer>) intent.getSerializableExtra("Listings index");
         }
         catch(Exception e){
             Log.d("Deserialization Error", "An error occured when deserializing the course and listings:\n" + e.getMessage());
@@ -106,8 +109,9 @@ public class CourseDetails extends Menu {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Listing clicked_listing = listingsAdapter.getItem(i);
-                UpdateListing(clicked_listing);
-
+                UpdateListing(clicked_listing, i);
+                Log.d("UPDATE_LISTING_STATUS",String.valueOf(clicked_listing.CRN));
+                Log.d("KEY:", clicked_listing.Key);
                 //https://stackoverflow.com/questions/16976431/change-background-color-of-selected-item-on-a-listview
                 //we need to change color of the registered CRN
                 listingsAdapter.notifyDataSetChanged();
@@ -124,12 +128,17 @@ public class CourseDetails extends Menu {
      *
      * @param selected_listing: listing selected from the course details
      */
-    private void UpdateListing(Listing selected_listing) {
+    private void UpdateListing(Listing selected_listing, int index) {
         //If the user has this CRN in their registered list, remove it (DROP COURSE)
         if (User.getUser().getRegistered().containsKey(selected_listing.Key)
                 && User.getUser().getRegistered().get(selected_listing.Key).equals(String.valueOf(selected_listing.CRN))) {
             //Otherwise we update the CRN or add new Key/CRN pair (SWITCH SECTION)
             User.getUser().getRegistered().remove(selected_listing.Key);
+            Log.d("UPDATE_LISTING_STATUS",String.valueOf(selected_listing.CRN));
+            Log.d("KEY:", selected_listing.Key);
+//
+            selected_listing.setCurrent_Enrollment(selected_listing.getCurrent_Enrollment() - 1);
+            firebaseDB.dbInterface.getRootDataReference().child("Listings").child(String.valueOf(listingNum.get(index))).child("Current_Enrollment").setValue(selected_listing.getCurrent_Enrollment());
         }
         //Otherwise, we add this to the user's registered list with listing.key as it's Key (ADD/SWITCH SECTION)
         //This means that a user can only register for one CRN per course, as it is overwritten
@@ -139,7 +148,25 @@ public class CourseDetails extends Menu {
                         Toast.LENGTH_LONG).show();
                 return;
             }
+            String registered_CRN;
+            if((registered_CRN = User.getUser().getRegistered().get(selected_listing.Key)) != null){
+                long CRN = Long.parseLong(registered_CRN);
+                Listing l;
+                for(int i = 0; i<listings.size(); i++){
+                    l = listings.get(i);
+                    if(l.CRN == CRN){
+                        l.setCurrent_Enrollment(l.getCurrent_Enrollment() - 1);
+                        firebaseDB.dbInterface.getRootDataReference().child("Listings").child(String.valueOf(listingNum.get(i))).child("Current_Enrollment").setValue(l.getCurrent_Enrollment());
+                    }
+                }
+            }
+
             User.getUser().getRegistered().put(selected_listing.Key,String.valueOf(selected_listing.CRN));
+            Log.d("UPDATE_LISTING_STATUS",String.valueOf(selected_listing.CRN));
+            Log.d("KEY:", selected_listing.Key);
+//
+            selected_listing.setCurrent_Enrollment(selected_listing.getCurrent_Enrollment() + 1);
+            firebaseDB.dbInterface.getRootDataReference().child("Listings").child(String.valueOf(listingNum.get(index))).child("Current_Enrollment").setValue(selected_listing.getCurrent_Enrollment());
         }
         Firebase.getRootDataReference().child("Users").child(User.getUser().getUID()).setValue(User.getUser());
     }

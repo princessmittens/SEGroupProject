@@ -108,4 +108,13 @@ public class Listing implements Serializable{
 
         return false;
     }
+
+    public void setCurrent_Enrollment(long current_Enrollment) {
+        Current_Enrollment = current_Enrollment;
+    }
+
+    public long getCurrent_Enrollment(){
+        return Current_Enrollment;
+    }
+
 }

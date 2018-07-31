@@ -46,12 +46,16 @@ public class ListAdapter extends ArrayAdapter<Listing> {
         TextView locationView = convertView.findViewById(R.id.locationView);
         TextView statusView = convertView.findViewById(R.id.statusView);
         TextView timeView = convertView.findViewById(R.id.TimeView);
+        TextView maxEnrollmentView = convertView.findViewById(R.id.maxEnrollmentView);
+        TextView currentEnrollmentView = convertView.findViewById(R.id.currentEnrollmentView);
 
         crnView.setText(String.valueOf(l.CRN));
         instructorView.setText(l.Instructor);
         daysView.setText(l.Days);
         locationView.setText(l.Location);
         timeView.setText(l.Time);
+        maxEnrollmentView.setText(l.Max_Enrollment);
+        currentEnrollmentView.setText(String.valueOf(l.getCurrent_Enrollment()));
 
         if (match) {
             crnView.setTypeface(null, Typeface.BOLD);
@@ -61,6 +65,8 @@ public class ListAdapter extends ArrayAdapter<Listing> {
             statusView.setText("Registered");
             statusView.setTypeface(null, Typeface.BOLD);
             timeView.setTypeface(null, Typeface.BOLD);
+            maxEnrollmentView.setTypeface(null, Typeface.BOLD);
+            currentEnrollmentView.setTypeface(null, Typeface.BOLD);
         } else
         {
             crnView.setTypeface(null, Typeface.NORMAL);
@@ -70,6 +76,8 @@ public class ListAdapter extends ArrayAdapter<Listing> {
             statusView.setText("Not registered");
             statusView.setTypeface(null, Typeface.NORMAL);
             timeView.setTypeface(null, Typeface.NORMAL);
+            maxEnrollmentView.setTypeface(null, Typeface.NORMAL);
+            currentEnrollmentView.setTypeface(null, Typeface.NORMAL);
         }
         return convertView;
     }
