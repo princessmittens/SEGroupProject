@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,14 +64,19 @@ public class MyCourses extends Menu {
                 Course clicked = Course.courses.get(position);
                 ArrayList<Listing> availableListings = new ArrayList<Listing>();
 
+                ArrayList<Integer> listingNum = new ArrayList<Integer>();
+                int index = 0;
                 for(Listing L : Listing.listings){
                     if(L.Key.equals(clicked.Key)){
                         availableListings.add(L);
+                        listingNum.add(index);
                     }
+                    index++;
                 }
 
                 intent.putExtra("Course", clicked);
                 intent.putExtra("Listings", availableListings);
+                intent.putExtra("Listings index", listingNum);
                 startActivity(intent);
             }
         });

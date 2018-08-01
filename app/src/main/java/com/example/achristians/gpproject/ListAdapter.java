@@ -55,7 +55,7 @@ public class ListAdapter extends ArrayAdapter<Listing> {
         locationView.setText(l.Location);
         timeView.setText(l.Time);
         maxEnrollmentView.setText(l.Max_Enrollment);
-        currentEnrollmentView.setText(String.valueOf(l.getCurrent_Enrollment()));
+        currentEnrollmentView.setText(String.valueOf(l.Current_Enrollment));
 
         if (match) {
             crnView.setTypeface(null, Typeface.BOLD);

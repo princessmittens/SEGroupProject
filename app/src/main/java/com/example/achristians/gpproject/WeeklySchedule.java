@@ -113,6 +113,7 @@ public class WeeklySchedule extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Iterable<DataSnapshot> dataSnapshots = dataSnapshot.getChildren();
+                        listingList.clear();
                         for (DataSnapshot dsListing: dataSnapshots) {
                             //add listings only for the current user
                             Listing l = dsListing.getValue(Listing.class);
@@ -148,6 +149,8 @@ public class WeeklySchedule extends AppCompatActivity {
      * @param listingList stores all the lectures of the student that should be displayed
      */
     void PopulateTimetable(ArrayList<Listing> listingList) {
+
+        listingsByDays.clear();
 
         //create 5 lists for 5 days
         for (int i=0;i<5; i++) {
