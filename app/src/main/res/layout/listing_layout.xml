@@ -145,14 +145,6 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/Line"
-            android:layout_width="fill_parent"
-            android:layout_height="2sp"
-            android:layout_weight="1"
-            android:background="#000000"
-            android:text="Unknown" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -192,6 +184,14 @@
                 android:layout_weight="1"
                 android:text="CurrentView" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/Line"
+            android:layout_width="fill_parent"
+            android:layout_height="2sp"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:text="Unknown" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

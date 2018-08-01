@@ -66,7 +66,7 @@ public class CourseDetails extends Menu {
         listingNum = (ArrayList<Integer>) intent.getSerializableExtra("Listings index");
         }
         catch(Exception e){
-            Log.d("Deserialization Error", "An error occured when deserializing the course and listings:\n" + e.getMessage());
+            Log.d("Deserialization Error", "An error occurred when de-serializing the course and listings:\n" + e.getMessage());
         }
 
         //Link to timetable
