@@ -128,6 +128,12 @@ public class CourseDetails extends Menu {
      * @param selected_listing: listing selected from the course details
      */
     private void UpdateListing(Listing selected_listing, int index) {
+        //Null check on user at beginning, so that we don't write to empty UID, overwriting user data
+        if(User.getUser().getUID() == null || User.getUser().getUID().isEmpty()){
+            Toast.makeText(this, "Registration request failed.\nUID is null or empty.", Toast.LENGTH_LONG);
+            return;
+        }
+
         //If the user has this CRN in their registered list, remove it (DROP COURSE)
         if (User.getUser().getRegistered().containsKey(selected_listing.Key)
                 && User.getUser().getRegistered().get(selected_listing.Key).equals(String.valueOf(selected_listing.CRN))) {
@@ -166,6 +172,13 @@ public class CourseDetails extends Menu {
 //
             selected_listing.Current_Enrollment = selected_listing.Current_Enrollment + 1;
             Firebase.getRootDataReference().child("Listings").child(String.valueOf(listingNum.get(index))).child("Current_Enrollment").setValue(selected_listing.Current_Enrollment);
+        }
+
+        //Null check on user at beginning, so that we don't write to empty UID, overwriting user data
+        //Redundant, but writing to a null DB child really sucks
+        if(User.getUser().getUID() == null || User.getUser().getUID().isEmpty()){
+            Toast.makeText(this, "Registration request failed.\nUID is null or empty.", Toast.LENGTH_LONG);
+            return;
         }
         Firebase.getRootDataReference().child("Users").child(User.getUser().getUID()).setValue(User.getUser());
     }

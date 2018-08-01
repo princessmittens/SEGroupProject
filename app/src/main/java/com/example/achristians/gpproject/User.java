@@ -159,6 +159,8 @@ public class User {
         boolean listingFound = false;
 
         for (String value : getRegistered().values()) {
+            //Listing found needs to be reset every loop
+            listingFound = false;
             for (int i = 0; i < Listing.listings.size() && !listingFound; i++) {
                 if (Listing.listings.get(i).CRN == Long.parseLong(value)) {
                     listingFound = true;

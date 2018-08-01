@@ -90,7 +90,7 @@ public class Firebase {
                             loggedIn.setUID(user.getUid());
                             loggedIn.setIdentifier(user.getEmail());
 
-                    instance.fetchLoggedInUser();
+                    instance.fetchLoggedInUser(context);
 
                     Toast.makeText(context, "Authentication success.",
                             Toast.LENGTH_SHORT).show();
@@ -130,7 +130,12 @@ public class Firebase {
      * Fetches the database information (Registered courses, completed courses)
      * for an authenticated user
      */
-    public static void fetchLoggedInUser(){
+    public static void fetchLoggedInUser(final Context context){
+        if(User.getUser().getUID() == null || User.getUser().getUID().isEmpty()){
+            Toast.makeText(context, "Fetching user data from database failed:UID not initialized.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         usersDataReference = rootDataReference.child("Users").child(User.getUser().getUID());
 
         usersDataReference.addValueEventListener(new ValueEventListener() {
@@ -176,20 +181,6 @@ public class Firebase {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-
-                            /* While this section of code is not being explicitly used right now,
-                            we've left this in for now for testing purposes for iteration 3.
-                             */
-                            final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference ref = database.getReference();
-                            DatabaseReference usersRef = ref.child("Users/");
-                            HashMap<String, String> coursesCompleted = new HashMap<String, String>();
-                            HashMap<String, String> coursesRegistered = new HashMap<String, String>();
-
-                            //coursesCompleted.put("100", new Date().toString());
-                            //coursesRegistered.put("200", new Date().toString());
-
-                            Map<String, User> users = new HashMap<>();
 
                             Toast.makeText(context, "User created.",
                                     Toast.LENGTH_SHORT).show();
