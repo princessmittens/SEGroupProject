@@ -226,6 +226,8 @@ public class CourseDetails extends Menu {
 
     /**
      * Sets ListView height dynamically based on the height of the items.
+     *
+     * Works Cited:
      * https://stackoverflow.com/questions/1778485/android-listview-display-all-available-items-without-scroll-with-static-header
      *
      * @param listView to be resized

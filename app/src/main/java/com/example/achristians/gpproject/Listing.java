@@ -102,8 +102,10 @@ public class Listing implements Serializable{
 
         for (int i = 0; i < Days.length(); i++){
             if (l.Days.indexOf(Days.charAt(i)) != -1) {
-                if (((thisStart >= otherStart && thisStart <= otherEnd)) ||
-                    (thisEnd >= otherStart && thisEnd <= otherEnd)) {
+                if ((thisStart >= otherStart && thisStart <= otherEnd) ||
+                    (thisEnd >= otherStart && thisEnd <= otherEnd) ||
+                    (thisStart <= otherStart && thisEnd >= otherEnd) ||
+                    (otherStart <= thisStart && otherEnd >= thisEnd)) {
                     return true;
                 }
             }
