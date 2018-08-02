@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-//https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
-
 /**
  * List adapter to display listings of the CourseDetails page
  */

@@ -134,29 +134,12 @@ public class User {
     }
 
     /**
-     * Adds an event to a user's calendar, on the condition that there are no scheduling conflicts.
-     * @param l The listing to add.
-     * @return Whether the course was added successfully
-     */
-    public boolean addEvent(Listing l){
-        return false;
-    }
-
-    /**
-     * Adds an event to a user's calendar, irrelevant to whether there are scheduling conflicts
-     * @param l The listing to add.
-     */
-    public void addEventOverride(Listing l){
-        /* Stub */
-    }
-
-    /**
      * Check if a listing conflicts with the courses a user is registered in.
      * @param l The listing to check against.
      * @return
      */
     public boolean checkConflict(Listing l) {
-        boolean listingFound = false;
+        boolean listingFound;
 
         for (String value : getRegistered().values()) {
             //Listing found needs to be reset every loop

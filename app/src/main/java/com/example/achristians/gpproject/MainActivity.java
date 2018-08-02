@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 // Assumes user open to availability of course with list view
 public class MainActivity extends AppCompatActivity {
 
-    TextView Vlogpass, Vlogemail, createaccount;
+    TextView createaccount;
     EditText Elogpass, Elogemail, Echeckpass;
     Button loginbutton;
 

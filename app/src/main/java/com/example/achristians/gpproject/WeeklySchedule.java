@@ -117,22 +117,13 @@ public class WeeklySchedule extends AppCompatActivity {
                         for (DataSnapshot dsListing: dataSnapshots) {
                             //add listings only for the current user
                             Listing l = dsListing.getValue(Listing.class);
-                            //Log.d("LISTING:",String.valueOf(l.CRN));
                             if (User.getUser().getRegistered().containsKey(l.Key) && User.getUser().getRegistered().get(l.Key).equals(String.valueOf(l.CRN))) {
                                 listingList.add(l);
-                                //Log.d("RESULT_LOG","Match found. add listing to the list");
-                                //Log.d("CRN is ", String.valueOf(l.CRN));
                             }
-                            //if (User.getUser().getRegistered().containsKey(l.Key)) Log.d("FOUND MATCH KEY", l.Key);
 
                         }
-                        Log.d("RESULT_LOG: ", String.valueOf(listingList.size()));
-                        Log.d("RESULT_LOG: ",String.valueOf(User.getUser().getRegistered().size()));
-
                         //populate timetable with listings
                         PopulateTimetable(listingList);
-
-
                     }
 
                     @Override
@@ -165,7 +156,6 @@ public class WeeklySchedule extends AppCompatActivity {
             for (int i = 0; i < days.length(); i++) {
                 int index = daysAbbr.get(days.charAt(i));
                 listingsByDays.get(index).add(l);
-                Log.d("RESULT_LOG: ", "Add listing CRN " + l.CRN + " to the day " + String.valueOf((index)));
             }
         }
 
@@ -190,14 +180,8 @@ public class WeeklySchedule extends AppCompatActivity {
         double dayStart=StartTime(day_start_end_string);
         double dayEnd=EndTime(day_start_end_string);
         double dayDuration=dayEnd-dayStart;
-        Log.d("RESULT_LOG:","Day duration is "+String.valueOf(dayDuration));
-        //will figure out activityTopHeight later
         activityTopHeight=50;
         double windowHeight = height - activityTopHeight;
-        Log.d("RESULT_LOG:","Screen height is "+String.valueOf(height));
-        Log.d("RESULT_LOG:","Timetable height is "+String.valueOf(windowHeight));
-
-        Log.d("RESULT_LOG:","Size of the listingsByDays is "+String.valueOf(listingsByDays.size()));
         for (ArrayList<Listing> day: listingsByDays) {
             LinearLayout column = daysColumns.get(index);
             //in the beggining of the day previous course end is actually start of the day
@@ -226,11 +210,9 @@ public class WeeklySchedule extends AppCompatActivity {
                 double emptyDuration = 0;
                 courseDuration = courseEnd - courseStart;
                 emptyDuration = courseStart - endOfPreviousCourse;
-                Log.d("RESULT_LOG:", "Course " + l.CRN + " duration is " + String.valueOf(courseDuration));
 
                 int courseHeight = (int) ((courseDuration) * windowHeight / dayDuration);
                 int emptyHeight = (int) ((emptyDuration) * windowHeight / dayDuration);
-                Log.d("RESULT_LOG:", "Course " + l.CRN + " height is " + String.valueOf(courseHeight));
                 listingView.setHeight(courseHeight);
                 emptyView.setHeight(emptyHeight);
                 //update end of PreviouseCourse for the next course;

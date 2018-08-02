@@ -1,34 +1,30 @@
 package com.example.achristians.gpproject;
 
-        import android.content.Context;
-        import android.os.SystemClock;
-        import android.support.test.InstrumentationRegistry;
-        import android.support.test.espresso.NoMatchingViewException;
-        import android.support.test.espresso.intent.rule.IntentsTestRule;
+import android.content.Context;
+import android.os.SystemClock;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.NoMatchingViewException;
+import android.support.test.espresso.intent.rule.IntentsTestRule;
 
-        import static android.support.test.espresso.Espresso.onData;
-        import static android.support.test.espresso.Espresso.onView;
-        import static android.support.test.espresso.action.ViewActions.click;
-        import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-        import static android.support.test.espresso.action.ViewActions.scrollTo;
-        import static android.support.test.espresso.action.ViewActions.swipeUp;
-        import static android.support.test.espresso.action.ViewActions.typeText;
-        import static android.support.test.espresso.matcher.ViewMatchers.withId;
-        import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.Espresso.onData;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.swipeUp;
+import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-        import org.junit.After;
-        import org.junit.Before;
-        import org.junit.Rule;
-        import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 
-        import java.util.Calendar;
-        import static org.hamcrest.CoreMatchers.anything;
-
+import java.util.Calendar;
+import static org.hamcrest.CoreMatchers.anything;
 
 public class TrackCourseCapacityTest {
     private String email,psswd,name;
-
-    private static boolean hasCreated = false;
 
     @Rule
     public IntentsTestRule<MainActivity> mActivityRule = new IntentsTestRule<>(
@@ -62,7 +58,7 @@ public class TrackCourseCapacityTest {
         onView(withId(R.id.regbutton)).perform(click());
 
         //check activity is now at registration page
-        Thread.sleep(2000);
+        Thread.sleep(3000);
 
         //This will fail if the update window is still open
         try{
@@ -101,7 +97,7 @@ public class TrackCourseCapacityTest {
         onView(withId(R.id.regbutton)).perform(click());
 
         //check activity is now at main menu page
-        Thread.sleep(1000);
+        Thread.sleep(3000);
 
         //This will fail if the register window is still open
         try{
@@ -114,7 +110,7 @@ public class TrackCourseCapacityTest {
         onView(withText("Course List")).perform(click());
 
         //wait for firebase to do stuff
-        SystemClock.sleep(500);
+        SystemClock.sleep(3000);
 
         //find course listing for csci 1105
         onData(anything()).inAdapterView(withId(R.id.courseListView)).atPosition(0).perform(click());
@@ -122,7 +118,6 @@ public class TrackCourseCapacityTest {
         //switch between course times
         onData(anything()).inAdapterView(withId(R.id.listView)).atPosition(0).perform(click(), swipeUp());
         onData(anything()).inAdapterView(withId(R.id.listView)).atPosition(1).perform(click());
-
     }
 
     @After

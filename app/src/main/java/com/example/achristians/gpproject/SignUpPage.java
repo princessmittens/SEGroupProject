@@ -8,7 +8,6 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -18,7 +17,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class SignUpPage extends AppCompatActivity {
 
-    TextView Vname, Vemail, Vpass, Vcheckpass;
     EditText Ename, Eemail, Epass, Echeckpass;
     Button regbutton;
 

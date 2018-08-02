@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,11 +18,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Executor;
 
 import static android.content.ContentValues.TAG;
 
@@ -106,27 +100,6 @@ public class Firebase {
     }
 
     /**
-     * Currently unused, kept in for posterity
-     */
-    public void getCurrentUser() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            // Name, email address, and profile photo Url
-            String name = user.getDisplayName();
-            String email = user.getEmail();
-            Uri photoUrl = user.getPhotoUrl();
-
-            // Check if user's email is verified
-            boolean emailVerified = user.isEmailVerified();
-
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getToken() instead.
-            String uid = user.getUid();
-        }
-    }
-
-    /**
      * Fetches the database information (Registered courses, completed courses)
      * for an authenticated user
      */
@@ -203,32 +176,5 @@ public class Firebase {
             Toast.makeText(context, "Fatal error when creating user remotely.", Toast.LENGTH_SHORT).show();
             SignUpPage.regButtonPressed = false;
         }
-    }
-
-
-    public DataSnapshot storedResult;
-    public DatabaseError storedError;
-
-    /**
-     * Adds a listener to a database path, whose result will be stored in result
-     * Not being explicitly used right now, but keeping it in for testing in iteration 3
-     * @param DB_path Path in the database to retrieve
-     */
-    public void addObjectListener(String DB_path){
-        generalDataReference = rootDataReference.child(DB_path);
-
-        generalDataReference.addValueEventListener(
-            new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    storedResult = dataSnapshot;
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    storedError = databaseError;
-                }
-            }
-        );
     }
 }

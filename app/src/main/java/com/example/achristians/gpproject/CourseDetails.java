@@ -2,7 +2,6 @@ package com.example.achristians.gpproject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +11,6 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.Exclude;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 /**
@@ -116,8 +106,7 @@ public class CourseDetails extends Menu {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Listing clicked_listing = listingsAdapter.getItem(i);
                 UpdateListing(clicked_listing, i);
-                Log.d("UPDATE_LISTING_STATUS",String.valueOf(clicked_listing.CRN));
-                Log.d("KEY:", clicked_listing.Key);
+
                 //https://stackoverflow.com/questions/16976431/change-background-color-of-selected-item-on-a-listview
                 //we need to change color of the registered CRN
                 listingsAdapter.notifyDataSetChanged();
@@ -154,8 +143,6 @@ public class CourseDetails extends Menu {
                 && User.getUser().getRegistered().get(selected_listing.Key).equals(String.valueOf(selected_listing.CRN))) {
             //Otherwise we update the CRN or add new Key/CRN pair (SWITCH SECTION)
             User.getUser().getRegistered().remove(selected_listing.Key);
-            Log.d("UPDATE_LISTING_STATUS",String.valueOf(selected_listing.CRN));
-            Log.d("KEY:", selected_listing.Key);
             
             selected_listing.Current_Enrollment = selected_listing.Current_Enrollment - 1;
             Firebase.getRootDataReference().child("Listings").child(String.valueOf(listingNum.get(index))).child("Current_Enrollment").setValue(selected_listing.Current_Enrollment);
@@ -192,9 +179,7 @@ public class CourseDetails extends Menu {
 
 
             User.getUser().getRegistered().put(selected_listing.Key,String.valueOf(selected_listing.CRN));
-            Log.d("UPDATE_LISTING_STATUS",String.valueOf(selected_listing.CRN));
-            Log.d("KEY:", selected_listing.Key);
-//
+
             selected_listing.Current_Enrollment = selected_listing.Current_Enrollment + 1;
             Firebase.getRootDataReference().child("Listings").child(String.valueOf(listingNum.get(index))).child("Current_Enrollment").setValue(selected_listing.Current_Enrollment);
         }
