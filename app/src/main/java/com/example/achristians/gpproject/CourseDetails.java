@@ -2,11 +2,14 @@ package com.example.achristians.gpproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +36,7 @@ public class CourseDetails extends Menu {
     private ListView listView;
     private Button timetableLink;
     private ListingAdapter listingsAdapter;
+    private ScrollView scrollView;
 
     //Displayed course, passed from calling activity
     private Course inputCourse;
@@ -58,12 +62,14 @@ public class CourseDetails extends Menu {
         listView=findViewById(R.id.listView);
         timetableLink = findViewById(R.id.timetableButton);
 
+        scrollView = findViewById(R.id.scroller);
+
         Intent intent = getIntent();
         //Retrieving passed in information
         try{
             inputCourse = (Course) intent.getSerializableExtra("Course");
             listings = (ArrayList<Listing>) intent.getSerializableExtra("Listings");
-        listingNum = (ArrayList<Integer>) intent.getSerializableExtra("Listings index");
+            listingNum = (ArrayList<Integer>) intent.getSerializableExtra("Listings index");
         }
         catch(Exception e){
             Log.d("Deserialization Error", "An error occurred when de-serializing the course and listings:\n" + e.getMessage());
@@ -93,6 +99,7 @@ public class CourseDetails extends Menu {
 
         listingsAdapter = new ListingAdapter(this, listings);
         listView.setAdapter(listingsAdapter);
+        setListViewHeightBasedOnItems(listView);
 
         //Setting the handler for a Listing click
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -114,12 +121,20 @@ public class CourseDetails extends Menu {
                 //https://stackoverflow.com/questions/16976431/change-background-color-of-selected-item-on-a-listview
                 //we need to change color of the registered CRN
                 listingsAdapter.notifyDataSetChanged();
+                setListViewHeightBasedOnItems(listView);
+
             }
         });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         populateFromCourse(inputCourse);
+
+        scrollView.post(new Runnable() {
+            public void run() {
+                scrollView.fullScroll(ScrollView.FOCUS_UP);
+            }
+        });
     }
 
     /**
@@ -141,7 +156,7 @@ public class CourseDetails extends Menu {
             User.getUser().getRegistered().remove(selected_listing.Key);
             Log.d("UPDATE_LISTING_STATUS",String.valueOf(selected_listing.CRN));
             Log.d("KEY:", selected_listing.Key);
-//
+            
             selected_listing.Current_Enrollment = selected_listing.Current_Enrollment - 1;
             Firebase.getRootDataReference().child("Listings").child(String.valueOf(listingNum.get(index))).child("Current_Enrollment").setValue(selected_listing.Current_Enrollment);
         }
@@ -158,9 +173,10 @@ public class CourseDetails extends Menu {
                 Toast.makeText(this, "The class you are trying to register for is full.",
                         Toast.LENGTH_LONG).show();
                 return;
-
             }
+
             String registered_CRN;
+            //Is the user already registered for a different section of this course?
             if((registered_CRN = User.getUser().getRegistered().get(selected_listing.Key)) != null){
                 long CRN = Long.parseLong(registered_CRN);
                 Listing l;
@@ -172,6 +188,8 @@ public class CourseDetails extends Menu {
                     }
                 }
             }
+
+
 
             User.getUser().getRegistered().put(selected_listing.Key,String.valueOf(selected_listing.CRN));
             Log.d("UPDATE_LISTING_STATUS",String.valueOf(selected_listing.CRN));
@@ -204,5 +222,45 @@ public class CourseDetails extends Menu {
     @Override
     public void onBackPressed(){
         childBackPressed();
+    }
+
+    /**
+     * Sets ListView height dynamically based on the height of the items.
+     * https://stackoverflow.com/questions/1778485/android-listview-display-all-available-items-without-scroll-with-static-header
+     *
+     * @param listView to be resized
+     * @return true if the listView is successfully resized, false otherwise
+     */
+    public static boolean setListViewHeightBasedOnItems(ListView listView) {
+
+        android.widget.ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter != null) {
+
+            int numberOfItems = listAdapter.getCount();
+
+            // Get total height of all items.
+            int totalItemsHeight = 0;
+            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
+                View item = listAdapter.getView(itemPos, null, listView);
+                item.measure(0, 0);
+                totalItemsHeight += item.getMeasuredHeight();
+            }
+
+            // Get total height of all item dividers.
+            int totalDividersHeight = listView.getDividerHeight() *
+                    (numberOfItems - 1);
+
+            // Set list height.
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            params.height = totalItemsHeight + totalDividersHeight;
+            listView.setLayoutParams(params);
+            listView.requestLayout();
+
+            return true;
+
+        } else {
+            return false;
+        }
+
     }
 }

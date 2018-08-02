@@ -10,6 +10,8 @@ package com.example.achristians.gpproject;
         import static android.support.test.espresso.Espresso.onView;
         import static android.support.test.espresso.action.ViewActions.click;
         import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+        import static android.support.test.espresso.action.ViewActions.scrollTo;
+        import static android.support.test.espresso.action.ViewActions.swipeUp;
         import static android.support.test.espresso.action.ViewActions.typeText;
         import static android.support.test.espresso.matcher.ViewMatchers.withId;
         import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -36,7 +38,7 @@ public class TrackCourseCapacityTest {
     //set user input for test
     public void initRegistration() throws Exception{
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        firebaseDB.dbInterface = new firebaseDB(context);
+        Firebase.initializeFirebase(context);
 
         String timePrefix = "" + Calendar.getInstance().getTimeInMillis();
 
@@ -98,10 +100,10 @@ public class TrackCourseCapacityTest {
         onView(withId(R.id.Echeckpass)).perform(typeText(psswd),closeSoftKeyboard());
         onView(withId(R.id.regbutton)).perform(click());
 
-        //check activity is now at registration page
-        Thread.sleep(2000);
+        //check activity is now at main menu page
+        Thread.sleep(1000);
 
-        //This will fail if the update window is still open
+        //This will fail if the register window is still open
         try{
             onView(withId(R.id.regbutton)).perform(click());
             assert(false);
@@ -112,13 +114,13 @@ public class TrackCourseCapacityTest {
         onView(withText("Course List")).perform(click());
 
         //wait for firebase to do stuff
-        SystemClock.sleep(3000);
+        SystemClock.sleep(500);
 
         //find course listing for csci 1105
         onData(anything()).inAdapterView(withId(R.id.courseListView)).atPosition(0).perform(click());
 
         //switch between course times
-        onData(anything()).inAdapterView(withId(R.id.listView)).atPosition(0).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.listView)).atPosition(0).perform(click(), swipeUp());
         onData(anything()).inAdapterView(withId(R.id.listView)).atPosition(1).perform(click());
 
     }

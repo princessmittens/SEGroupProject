@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Listing implements Serializable{
 
     public static ArrayList<Listing> listings;
-    public static Listing exampleListing = new Listing(99999, "TEST_COURSE_KEY", 3, "lec", "Doe, John", 0,
+    public static Listing exampleListing = new Listing(99999, "TEST_COURSE_KEY", 3, "Lec", "Doe, John", 0,
                                                                            "99", "Goldberg 127", "MWF", "1705-1755");
 
     /**
@@ -86,8 +86,11 @@ public class Listing implements Serializable{
      * @return Whether a conflict exists
      */
     public boolean checkConflict(Listing l){
+        //There is no conflict if the time is Consult department, or the section
+        //that is being checked against would be dropped anyway
         if (Days == null || l == null || Time == null || l.Time == null ||
-                Time.compareTo("C/D") == 0 || l.Time.compareTo("C/D") == 0) {
+                Time.compareTo("C/D") == 0 || l.Time.compareTo("C/D") == 0 ||
+                l.Key.equals(this.Key)) {
             return false;
         }
 
