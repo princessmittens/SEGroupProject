@@ -153,6 +153,13 @@ public class CourseDetails extends Menu {
                         Toast.LENGTH_LONG).show();
                 return;
             }
+            //Check that the course capacity is not full
+            if(User.getUser().checkMax(selected_listing)){
+                Toast.makeText(this, "The class you are trying to register for is full.",
+                        Toast.LENGTH_LONG).show();
+                return;
+
+            }
             String registered_CRN;
             if((registered_CRN = User.getUser().getRegistered().get(selected_listing.Key)) != null){
                 long CRN = Long.parseLong(registered_CRN);

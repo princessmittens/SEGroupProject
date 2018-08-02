@@ -173,4 +173,12 @@ public class User {
         }
         return false;
     }
+
+    public boolean checkMax(Listing l) {
+
+        if (String.valueOf(l.Current_Enrollment).equals(l.Max_Enrollment))
+            return true;
+        else
+            return false;
+    }
 }
