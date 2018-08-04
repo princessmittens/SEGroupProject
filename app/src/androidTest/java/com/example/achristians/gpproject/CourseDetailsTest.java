@@ -58,6 +58,10 @@ public class CourseDetailsTest {
 
         intent.putExtra("Course", c);
         intent.putExtra("Listings", listings);
+
+        ArrayList<Integer> listingsNum = new ArrayList<>();
+        listingsNum.add(520);
+        intent.putExtra("Listings index", listingsNum);
         activityRule.launchActivity(intent);
         Thread.sleep(2000);
     }
