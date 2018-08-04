@@ -10,9 +10,14 @@ import android.view.View;
 import android.app.ActionBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
+import java.util.ArrayList;
+import static android.app.PendingIntent.getActivity;
 
+/**
+ * Allows a user to navigate to a specific screen
+ * once logged in
+ */
 public class Menu extends AppCompatActivity{
 
     private TextView navListView, myCourses, timetable;
@@ -56,6 +61,12 @@ public class Menu extends AppCompatActivity{
             }
         });
     }
+
+    /**
+     * Toggles options in menu item and allows functionality to be assigned
+     * @param item - menu item to select
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -79,6 +90,11 @@ public class Menu extends AppCompatActivity{
     }
 
 
+
+    /**
+     * Create and shows menu
+     * @param menu - menu object
+     */
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         MenuInflater inflater = getMenuInflater();
