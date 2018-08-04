@@ -157,8 +157,14 @@ public class User {
         return false;
     }
 
+    /**
+     * Check if a listing is at full capacity
+     * @param l The listing to check the number of students enrolled in
+     * @return
+     */
     public boolean checkMax(Listing l) {
 
+        //Return whether the current and max enrollments are equal
         if (String.valueOf(l.Current_Enrollment).equals(l.Max_Enrollment))
             return true;
         else

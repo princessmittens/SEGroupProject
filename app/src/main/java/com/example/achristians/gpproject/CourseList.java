@@ -67,6 +67,7 @@ public class CourseList extends Menu {
             ArrayList<Listing> availableListings = new ArrayList<Listing>();
             ArrayList<Integer> listingNum = new ArrayList<>();
 
+            //Index variable tracks the listing number, this is used to help with Firebase queries for course capacity
             int index = 0;
 
             //Find the listings associated with the course
