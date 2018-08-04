@@ -24,7 +24,7 @@
         android:ems="10"
         android:layout_marginTop="5sp"
         android:layout_marginBottom="5sp"
-        android:inputType="textEmailAddress"
+        android:inputType="textEmailAddress|textVisiblePassword"
         android:layout_margin="10sp"
         android:theme="@style/EditTextTheme"/>
 
