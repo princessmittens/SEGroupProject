@@ -65,17 +65,24 @@ public class CourseList extends Menu {
             //Get the clicked course
             Course clicked = Course.courses.get(position);
             ArrayList<Listing> availableListings = new ArrayList<Listing>();
+            ArrayList<Integer> listingNum = new ArrayList<>();
+
+            //Index variable tracks the listing number, this is used to help with Firebase queries for course capacity
+            int index = 0;
 
             //Find the listings associated with the course
             for(Listing L : Listing.listings){
                 if(L.Key.equals(clicked.Key)){
                     availableListings.add(L);
+                    listingNum.add(index);
                 }
+                index++;
             }
 
             //Putting parameters in the intent
             intent.putExtra("Course", clicked);
             intent.putExtra("Listings", availableListings);
+            intent.putExtra("Listings index", listingNum);
             startActivity(intent);
             }
         });
@@ -159,5 +166,10 @@ public class CourseList extends Menu {
         Course.courses.clear();
         Course.courses.addAll(courseListNew);
         arrayAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onBackPressed(){
+        childBackPressed();
     }
 }

@@ -134,31 +134,16 @@ public class User {
     }
 
     /**
-     * Adds an event to a user's calendar, on the condition that there are no scheduling conflicts.
-     * @param l The listing to add.
-     * @return Whether the course was added successfully
-     */
-    public boolean addEvent(Listing l){
-        return false;
-    }
-
-    /**
-     * Adds an event to a user's calendar, irrelevant to whether there are scheduling conflicts
-     * @param l The listing to add.
-     */
-    public void addEventOverride(Listing l){
-        /* Stub */
-    }
-
-    /**
      * Check if a listing conflicts with the courses a user is registered in.
      * @param l The listing to check against.
      * @return
      */
     public boolean checkConflict(Listing l) {
-        boolean listingFound = false;
+        boolean listingFound;
 
         for (String value : getRegistered().values()) {
+            //Listing found needs to be reset every loop
+            listingFound = false;
             for (int i = 0; i < Listing.listings.size() && !listingFound; i++) {
                 if (Listing.listings.get(i).CRN == Long.parseLong(value)) {
                     listingFound = true;
@@ -170,5 +155,19 @@ public class User {
             }
         }
         return false;
+    }
+
+    /**
+     * Check if a listing is at full capacity
+     * @param l The listing to check the number of students enrolled in
+     * @return
+     */
+    public boolean checkMax(Listing l) {
+
+        //Return whether the current and max enrollments are equal
+        if (String.valueOf(l.Current_Enrollment).equals(l.Max_Enrollment))
+            return true;
+        else
+            return false;
     }
 }

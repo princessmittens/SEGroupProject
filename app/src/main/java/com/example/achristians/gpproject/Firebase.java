@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,11 +18,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Executor;
 
 import static android.content.ContentValues.TAG;
 
@@ -90,7 +84,7 @@ public class Firebase {
                             loggedIn.setUID(user.getUid());
                             loggedIn.setIdentifier(user.getEmail());
 
-                    instance.fetchLoggedInUser();
+                    instance.fetchLoggedInUser(context);
 
                     Toast.makeText(context, "Authentication success.",
                             Toast.LENGTH_SHORT).show();
@@ -106,31 +100,15 @@ public class Firebase {
     }
 
     /**
-     * Currently unused, kept in for posterity
-     */
-    public void getCurrentUser() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            // Name, email address, and profile photo Url
-            String name = user.getDisplayName();
-            String email = user.getEmail();
-            Uri photoUrl = user.getPhotoUrl();
-
-            // Check if user's email is verified
-            boolean emailVerified = user.isEmailVerified();
-
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getToken() instead.
-            String uid = user.getUid();
-        }
-    }
-
-    /**
      * Fetches the database information (Registered courses, completed courses)
      * for an authenticated user
      */
-    public static void fetchLoggedInUser(){
+    public static void fetchLoggedInUser(final Context context){
+        if(User.getUser().getUID() == null || User.getUser().getUID().isEmpty()){
+            Toast.makeText(context, "Fetching user data from database failed:UID not initialized.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         usersDataReference = rootDataReference.child("Users").child(User.getUser().getUID());
 
         usersDataReference.addValueEventListener(new ValueEventListener() {
@@ -162,68 +140,41 @@ public class Firebase {
             firebaseAuth = FirebaseAuth.getInstance();
         }
 
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(callingActivity, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "createUserWithEmail:success");
-                        FirebaseUser user = firebaseAuth.getCurrentUser();
+        try {
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(callingActivity, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
 
-                        /* While this section of code is not being explicitly used right now,
-                        we've left this in for now for testing purposes for iteration 3.
-                         */
-                        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        DatabaseReference ref = database.getReference();
-                        DatabaseReference usersRef = ref.child("Users/");
-                        HashMap<String, String> coursesCompleted = new HashMap<String,String>();
-                        HashMap<String, String> coursesRegistered = new HashMap<String,String>();
+                            //Re-enabling the register button (Not strictly necessary as it should
+                            //leave the registration page)
+                            SignUpPage.regButtonPressed = false;
 
-                        //coursesCompleted.put("100", new Date().toString());
-                        //coursesRegistered.put("200", new Date().toString());
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
 
-                        Map<String, User> users = new HashMap<>();
+                            Toast.makeText(context, "User created.",
+                                    Toast.LENGTH_SHORT).show();
+                            signIn(context, email, password, callingActivity);
 
-                        Toast.makeText(context, "Authentication success.",
-                                Toast.LENGTH_SHORT).show();
-                        signIn(context, email, password, callingActivity);
+                        } else {
+                            //Re-enabling the register button if this failed.
+                            SignUpPage.regButtonPressed = false;
 
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "createUserWith Email:failure", task.getException());
-                        Toast.makeText(context, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWith Email:failure", task.getException());
+                            Toast.makeText(context, "User creation failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
-            }
-        );
-    }
-
-
-    public DataSnapshot storedResult;
-    public DatabaseError storedError;
-
-    /**
-     * Adds a listener to a database path, whose result will be stored in result
-     * Not being explicitly used right now, but keeping it in for testing in iteration 3
-     * @param DB_path Path in the database to retrieve
-     */
-    public void addObjectListener(String DB_path){
-        generalDataReference = rootDataReference.child(DB_path);
-
-        generalDataReference.addValueEventListener(
-            new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    storedResult = dataSnapshot;
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    storedError = databaseError;
-                }
-            }
-        );
+            );
+        }
+        catch (Exception e){
+            Toast.makeText(context, "Fatal error when creating user remotely.", Toast.LENGTH_SHORT).show();
+            SignUpPage.regButtonPressed = false;
+        }
     }
 }

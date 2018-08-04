@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-//https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
-
 /**
  * List adapter to display listings of the CourseDetails page
  */
@@ -56,6 +54,8 @@ public class ListingAdapter extends ArrayAdapter<Listing> {
         TextView statusView = convertView.findViewById(R.id.statusView);
         TextView timeView = convertView.findViewById(R.id.TimeView);
         TextView formatView = convertView.findViewById(R.id.formatView);
+        TextView enrollmentView = convertView.findViewById(R.id.currentEnrollmentView);
+        TextView maxEnrollmentView = convertView.findViewById(R.id.maxEnrollmentView);
 
         timeView.setText(l.Time);
         crnView.setText(String.valueOf(l.CRN));
@@ -63,6 +63,8 @@ public class ListingAdapter extends ArrayAdapter<Listing> {
         daysView.setText(l.Days);
         locationView.setText(l.Location);
         formatView.setText(l.Format);
+        enrollmentView.setText(l.Current_Enrollment + "");
+        maxEnrollmentView.setText(l.Max_Enrollment);
 
         //If the user is registered for the course, indicate with bold text
         if (match) {
@@ -74,6 +76,8 @@ public class ListingAdapter extends ArrayAdapter<Listing> {
             statusView.setTypeface(null, Typeface.BOLD);
             timeView.setTypeface(null, Typeface.BOLD);
             formatView.setTypeface(null, Typeface.BOLD);
+            enrollmentView.setTypeface(null, Typeface.BOLD);
+            maxEnrollmentView.setTypeface(null, Typeface.BOLD);
         } else
         {
             crnView.setTypeface(null, Typeface.NORMAL);
@@ -84,6 +88,8 @@ public class ListingAdapter extends ArrayAdapter<Listing> {
             statusView.setTypeface(null, Typeface.NORMAL);
             timeView.setTypeface(null, Typeface.NORMAL);
             formatView.setTypeface(null, Typeface.NORMAL);
+            enrollmentView.setTypeface(null, Typeface.NORMAL);
+            maxEnrollmentView.setTypeface(null, Typeface.NORMAL);
         }
         return convertView;
     }
