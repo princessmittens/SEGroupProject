@@ -1,6 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/relativeLayout">
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="75dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose an Option:"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="90dp"
+        android:paddingLeft="20dp"/>
+
+    <TextView
+        android:id="@+id/timetableButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="171dp"
+        android:textSize="20sp"
+        android:onClick="onClick"
+        android:clickable="true"
+        android:text="View Your Timetable" />
+
+    <TextView
+        android:id="@+id/myCoursesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timetableButton"
+        android:layout_centerHorizontal="true"
+        android:textSize="20dp"
+        android:text="My Courses"
+        android:onClick="onClick"
+        android:clickable="true"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:id="@+id/navListView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/myCoursesButton"
+        android:textSize="20dp"
+        android:onClick="onClick"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:text="Course List" />
+
+
+</RelativeLayout>

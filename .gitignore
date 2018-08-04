@@ -21,6 +21,7 @@ out/
 
 # Gradle files
 .gradle
+
 .gradle/
 build/
 
@@ -151,3 +152,8 @@ $RECYCLE.BIN/
 
 
 # End of https://www.gitignore.io/api/windows,androidstudio
+.idea/codeStyles/Project.xml
+.idea/sonarlint/issuestore/*
+.idea/misc.xml
+.idea/modules.xml
+.idea/misc.xml
