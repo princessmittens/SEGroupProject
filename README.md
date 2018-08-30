@@ -39,6 +39,7 @@ An outline of the application can be seen below (Fig. 1).
 <figcaption><br><b>Figure 3:</b> Menu (left) and course listings page (right).</figcaption><br>
 </figure>
 </div>
+<br><br>
 <div style="display: flex; justify-content: center;">
 <figure>
    <img  src="./images/timetable.png"  width="40%"  height="40%"/>
