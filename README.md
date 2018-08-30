@@ -28,7 +28,7 @@ An outline of the application can be seen below (Fig. 1).
 <figure>
    <img  src="./images/login.png"  width="40%"  height="40%"/>
    <img src="./images/registration.png" width="40%" height="40%"/><br>
-   <figcaption><b>Figure 2:</b> Login (left) and registration page (right).</figcaption> <br>
+   <figcaption><br><b>Figure 2:</b> Login (left) and registration page (right).</figcaption> <br>
 </figure>
 </div>
 <br><br>
@@ -36,14 +36,14 @@ An outline of the application can be seen below (Fig. 1).
 <figure>
    <img  src="./images/menu.png"  width="40%"  height="40%"/>
    <img  src="./images/listings.png"  width="40%"  height="40%"/><br>
-<figcaption><b>Figure 3:</b> Menu (left) and course listings page (right).</figcaption>
+<figcaption><br><b>Figure 3:</b> Menu (left) and course listings page (right).</figcaption>
 </figure>
 </div>
 <div style="display: flex; justify-content: center;">
 <figure>
    <img  src="./images/timetable.png"  width="40%"  height="40%"/>
    <img  src="./images/details.png"  width="40%"  height="40%"/><br>
-<figcaption><b>Figure 3:</b> Course timetable (left) and course details page (right).</figcaption>
+<figcaption><br><b>Figure 4:</b> Course timetable (left) and course details page (right).</figcaption>
 </figure>
 </div>
 
